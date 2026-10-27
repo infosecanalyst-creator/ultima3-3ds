@@ -30,21 +30,22 @@ include $(DEVKITARM)/3ds_rules
 # APP_AUTHOR is the author of the app stored in the SMDH file (Optional)
 #---------------------------------------------------------------------------------
 
-TARGET      := dosbox-3ds
+TARGET      := u3-3ds
 BUILD       := build
 SOURCES     := src src/cpu src/dos src/fpu src/hardware src/hardware/mame \
                src/hardware/serialport src/ints src/libs src/misc src/gui \
-               src/shell src/platform/ctr src/libs/sdl_net
+               src/shell src/platform/ctr src/libs/sdl_net \
+               src/platform/ctr/u3 src/platform/ctr/sdlvid/video/n3ds
 DATA        := data
-INCLUDES    := include src/platform/ctr src/libs/sdl_net
+INCLUDES    := include src/platform/ctr src/libs/sdl_net src/platform/ctr/u3
 GRAPHICS    := gfx
 GFXBUILD    := $(BUILD)
 #ROMFS       := ctr/romfs
 #GFXBUILD    := $(ROMFS)/gfx
 
-APP_TITLE           := DOSBox
-APP_DESCRIPTION     := DOSBox port for 3DS
-APP_AUTHOR          := MrHuu
+APP_TITLE           := Ultima III
+APP_DESCRIPTION     := Exodus for New 3DS
+APP_AUTHOR          := Ryan Gurney (DOSBox port: MrHuu)
 
 APP_PRODUCT_CODE    := CTR-P-DOSBOX
 APP_UNIQUE_ID       := 0xD0486

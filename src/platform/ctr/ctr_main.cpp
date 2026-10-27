@@ -49,6 +49,11 @@
 
 #include "ctr_system.h"
 #include "ctr_input.h"
+#include "u3/u3_ui.h"
+
+extern "C" int u3v_custom_top;
+static Bit8u *u3_frame_pixels = 0;
+static Bitu u3_frame_pitch = 0;
 
 #include "../../gui/dosbox_splash.h"
 
@@ -80,8 +85,9 @@ void aptHookFunc(APT_HookType hookType, void *param)
 {
 	switch (hookType) {
 		case APTHOOK_ONSUSPEND:
-			ctr_backlight_enable(true,GSPLCD_SCREEN_BOTTOM);
 		case APTHOOK_ONSLEEP:
+		case APTHOOK_ONEXIT:
+			u3_ui_save_all();
 			break;
 		case APTHOOK_ONRESTORE:
 		case APTHOOK_ONWAKEUP:
@@ -127,6 +133,7 @@ struct SDL_Block {
 static SDL_Block sdl;
 
 SDL_Surface* SDL_SetVideoMode_Wrap(int width,int height,int bpp,Bit32u flags){
+	u3v_custom_top = 1;   // 4:3 game rect + info strips on the top screen
 
 	SDL_Surface* s = SDL_SetVideoMode(width,height,16,flags|
 			((flags & SDL_BOTTOMSCR)?SDL_BOTTOMSCR:SDL_TOPSCR)|
@@ -251,6 +258,8 @@ bool GFX_StartUpdate(Bit8u * & pixels,Bitu & pitch) {
 		pitch=sdl.surface->pitch;
 	}
 	
+	u3_frame_pixels = pixels;
+	u3_frame_pitch = pitch;
 	sdl.updating=true;
 	return true;
 }
@@ -295,6 +304,9 @@ void GFX_EndUpdate_Thread() {
 void GFX_EndUpdate( const Bit16u *changedLines ) {
 	if (!RENDER_GetForceUpdate() && !sdl.updating)
 		return;
+
+	if (u3_frame_pixels && sdl.surface && sdl.surface->format->BitsPerPixel == 16)
+		u3_ui_on_frame((const uint16_t *)u3_frame_pixels, (int)(u3_frame_pitch / 2), (int)sdl.draw.width, (int)sdl.draw.height);
 
 	sdl.updating=false;
 
@@ -587,6 +599,9 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
+		// Ultima III build: our own config lives next to the game
+		if(!control->configfiles.size()) control->ParseConfigFile(U3_DIR "/u3.conf");
+
 		// if none found => user selection list of all .conf found in 'config' folder.
 		if(!control->configfiles.size()) {ctr_conf_select();control->ParseConfigFile((char*)conf_path);}
 
@@ -639,6 +654,7 @@ int main(int argc, char* argv[]) {
 	catch(...){
 		; // Unknown error, let's just exit.
 	}
+	u3_ui_save_all();
 	SDL_Quit();//Let's hope sdl will quit as well when it catches an exception
 
 #if defined(CTR_ROMFS)

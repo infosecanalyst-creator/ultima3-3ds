@@ -5,6 +5,7 @@
 #include "ctr_keyboard.h"
 
 #include "control.h"
+#include "u3/u3_ui.h"
 
 void shutdown_program();
 
@@ -1532,9 +1533,7 @@ void GetInput()
 	aptMainLoop();
 	hidScanInput();
 
-	touch_event();
-	button_event();
-	axis_event();
+	u3_ui_input();   // Ultima III front end replaces the generic keyboard/mouse UI
 
 	return;
 }
