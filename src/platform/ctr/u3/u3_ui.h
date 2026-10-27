@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-#define U3_DIR "/3ds/u3-3ds"
+#define U3_DIR "sdmc:/3ds/u3-3ds"
 #define U3_GAME_DIR U3_DIR "/game"
 #define U3_BOOK_DIR U3_DIR "/books"
 

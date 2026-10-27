@@ -38,11 +38,12 @@ static void moon(U3Canvas &c, int cx, int cy, int r, int phase, uint32_t lit) {
 
 static void wind_icon(U3Canvas &c, int cx, int cy, int wind) {
 	c.ring(cx, cy, 11, 0x50566A);
-	c.text_center(font_small, cx, cy - 11 - 1 - 9, "N", LABEL);
+	c.text(font_small, cx - 2, cy - 11 - 11, "N", 0x5A6070);
 	if (wind <= 0) { c.disc(cx, cy, 2, 0xA0C8FF); return; }
 	// wind named for where it comes FROM; arrow shows where it blows
 	int dx = 0, dy = 0;
-	switch (wind) { case 1: dy = 1; break; case 2: dy = -1; break; case 3: dx = -1; break; case 4: dx = 1; break; }
+	// raw values: 0 calm, 1 north, 2 east, 3 south, 4 west (checked against the game's own text)
+	switch (wind) { case 1: dy = 1; break; case 2: dx = -1; break; case 3: dy = -1; break; case 4: dx = 1; break; }
 	int tx = cx + dx * 9, ty = cy + dy * 9, bx = cx - dx * 8, by = cy - dy * 8;
 	c.line(bx, by, tx, ty, 0xA0C8FF); c.line(bx + dy, by + dx, tx + dy, ty + dx, 0xA0C8FF);
 	int px = -dy, py = dx;
@@ -154,11 +155,11 @@ void u3_top_update(bool force) {
 	if (live && u3s.moon_f >= 0) { snprintf(b, sizeof b, "%d", u3s.moon_f); ov.text_center(font_bold, 29, 31, b, TEXT); }
 
 	// ---- wind (meaningful on the surface)
-	ov.text_center(font_small, 20, 50, "WIND", LABEL);
+	ov.text_center(font_small, 20, 46, "WIND", LABEL);
 	bool show_wind = live && (u3s.map == U3MAP_SOSARIA) && u3s.wind >= 0;
-	wind_icon(ov, 20, 78, show_wind ? u3s.wind : 0);
+	wind_icon(ov, 20, 80, show_wind ? u3s.wind : 0);
 	if (show_wind) {
-		static const char *wn[5] = { "Calm", "North", "South", "East", "West" };
+		static const char *wn[5] = { "Calm", "North", "East", "South", "West" };
 		ov.text_center(font_small, 20, 92, wn[u3s.wind], TEXT);
 	}
 

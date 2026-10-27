@@ -32,6 +32,8 @@ bool u3_text_init(const char *path) {
 		for (int i = 0; i < 64; i++) if (d[c * 64 + i]) m |= 1ull << i;
 		if (m) glyphs[m] = (char)c;
 	}
+	// ',' and '.' share a shape in some fonts; a period is far more common in game text
+	{ uint64_t m = 0; for (int i = 0; i < 64; i++) if (d['.' * 64 + i]) m |= 1ull << i; if (m) glyphs[m] = '.'; }
 	glyphs_ok = true;
 	memset(cur, 0, sizeof cur);
 	memset(prev, 0, sizeof prev);

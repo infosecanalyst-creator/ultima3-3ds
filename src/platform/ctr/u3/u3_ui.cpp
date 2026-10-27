@@ -44,7 +44,7 @@ static int touch_x0, touch_y0, touch_x, touch_y;
 static uint32_t touch_t0;
 
 enum {
-	ID_NONE = 0, ID_TAB = 100, ID_CMD = 200, ID_NUM = 300, ID_KEY = 400, ID_CHIP = 600,
+	ID_NONE = 0, ID_TAB = 100, ID_CMD = 200, ID_NUM = 300, ID_KEY = 400, ID_CHIP = 5000,
 	ID_PASS = 700, ID_ESC, ID_ENTER, ID_KBD, ID_DIGITS, ID_SPELLS,
 	ID_KB_SPACE = 720, ID_KB_BACK, ID_KB_ENTER, ID_KB_CLOSE, ID_KB_MODE, ID_KB_ESC,
 	ID_MAP_LEVEL = 740, ID_MAP_ZOOM = 760, ID_MAP_CENTER, ID_MAP_PLACES, ID_MAP_PLACE = 780, ID_MAP_BACK = 810,
@@ -71,11 +71,12 @@ static void button(int x, int y, int w, int h, int id, const char *label, const 
 }
 
 // ------------------------------------------------------------------ key injection
-struct KeyEv { KBD_KEYS k; };
+struct KeyEv { KBD_KEYS k; bool shift; };
 static std::deque<KeyEv> keyq;
 static int key_phase = 0;          // 0 idle, 1 down, 2 gap
 static uint32_t key_time = 0;
 static KBD_KEYS key_cur = KBD_NONE;
+static bool key_shift = false;
 
 static KBD_KEYS ascii_key(char c) {
 	static const KBD_KEYS letters[26] = { KBD_a, KBD_b, KBD_c, KBD_d, KBD_e, KBD_f, KBD_g, KBD_h, KBD_i, KBD_j,
@@ -91,22 +92,32 @@ static KBD_KEYS ascii_key(char c) {
 	}
 	return KBD_NONE;
 }
-void u3_key_tap(char c) { KBD_KEYS k = ascii_key(c); if (k != KBD_NONE) { KeyEv e = { k }; keyq.push_back(e); } }
-void u3_key_special(int k) { KeyEv e = { (KBD_KEYS)k }; keyq.push_back(e); }
+void u3_key_tap(char c) { KBD_KEYS k = ascii_key(c); if (k != KBD_NONE) { KeyEv e = { k, false }; keyq.push_back(e); } }
+static void key_tap_upper(char c) { KBD_KEYS k = ascii_key(c); if (k != KBD_NONE) { KeyEv e = { k, c >= 'A' && c <= 'Z' }; keyq.push_back(e); } }
+void u3_key_special(int k) { KeyEv e = { (KBD_KEYS)k, false }; keyq.push_back(e); }
+
+static void dbg(const char *fmt, int a, int b) {
+	static int lines = 0;
+	if (lines > 400) return;
+	FILE *f = fopen(U3_DIR "/debug.log", "a");
+	if (!f) return;
+	fprintf(f, "%u ", (unsigned)u3_ticks_ms()); fprintf(f, fmt, a, b); fputc('\n', f); fclose(f); lines++;
+}
 
 static void key_pump(uint32_t now) {
 	switch (key_phase) {
 	case 0:
 		if (keyq.empty()) return;
-		key_cur = keyq.front().k; keyq.pop_front();
+		key_cur = keyq.front().k; key_shift = keyq.front().shift; keyq.pop_front();
+		if (key_shift) KEYBOARD_AddKey(KBD_leftshift, true);
 		KEYBOARD_AddKey(key_cur, true);
 		key_phase = 1; key_time = now;
 		break;
 	case 1:
-		if (now - key_time >= 45) { KEYBOARD_AddKey(key_cur, false); key_phase = 2; key_time = now; }
+		if (now - key_time >= 90) { KEYBOARD_AddKey(key_cur, false); if (key_shift) KEYBOARD_AddKey(KBD_leftshift, false); key_phase = 2; key_time = now; }
 		break;
 	case 2:
-		if (now - key_time >= 35) key_phase = 0;
+		if (now - key_time >= 50) key_phase = 0;
 		break;
 	}
 }
@@ -129,10 +140,12 @@ static int tab = TAB_PAD;
 static bool kb_open = false;
 static int kb_mode = 0;            // 0 letters, 1 digits/punctuation
 static std::string kb_typed;       // what was typed since the keyboard opened
+static bool kb_auto = false;       // opened by O/Y: Enter closes it
 static std::vector<std::string> chips;
 static int chip_scroll = 0;
 
-static void open_keyboard(int mode) {
+static void open_keyboard(int mode, bool autoclose = false) {
+	kb_auto = autoclose;
 	kb_open = true; kb_mode = mode; kb_typed.clear(); chip_scroll = 0;
 	u3_words(chips);
 	dirty = true;
@@ -278,18 +291,18 @@ static void draw_keyboard() {
 static void kb_press(int id) {
 	if (id >= ID_KEY && id < ID_KEY + 256) {
 		char c = (char)(id - ID_KEY);
-		u3_key_tap(c);
+		key_tap_upper(c);
 		if (isalnum((unsigned char)c)) kb_typed += (char)toupper((unsigned char)c);
-	} else if (id >= ID_CHIP && id < ID_CHIP + 200) {
+	} else if (id >= ID_CHIP && id < ID_CHIP + 500) {
 		int i = id - ID_CHIP;
 		if (i < (int)chips.size()) {
-			for (size_t k = 0; k < chips[i].size(); k++) u3_key_tap(chips[i][k]);
+			for (size_t k = 0; k < chips[i].size(); k++) key_tap_upper(chips[i][k]);
 			kb_typed += chips[i];
 		}
 	} else switch (id) {
 	case ID_KB_SPACE: u3_key_tap(' '); kb_typed += ' '; break;
 	case ID_KB_BACK: u3_key_tap(8); if (!kb_typed.empty()) kb_typed.erase(kb_typed.size() - 1); break;
-	case ID_KB_ENTER: u3_key_tap('\n'); close_keyboard(); break;
+	case ID_KB_ENTER: u3_key_tap('\n'); if (kb_auto) close_keyboard(); else { if (!kb_typed.empty()) u3_word_typed(kb_typed); kb_typed.clear(); } break;
 	case ID_KB_ESC: u3_key_tap(27); close_keyboard(); break;
 	case ID_KB_CLOSE: close_keyboard(); break;
 	case ID_KB_MODE: kb_mode ^= 1; break;
@@ -549,7 +562,7 @@ static void press(int id) {
 		if (id >= ID_CMD && id < ID_CMD + 26) {
 			char k = CMDS[id - ID_CMD].key;
 			u3_key_tap(k);
-			if (k == 'O' || k == 'Y') open_keyboard(0);
+			if (k == 'O' || k == 'Y') open_keyboard(0, true);
 		} else if (id >= ID_NUM + 1 && id <= ID_NUM + 4) u3_key_tap((char)('0' + id - ID_NUM));
 		else if (id == ID_PASS) u3_key_tap(' ');
 		else if (id == ID_ESC) u3_key_tap(27);
@@ -616,7 +629,12 @@ void u3_ui_input() {
 
 	key_pump(now);
 
-	u32 kd = hidKeysDown(), kh = hidKeysHeld(), ku = hidKeysUp();
+	// SDL's event pump also calls hidScanInput(), so hidKeysDown() is unreliable here:
+	// derive presses/releases from the held state ourselves.
+	static u32 prev_held = 0;
+	u32 kh = hidKeysHeld();
+	u32 kd = kh & ~prev_held, ku = ~kh & prev_held;
+	prev_held = kh;
 
 	// --- movement: D-pad (+ circle pad unless reading a book)
 	circlePosition cp; hidCircleRead(&cp);
@@ -651,8 +669,9 @@ void u3_ui_input() {
 	(void)ku;
 
 	// --- touch
-	if (kd & KEY_TOUCH) {
+	if ((kh & KEY_TOUCH) && !touching) {
 		touchPosition t; hidTouchRead(&t);
+		if (t.px == 0 && t.py == 0) goto touch_done;   // first sample can be empty
 		touching = true; touch_x0 = touch_x = t.px; touch_y0 = touch_y = t.py; touch_t0 = now;
 		touch_id = hit(t.px, t.py);
 		if (tab == TAB_BOOK && !kb_open && t.py >= 24) u3_book_touch(t.px, t.py, 0);
@@ -685,6 +704,7 @@ void u3_ui_input() {
 		touch_id = -1;
 		dirty = true;
 	}
+touch_done:
 
 	// --- slow work (~12 Hz)
 	if (now - last_slow >= 80) {

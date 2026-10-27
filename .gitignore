@@ -1,4 +1,8 @@
-*.elf
-*.3dsx
-*.cia
 build/
+*.3dsx
+*.elf
+*.smdh
+ctr/gfx/*.bgr
+ctr/gfx/kbd/*.bgr
+ctr/gfx/*_bgr.h
+ctr/gfx/kbd/*_bgr.h

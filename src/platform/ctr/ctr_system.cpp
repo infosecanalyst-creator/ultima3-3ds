@@ -27,6 +27,8 @@ void ctr_backlight_enable(bool enable, u32 screen) {
 }
 
 void ctr_sys_error(bool fatal, const char* error) {
+	svcOutputDebugString(error, strlen(error));
+	{ FILE *lf = fopen("sdmc:/3ds/u3-3ds/error.log", "a"); if (lf) { fprintf(lf, "%s\n", error); fclose(lf); } }
 	if (!gspHasGpuRight())
 		gfxInitDefault();
 

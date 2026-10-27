@@ -381,6 +381,7 @@ void GFX_ShowMsg(char const* format,...) {
 	va_end(msg);
 
 	buf[sizeof(buf) - 1] = '\0';
+	svcOutputDebugString(buf, strlen(buf));   // visible in emulator logs
 	if (!no_stdout) puts(buf); //Else buf is parsed again. (puts adds end of line)
 }
 

@@ -1,0 +1,112 @@
+# Ultima III on the New 3DS
+
+This is the MS-DOS Ultima III: Exodus with the Exodus Project upgrade (VGA graphics and music), running in DOSBox with a front end built for the 3DS's two screens.
+
+The game is on the top screen at its true shape (4:3, full height). The strips on either side show information the game makes you dig for. The bottom screen is your keyboard, map, notebook and library.
+
+# Starting a new game
+
+When the title appears, press Space (X button, or Pass on the command pad). Then use the letters on the command pad:
+
+- O - Organize a Party
+- C - Create a Character, then fill in a number (1-20), name, sex, race, type and attributes
+- F - Form a Party from up to four characters
+- M - back to the Main Menu
+- J - Journey Onward to begin
+
+The Book of Play explains races, types and attributes. A balanced first party is a fighter, a cleric, a wizard and a thief or paladin.
+
+# Buttons
+
+- D-pad or circle pad - move (the arrow keys)
+- A - Enter
+- B - Esc (cancel)
+- X - Space (pass a turn, skip)
+- Y - open or close the keyboard
+- ZL - Ztats (character status)
+- ZR - fast-forward (hold it; can be switched to a toggle in Menu)
+- L / R - previous / next bottom-screen tab
+- Select - jump to the Map tab and back
+- Start - jump to the Menu tab and back
+
+A and B can be swapped in Menu.
+
+# The Commands tab
+
+Every Ultima III command is one letter. The pad shows all 26 with their names. Tap one to press that key. Commands that usually matter where you are now are tinted gold: Klimb and Descend in a dungeon, Transact in a town, and so on.
+
+The bottom row has 1-4 for choosing a party member (the bars under the names are their health), 0-9 for amounts, and Spells for the spell list.
+
+Most commands ask a follow-up question at the bottom of the game screen, such as a direction or a number. Answer with the D-pad, the pad's buttons, or the keyboard.
+
+Ultima III has no conversation typing: walk up to someone and use T (Transact) with a direction.
+
+# Typing
+
+Two commands take a typed word: O (Other) and Y (Yell). Tapping either one opens the keyboard by itself.
+
+The gold buttons across the top of the keyboard are words you'll want to type. They come from clues you pinned on the Log tab and from words you typed before. Tap a word, then Enter.
+
+The keyboard also opens with Y, the Abc button, or 0-9 (numbers first).
+
+# Info strips (top screen)
+
+Left strip:
+
+- Moons - the phases of Trammel (silver) and Felucca (gold), 0 to 7, as the game counts them
+- Wind - the direction the wind is blowing while you're outdoors (it matters when sailing). The name is where it blows from.
+- Party - one bar per character: green is healthy, yellow is hurt, red is in danger, purple is poisoned, gray with a slash is dead
+- Food - the lowest food count in the party. It turns orange below 100 and flashes red below 50.
+
+Right strip:
+
+- Marks and Cards - eight slots that stay blank until someone in the party carries that item
+- In a dungeon: the level you're on and which way you face
+
+Turn the strips off in Menu if you want plain black bars.
+
+# The Map tab
+
+The map draws itself as you explore. Nothing appears until you've seen it.
+
+- Outdoors and in towns: the land around you fills in as you travel. Zoom in shows real tile art; drag to look around and tap Center to follow the party again. Whole shows the entire map.
+- In dungeons: each level is drawn from what the party could see down the corridors, with doors, ladders (blue arrows), chests, fountains and writings. Traps and other hidden things are never shown. Use the 1-8 buttons to look at other levels. A gold dot marks the level you're on.
+- Places lists every town, castle and dungeon you've explored, so you can review it any time.
+
+The map is saved on the SD card. If you start a brand-new game, use Reset auto-map in Menu.
+
+# The Log tab
+
+Everything the game prints in its message window is collected here, so nothing scrolls away. Drag to scroll.
+
+Tap a line to pin it as a clue. Pinned lines are kept for good with the place you heard them. Pinned only shows just your clues. Words from pinned clues show up as buttons on the keyboard.
+
+# The Book tab
+
+- This guide
+- Spell list - every spell, what it does and what it costs
+- Book of Play - the original manual as large, readable text. See page jumps to that page of the original.
+- The original pages - the Book of Play, both spellbooks and the cloth map, with zoom
+- Cluebook - only listed if you turn it on in Menu, because it gives answers away
+
+In a text book, drag or use the circle pad to scroll, and Contents jumps to a section. On page scans, drag to move, use + and - (or push the circle pad hard up and down) to zoom, and X and Y to turn pages.
+
+The original manuals are not included with this program. The setup script makes them from your own GOG copy of Ultima III.
+
+# Saving
+
+The game saves when you use Q (Quit) while outdoors. Do that before you stop playing. The next time you start, choose Journey Onward to continue.
+
+Closing the 3DS lid puts everything to sleep. Your map, clues and settings are saved when you leave the program, and when the 3DS sleeps.
+
+# A few spoiler-free tips
+
+- Buy food early and keep an eye on the Food number.
+- Look (L) before stepping into unfamiliar terrain.
+- In dungeons, light a torch with I (Ignite).
+- Talk to everyone with T (Transact), and pin anything that sounds important.
+- Chests are often trapped. A thief, or the cleric spell Appar Unem, can disarm them.
+
+# Credits
+
+Ultima III: Exodus by Origin Systems. The Exodus Project upgrade by Voyager Dragon (Michael C. Maggio). DOSBox by the DOSBox Team; 3DS port of DOSBox by MrHuu. 3DS front end for Ryan Gurney.

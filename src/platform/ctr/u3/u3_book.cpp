@@ -302,7 +302,7 @@ static void draw_scan(U3Canvas &c) {
 	bbutton(c, 138, 27, 28, 20, B_NEXT, ">");
 	bbutton(c, 236, 27, 38, 20, B_ZOOMOUT, "-");
 	bbutton(c, 278, 27, 38, 20, B_ZOOMIN, "+");
-	c.text(font_small, 172, 31, b.title, C_FAINT);
+	(void)b;
 	c.fill(0, SCAN_TOP, 320, SCAN_H, 0x0A0B0E);
 	if (img_err) { c.text_center(font_ui, 160, 130, "Couldn't open this page (out of memory?)", C_DIM); return; }
 	if (!img) return;
@@ -325,11 +325,11 @@ static void draw_shelf(U3Canvas &c) {
 		if (BOOKS[i].spoiler && !u3_settings.cluebook) continue;
 		bool ok = avail[i];
 		bool d = down_id == B_BOOK + i;
-		c.fill_round(4, y, 312, 25, 5, d ? C_BTN_DOWN : (ok ? C_BTN : 0x1A1C22));
+		c.fill_round(4, y, 312, 27, 5, d ? C_BTN_DOWN : (ok ? C_BTN : 0x1A1C22));
 		c.text(font_bold, 12, y + 2, BOOKS[i].title, ok ? (BOOKS[i].spoiler ? 0xFF9C8A : C_TEXT) : C_FAINT);
-		c.text(font_small, 12, y + 14, ok ? BOOKS[i].sub : "Not installed - see the guide", ok ? C_DIM : C_FAINT);
-		if (ok) hreg(4, y, 312, 25, B_BOOK + i);
-		y += 27;
+		c.text(font_small, 12, y + 15, ok ? BOOKS[i].sub : "Not installed - see the guide", ok ? C_DIM : C_FAINT);
+		if (ok) hreg(4, y, 312, 27, B_BOOK + i);
+		y += 29;
 	}
 }
 
@@ -396,7 +396,8 @@ void u3_book_touch(int x, int y, int phase) {
 			if (!dragging && down_id && (cur_book < 0 || show_toc || down_id >= B_TOC)) down_id = 0;
 			dragging = true;
 		}
-		if (cur_book >= 0 && !BOOKS[cur_book].scans) { tscroll -= dy; clamp_text(); }
+		if (!dragging) { dirty = true; return; }   // ignore jitter until a real drag starts (drag_x/y stay at the start point)
+		if (cur_book >= 0 && !BOOKS[cur_book].scans) { if (start_y >= TEXT_TOP) { tscroll -= dy; clamp_text(); } }
 		else if (cur_book >= 0 && start_y >= SCAN_TOP && down_id == 0) {
 			float s = scan_scale();
 			ox -= dx / s; oy -= dy / s; clamp_scan();

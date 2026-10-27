@@ -1,0 +1,107 @@
+# Spell list
+
+To cast: press C (Cast), pick the character's number, choose W or C if that character knows both kinds of magic, then press the spell's letter.
+
+A spell's letter is also its rank. Rank A costs 0 magic points, and every rank after that costs 5 more (B costs 5, C costs 10 ... P costs 75). A character can never cast a spell that costs more than their maximum magic points.
+
+Effects below are summarized from the original spellbooks. Open "Wizard spellbook" or "Cleric spellbook" on the Book tab to read the full pages.
+
+# Wizard spells
+
+## A. Repond - 0 MP
+Dispels orcs, goblins and trolls.
+
+## B. Mittar - 5 MP
+A magic missile that strikes one foe.
+
+## C. Lorum - 10 MP
+A short-lived magical light.
+
+## D. Dor Acron - 15 MP
+Takes the party down one dungeon level.
+
+## E. Sur Acron - 20 MP
+Takes the party up one dungeon level.
+
+## F. Fulgar - 25 MP
+A fireball hurled at one foe.
+
+## G. Mag Acron - 30 MP
+Teleports the party to a random spot on the surface of Sosaria. Works only on the surface.
+
+## H. Mentar - 35 MP
+A psychic blow at one foe. Damage grows with the caster's intelligence.
+
+## I. Dag Lorum - 40 MP
+A long-lasting light.
+
+## J. Fal Divi - 45 MP
+Lets a wizard cast any cleric spell. It often fails.
+
+## K. Noxum - 50 MP
+Strikes every foe in the battle.
+
+## L. Decorp - 55 MP
+Kills one foe.
+
+## M. Altair - 60 MP
+Stops time, freezing the world while the party moves freely.
+
+## N. Dag Mentar - 65 MP
+A powerful blow against every foe. Damage grows with the caster's intelligence.
+
+## O. Necorp - 70 MP
+Leaves every foe with little strength left for battle.
+
+## P. (no name) - 75 MP
+Destroys all foes who hear it.
+
+# Cleric spells
+
+## A. Pontori - 0 MP
+Dispels undead: skeletons, ghouls and zombies.
+
+## B. Appar Unem - 5 MP
+Disarms a trapped chest.
+
+## C. Sanctu - 10 MP
+Heals minor wounds. Grows stronger with experience.
+
+## D. Luminae - 15 MP
+A short-lived light.
+
+## E. Rec Su - 20 MP
+Takes the party up one dungeon level.
+
+## F. Rec Du - 25 MP
+Takes the party down one dungeon level.
+
+## G. Lib Rec - 30 MP
+Moves the party to another place within the dungeon. Must be cast in a dungeon.
+
+## H. Alcort - 35 MP
+Cures poison.
+
+## I. Sequitu - 40 MP
+Lifts the party out of a dungeon to the surface.
+
+## J. Sominae - 45 MP
+A long-lasting light.
+
+## K. Sanctu Mani - 50 MP
+Major healing for one near death.
+
+## L. Vieda - 55 MP
+Shows a vision of the surroundings, in a dungeon or on the surface.
+
+## M. Excuun - 60 MP
+Kills one foe.
+
+## N. Surmandum - 65 MP
+Brings a dead companion back to life. If it fails, the body turns to ashes.
+
+## O. Zxkuqyb - 70 MP
+Strikes down most foes in the battle.
+
+## P. Anju Sermani - 75 MP
+Restores a companion who has turned to ashes. The caster permanently gives up 5 points of wisdom.
