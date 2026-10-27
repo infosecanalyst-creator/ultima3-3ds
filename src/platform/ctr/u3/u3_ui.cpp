@@ -98,7 +98,7 @@ void u3_key_special(int k) { KeyEv e = { (KBD_KEYS)k, false }; keyq.push_back(e)
 
 static void dbg(const char *fmt, int a, int b) {
 	static int lines = 0;
-	if (lines > 400) return;
+	if (lines > 2000) return;
 	FILE *f = fopen(U3_DIR "/debug.log", "a");
 	if (!f) return;
 	fprintf(f, "%u ", (unsigned)u3_ticks_ms()); fprintf(f, fmt, a, b); fputc('\n', f); fclose(f); lines++;
@@ -705,6 +705,19 @@ void u3_ui_input() {
 		dirty = true;
 	}
 touch_done:
+
+	// --- performance log (read back over FTP when tuning)
+	{
+		extern unsigned int u3_emu_ticks;
+		extern unsigned int u3_mixer_underruns;
+		static uint32_t perf_t = 0; static unsigned int perf_ticks = 0, perf_under = 0;
+		if (!perf_t) { perf_t = now; perf_ticks = u3_emu_ticks; perf_under = u3_mixer_underruns; }
+		else if (now - perf_t >= 10000) {
+			int speed = (int)((u3_emu_ticks - perf_ticks) * 100 / (now - perf_t));
+			dbg("speed %d%% of real time, audio underruns %d", speed, (int)(u3_mixer_underruns - perf_under));
+			perf_t = now; perf_ticks = u3_emu_ticks; perf_under = u3_mixer_underruns;
+		}
+	}
 
 	// --- slow work (~12 Hz)
 	if (now - last_slow >= 80) {

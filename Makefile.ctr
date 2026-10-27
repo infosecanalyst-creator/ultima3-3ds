@@ -35,7 +35,7 @@ BUILD       := build
 SOURCES     := src src/cpu src/dos src/fpu src/hardware src/hardware/mame \
                src/hardware/serialport src/ints src/libs src/misc src/gui \
                src/shell src/platform/ctr src/libs/sdl_net \
-               src/platform/ctr/u3 src/platform/ctr/sdlvid/video/n3ds
+               src/platform/ctr/u3 src/platform/ctr/sdlvid/video/n3ds src/platform/ctr/sdlvid/audio/n3ds
 DATA        := data
 INCLUDES    := include src/platform/ctr src/libs/sdl_net src/platform/ctr/u3
 GRAPHICS    := gfx

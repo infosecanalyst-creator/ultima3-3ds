@@ -535,6 +535,7 @@ static void MIXER_Mix_NoSound(void) {
 
 #define INDEX_SHIFT_LOCAL 14
 
+unsigned int u3_mixer_underruns = 0;
 static void SDLCALL MIXER_CallBack(void * /*userdata*/, Uint8 *stream, int len) {
 	Bitu need=(Bitu)len/MIXER_SSIZE;
 	Bit16s * output=(Bit16s *)stream;
@@ -547,6 +548,7 @@ static void SDLCALL MIXER_CallBack(void * /*userdata*/, Uint8 *stream, int len) 
 	Bits sample;
 	/* Enough room in the buffer ? */
 	if (mixer.done < need) {
+		u3_mixer_underruns++;
 //		LOG_MSG("Full underrun need %d, have %d, min %d", need, mixer.done, mixer.min_needed);
 		if((need - mixer.done) > (need >>7) ) //Max 1 percent stretch.
 			return;

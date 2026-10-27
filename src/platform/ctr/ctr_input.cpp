@@ -1517,9 +1517,18 @@ void axis_event()
 	return;
 }
 
+unsigned int u3_emu_ticks = 0;   // emulated milliseconds (GFX_Events runs once per emulated ms)
+
 void GetInput()
 {
 	SDL_Event event;
+
+	// Polling HID/APT every emulated millisecond is expensive on the 3DS; 8 ms is plenty for input.
+	u3_emu_ticks++;
+	static u64 last_poll = 0;
+	u64 now_tick = svcGetSystemTick();
+	if (now_tick - last_poll < (u64)(SYSCLOCK_ARM11 / 125)) return;
+	last_poll = now_tick;
 
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
