@@ -102,7 +102,7 @@ ARCH        := -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
 #Idea to use funroll-all-loops, param max, and fomit-frame-pointer
 #Originally by vogons user 'Moe'. Post found by RetroGamer02.
-CFLAGS      := -g -Wall -O3 -mword-relocations \
+CFLAGS	:= -Wno-error=incompatible-pointer-types -Wno-error=int-conversion -Wno-switch -g -Wall -O3 -mword-relocations \
                -fomit-frame-pointer -ffunction-sections \
 			   -funroll-all-loops --param max-unrolled-insns=60 \
 			   -fomit-frame-pointer \
@@ -264,11 +264,12 @@ endif
 #---------------------------------------------------------------------------------
 .PHONY : all
 
-all               : $(OUTPUT).3dsx $(OUTPUT).cia
+all               : $(OUTPUT).3dsx
 
 $(OUTPUT).3dsx    : $(OUTPUT).elf $(TARGET).smdh
 
-$(OFILES_SOURCES) : $(HFILES)
+$(OFILES_SOURCES) : $(HFILES) $(GFX_HDR)
+.SECONDARY:
 
 $(OUTPUT).elf     : $(GFX_BIN) $(OFILES)
 
@@ -280,7 +281,7 @@ $(TARGET).bnr     : $(APP_BANNER_IMAGE) $(APP_BANNER_AUDIO)
 	@$(BANNERTOOL) makebanner -i $(APP_BANNER_IMAGE) -a $(APP_BANNER_AUDIO) -o $(TARGET).bnr > /dev/null
 
 $(TARGET).smdh    : $(APP_ICON)
-	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i $(APP_ICON) -o $(TARGET).smdh > /dev/null
+	@smdhtool --create "$(APP_TITLE)" "$(APP_DESCRIPTION)" "$(APP_AUTHOR)" $(APP_ICON) $(TARGET).smdh
 
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
@@ -301,13 +302,13 @@ $(TARGET).smdh    : $(APP_ICON)
 
 %_bgr.h %.bgr.o: %.bgr
 	@echo $(notdir $<)
-	@$(TOOLDIR)/bin2s -a 4 -H `(echo $(<)) | tr . _)`.h $< | $(AS) -o $(<).o
+	@$(TOOLDIR)/bin2s -a 4 -H `(echo $(<) | tr . _)`.h $< | $(AS) -o $(<).o
 	
 #---------------------------------------------------------------------------------
 
 %.bgr: %.png
 	@echo $(notdir $<)
-	@ffmpeg -vcodec png -i $< -vcodec rawvideo -f rawvideo -vf "transpose=1" -pix_fmt rgb565 $@
+	@ffmpeg -loglevel error -y -vcodec png -i $< -vcodec rawvideo -f rawvideo -vf "transpose=1" -pix_fmt rgb565 $@
 
 #---------------------------------------------------------------------------------
 # rules for assembling GPU shaders
