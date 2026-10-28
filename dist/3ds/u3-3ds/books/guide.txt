@@ -85,6 +85,7 @@ Tap a line to pin it as a clue. Pinned lines are kept for good with the place yo
 
 - This guide
 - Spell list - every spell, what it does and what it costs
+- Reference card - all 26 commands, A to Z, and their 3DS buttons
 - Book of Play - the original manual as large, readable text. See page jumps to that page of the original.
 - The original pages - the Book of Play, both spellbooks and the cloth map, with zoom
 - Cluebook - only listed if you turn it on in Menu, because it gives answers away

@@ -1,0 +1,92 @@
+# Reference card
+
+Every command is a single letter. Most then ask a follow-up at the bottom of the game screen: a direction (D-pad), a character's number (1-4) or a choice. Commands that need something special, such as a ship, a key, a gem or a ladder, simply fail if it isn't there.
+
+## A - Attack
+Attack in a direction. In combat, a character can attack straight up, down, left or right, but not diagonally.
+
+## B - Board
+Board a ship or mount a horse you're standing on.
+
+## C - Cast
+Cast a spell. Pick the character, choose W or C if that character knows both kinds of magic, then pick the spell's letter. See the Spell list.
+
+## D - Descend
+Climb down a ladder in a dungeon.
+
+## E - Enter
+Enter the town, castle, dungeon or shrine you're standing on.
+
+## F - Fire
+Fire a ship's cannons. They reach three squares. A foe sunk by cannon fire leaves no treasure, and pirate ships fire back.
+
+## G - Get chest
+Open a chest. Many are trapped. A thief, or the cleric spell Appar Unem, can disarm them first.
+
+## H - Hand
+Hand food, gold or equipment from one character to another.
+
+## I - Ignite
+Light a torch. Needed in dungeons.
+
+## J - Join gold
+Pool all the party's gold with one character, for buying expensive things.
+
+## K - Klimb
+Climb up a ladder in a dungeon.
+
+## L - Look
+Name what's in a square. Useful before stepping onto unfamiliar terrain.
+
+## M - Modify order
+Swap the positions of two characters in the party.
+
+## N - Negate time
+Stop time around the party. Needs a special item.
+
+## O - Other
+Type a verb for special situations, such as a word to say or something to do. See the typing helper in the guide.
+
+## P - Peer
+Look into a gem for an overview of where you are. On the surface it shows the whole world, in a town or castle all of the inside, and in a dungeon the whole level, ladders, doors and special objects included.
+
+## Q - Quit
+Save the game. Do this outdoors before you stop playing.
+
+## R - Ready
+Ready a weapon.
+
+## S - Steal
+Try to steal from a shop counter. Thieves are best at it. Get caught and the guards attack.
+
+## T - Transact
+Talk or trade with someone next to you. Give the direction they're in.
+
+## U - Unlock
+Unlock a door. Needs a key.
+
+## V - Volume
+Turn the sound on or off.
+
+## W - Wear
+Put on armour.
+
+## X - X-it
+Get off a ship or horse.
+
+## Y - Yell
+Shout a word that carries some distance.
+
+## Z - Ztats
+Show a character's status, inventory and equipment.
+
+## Space - Pass
+Let a turn pass without doing anything.
+
+# On the 3DS
+
+- Every command is on the Commands tab. Tap it, then answer the question with the D-pad, the number buttons or the keyboard.
+- A is Enter, B is Esc, X is Space (Pass), ZL is Ztats.
+- O and Y open the keyboard for you.
+
+The original reference card isn't in the GOG release. If you have a scan, put its pages (JPG) in /3ds/u3-3ds/books/refcard and they'll show up next to this list.

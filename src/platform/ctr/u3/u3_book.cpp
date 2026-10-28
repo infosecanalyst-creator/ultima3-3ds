@@ -32,6 +32,8 @@ struct Book {
 static const Book BOOKS[] = {
 	{ "3DS player's guide", "Controls, commands, the auto-map, first steps", U3_BOOK_DIR "/guide.txt", false, false },
 	{ "Spell list", "Every wizard and cleric spell at a glance", U3_BOOK_DIR "/spells.txt", false, false },
+	{ "Reference card", "All 26 commands, A to Z", U3_BOOK_DIR "/refcard.txt", false, false },
+	{ "Reference card - pages", "Your scan of the original card", U3_BOOK_DIR "/refcard", true, false },
 	{ "Book of Play", "The original manual, as large text", U3_BOOK_DIR "/manual.txt", false, false },
 	{ "Book of Play - pages", "The original manual's pages", U3_BOOK_DIR "/manual", true, false },
 	{ "Wizard spellbook", "Original pages", U3_BOOK_DIR "/wizard", true, false },
@@ -40,6 +42,7 @@ static const Book BOOKS[] = {
 	{ "Cluebook", "Spoilers! Hints and full solutions", U3_BOOK_DIR "/cluebook", true, true },
 };
 enum { NBOOKS = sizeof(BOOKS) / sizeof(BOOKS[0]) };
+enum { BK_SPELLS = 1, BK_REFCARD_PAGES = 3, BK_PLAY = 4, BK_PLAY_PAGES = 5 };
 
 static int cur_book = -1;     // -1 = shelf
 static bool dirty = true;
@@ -206,7 +209,7 @@ static void draw_text(U3Canvas &c) {
 	c.fill(0, 24, 320, 26, C_PANEL);
 	bbutton(c, 4, 27, 50, 20, B_BACK, "Back");
 	bbutton(c, 58, 27, 74, 20, B_CONTENTS, show_toc ? "Text" : "Contents");
-	bool has_scans = cur_book == 2 && avail[3];
+	bool has_scans = (cur_book == BK_PLAY && avail[BK_PLAY_PAGES]) || (cur_book == BK_REFCARD_PAGES - 1 && avail[BK_REFCARD_PAGES]);
 	if (has_scans && !show_toc) bbutton(c, 136, 27, 74, 20, B_SCAN, "See page");
 	c.text(font_small, has_scans ? 216 : 140, 31, b.title, C_DIM);
 	if (show_toc) {
@@ -320,16 +323,37 @@ static void draw_scan(U3Canvas &c) {
 static void draw_shelf(U3Canvas &c) {
 	if (!avail_checked) check_avail();
 	c.fill(0, 24, 320, 216, C_BG);
-	int y = 28;
+	int n = 0;
 	for (int i = 0; i < NBOOKS; i++) {
 		if (BOOKS[i].spoiler && !u3_settings.cluebook) continue;
+		if (i == BK_REFCARD_PAGES && !avail[i]) continue;
+		n++;
+	}
+	int step = n > 0 ? 212 / n : 29;
+	if (step > 29) step = 29;
+	int h = step - 2;
+	bool two_lines = h >= 26;
+	int y = 27;
+	for (int i = 0; i < NBOOKS; i++) {
+		if (BOOKS[i].spoiler && !u3_settings.cluebook) continue;
+		if (i == BK_REFCARD_PAGES && !avail[i]) continue;   // only listed if a scan was added
 		bool ok = avail[i];
 		bool d = down_id == B_BOOK + i;
-		c.fill_round(4, y, 312, 27, 5, d ? C_BTN_DOWN : (ok ? C_BTN : 0x1A1C22));
-		c.text(font_bold, 12, y + 2, BOOKS[i].title, ok ? (BOOKS[i].spoiler ? 0xFF9C8A : C_TEXT) : C_FAINT);
-		c.text(font_small, 12, y + 15, ok ? BOOKS[i].sub : "Not installed - see the guide", ok ? C_DIM : C_FAINT);
-		if (ok) hreg(4, y, 312, 27, B_BOOK + i);
-		y += 29;
+		c.fill_round(4, y, 312, h, 5, d ? C_BTN_DOWN : (ok ? C_BTN : 0x1A1C22));
+		uint32_t tc = ok ? (BOOKS[i].spoiler ? 0xFF9C8A : C_TEXT) : C_FAINT;
+		const char *sub = ok ? BOOKS[i].sub : "Not installed";
+		if (two_lines) {
+			c.text(font_bold, 12, y + 2, BOOKS[i].title, tc);
+			c.text(font_small, 12, y + 15, sub, ok ? C_DIM : C_FAINT);
+		} else {
+			int ty = y + (h - font_bold.height) / 2;
+			int tw = c.text(font_bold, 12, ty, BOOKS[i].title, tc);
+			c.clip(0, y, 312, h);
+			c.text(font_small, 12 + tw + 10, ty + 2, sub, ok ? C_DIM : C_FAINT);
+			c.noclip();
+		}
+		if (ok) hreg(4, y, 312, h, B_BOOK + i);
+		y += step;
 	}
 }
 
@@ -346,7 +370,7 @@ static void close_book() {
 
 void u3_book_open_spells(char) {
 	if (!avail_checked) check_avail();
-	if (avail[1]) open_book(1);
+	if (avail[BK_SPELLS]) open_book(BK_SPELLS);
 }
 
 void u3_book_draw(U3Canvas &c, int) {
@@ -376,7 +400,9 @@ static void action(int id) {
 	case B_SCAN: {
 		int line = text_line_at(tscroll);
 		int pg = line >= 0 && line < (int)tlines.size() ? tlines[line].page : 1;
-		open_book(3);
+		int target = cur_book == BK_PLAY ? BK_PLAY_PAGES : BK_REFCARD_PAGES;
+		open_book(target);
+		if (target == BK_REFCARD_PAGES) break;
 		// page files are p-01.jpg ... in order; manual page numbers map 1:1
 		if (pg >= 1 && pg <= (int)pages.size()) { page_i = pg - 1; load_page(); }
 		break;
