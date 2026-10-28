@@ -1539,7 +1539,12 @@ void GetInput()
 		}
 	}
 
-	aptMainLoop();
+	// Closing from the HOME menu: aptMainLoop() returns false. Leave right away
+	// (saving the map, clues and settings) instead of waiting to be killed.
+	if (!aptMainLoop()) {
+		u3_ui_save_all();
+		throw(0);
+	}
 	hidScanInput();
 
 	u3_ui_input();   // Ultima III front end replaces the generic keyboard/mouse UI
