@@ -27,6 +27,17 @@ void u3_ui_save_all();                  // persist map, pins, settings (on exit 
 // Top strips (u3_top.cpp)
 void u3_top_update(bool force);
 
+// Button feedback (u3_sfx.cpp / u3_ui.cpp): every enabled touch button clicks quietly
+// when pressed and shows a press animation (held: pushed in; released: brief flash).
+struct U3Canvas;
+void u3_click();
+void u3_press_down(int id);            // touch-down on an enabled button: click
+void u3_press_up(int id);              // released on the same button: start the flash
+int  u3_press_look(int id, bool held); // 0 normal, 1 held, 2..256 flash (alpha + 1)
+// Draws a button background for the given look; returns the y offset for its content.
+int  u3_btn_bg(U3Canvas &c, int x, int y, int w, int h, int r, uint32_t bg, int look);
+bool u3_press_animating();
+
 // Key injection
 void u3_key_tap(char c);                // queue a key press for an ASCII char
 void u3_key_special(int kbd_key);       // queue a KBD_KEYS value
@@ -35,9 +46,11 @@ void u3_key_special(int kbd_key);       // queue a KBD_KEYS value
 struct U3Canvas;
 void u3_book_draw(U3Canvas &c, int y0);
 void u3_book_touch(int x, int y, int phase);   // phase 0 down, 1 drag, 2 up
-bool u3_book_button(uint32_t keys_down);       // returns true if consumed
-void u3_book_tick();                           // circle pad scrolling etc.
+// Buttons while the Book tab is open. Returns 0 if not used, 1 if used,
+// 2 if the player asked to close the manual (B or START).
+int  u3_book_buttons(uint32_t keys_down, uint32_t keys_held);
+void u3_book_tick();                           // Circle Pad / C-Stick scrolling (call often)
 bool u3_book_dirty();
-void u3_book_open_spells(char kind);           // 'W' wizard, 'C' cleric
+void u3_book_open_spells(char kind);
 
 #endif

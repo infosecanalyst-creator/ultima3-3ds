@@ -61,12 +61,54 @@ static int hit(int x, int y) {
 	return ID_NONE;
 }
 
+// ---- press feedback (shared with the book reader)
+static int fx_id = -1;
+static uint32_t fx_t = 0;
+enum { FX_MS = 170 };
+void u3_press_down(int id) { if (id > 0) u3_click(); }
+void u3_press_up(int id) { fx_id = id; fx_t = u3_ticks_ms(); }
+bool u3_press_animating() { return fx_id >= 0 && u3_ticks_ms() - fx_t < FX_MS; }
+int u3_press_look(int id, bool held) {
+	if (held) return 1;
+	if (id == fx_id) {
+		uint32_t e = u3_ticks_ms() - fx_t;
+		if (e < FX_MS) return 2 + (int)(254 * (FX_MS - e) / FX_MS);
+	}
+	return 0;
+}
+int u3_btn_bg(U3Canvas &c, int x, int y, int w, int h, int r, uint32_t bg, int look) {
+	if (look == 1) {   // pushed in: darker, one pixel smaller, content drops a pixel
+		c.fill_round(x, y, w, h, r, 0x0C0D10);
+		c.fill_round(x + 1, y + 1, w - 2, h - 2, r, u3_mix(bg, 0x7A8496, 90));
+		return 1;
+	}
+	c.fill_round(x, y, w, h, r, bg);
+	if (look >= 2) {   // release flash: a bright rim that fades out
+		int a = look - 2;
+		c.fill_round(x, y, w, h, r, 0xFFFFFF, a / 6);
+		c.frame_round(x, y, w, h, r, 0xFFE9B0, a);
+	}
+	return 0;
+}
+
+// Shorten text with "..." so it never runs past its space.
+static std::string fit_str(const u3_font &f, const std::string &str, int maxw) {
+	if (u3_text_width(f, str.c_str()) <= maxw) return str;
+	int dots = u3_text_width(f, "...");
+	std::string t = str;
+	while (!t.empty() && u3_text_width(f, t.c_str()) + dots > maxw) t.erase(t.size() - 1);
+	while (!t.empty() && t[t.size() - 1] == ' ') t.erase(t.size() - 1);
+	return t + "...";
+}
+
+static inline bool held_on(int id) { return touching && touch_id == id && hit(touch_x, touch_y) == id; }
+
 static void button(int x, int y, int w, int h, int id, const char *label, const u3_font &f = font_ui,
                    uint32_t bg = C_BTN, uint32_t fg = C_TEXT) {
-	bool down = touching && touch_id == id && hit(touch_x, touch_y) == id;
-	cv.fill_round(x, y, w, h, 5, down ? C_BTN_DOWN : bg);
-	int tw = u3_text_width(f, label);
-	cv.text(f, x + (w - tw) / 2, y + (h - f.height) / 2, label, fg);
+	int off = u3_btn_bg(cv, x, y, w, h, 5, bg, u3_press_look(id, held_on(id)));
+	std::string t = fit_str(f, label, w - 6);
+	int tw = u3_text_width(f, t.c_str());
+	cv.text(f, x + (w - tw) / 2, y + (h - f.height) / 2 + off, t.c_str(), fg);
 	reg(x, y, w, h, id);
 }
 
@@ -155,9 +197,11 @@ static void close_keyboard() {
 	kb_open = false; dirty = true;
 }
 
+static int book_return_tab = 0;    // where B/START go back to when the manual closes
 static void set_tab(int t) {
 	t = (t + TAB_COUNT) % TAB_COUNT;
 	if (t == tab) return;
+	if (t == TAB_BOOK) book_return_tab = tab;
 	tab = t; dirty = true;
 }
 
@@ -188,10 +232,11 @@ static void draw_tabs() {
 	static const int W[TAB_COUNT] = { 84, 52, 56, 52, 76 };
 	for (int t = 0; t < TAB_COUNT; t++) {
 		bool sel = t == tab && !kb_open;
-		bool down = touching && touch_id == ID_TAB + t;
-		if (sel) cv.fill(x, 0, W[t], 24, C_BG);
-		else if (down) cv.fill(x, 0, W[t], 24, C_BTN_DOWN);
-		cv.text_center(sel ? font_bold : font_ui, x + W[t] / 2, 5, TAB_NAMES[t], sel ? C_ACCENT : C_DIM);
+		int look = u3_press_look(ID_TAB + t, held_on(ID_TAB + t));
+		int off = 0;
+		if (sel && look == 0) cv.fill(x, 0, W[t], 24, C_BG);
+		else if (look) off = u3_btn_bg(cv, x + 1, 1, W[t] - 2, 22, 4, sel ? C_BG : C_PANEL, look);
+		cv.text_center(sel ? font_bold : font_ui, x + W[t] / 2, 5 + off, TAB_NAMES[t], sel ? C_ACCENT : C_DIM);
 		if (sel) cv.hline(x + 8, 22, W[t] - 16, C_ACCENT);
 		reg(x, 0, W[t], 24, ID_TAB + t);
 		x += W[t];
@@ -205,12 +250,11 @@ static void draw_pad() {
 		if (i < 26) {
 			const Cmd &c = CMDS[i];
 			int id = ID_CMD + i;
-			bool down = touching && touch_id == id && hit(touch_x, touch_y) == id;
 			bool rel = cmd_relevant(c.key);
-			cv.fill_round(cx, cy, cw, ch, 5, down ? C_BTN_DOWN : (rel ? C_ACCENT_BG : C_BTN));
+			int off = u3_btn_bg(cv, cx, cy, cw, ch, 5, rel ? C_ACCENT_BG : C_BTN, u3_press_look(id, held_on(id)));
 			char k[2] = { c.key, 0 };
-			cv.text(font_big, cx + 5, cy + (ch - font_big.height) / 2, k, rel ? C_ACCENT : C_TEXT);
-			cv.text(font_small, cx + 20, cy + (ch - font_small.height) / 2 + 1, c.word, rel ? 0xF4E2B8 : C_DIM);
+			cv.text(font_big, cx + 4, cy + (ch - font_big.height) / 2 + off, k, rel ? C_ACCENT : C_TEXT);
+			cv.text(font_small, cx + 18, cy + (ch - font_small.height) / 2 + 1 + off, c.word, rel ? 0xF4E2B8 : C_DIM);
 			reg(cx, cy, cw, ch, id);
 		} else {
 			static const char *L[4] = { "Pass", "Esc", "Enter", "Abc" };
@@ -224,18 +268,19 @@ static void draw_pad() {
 		char lbl[24];
 		const U3Member &m = u3s.m[i];
 		int id = ID_NUM + i + 1;
-		bool down = touching && touch_id == id && hit(touch_x, touch_y) == id;
-		cv.fill_round(3 + i * (w + 2), y, w, 31, 5, down ? C_BTN_DOWN : C_BTN);
+		int off = u3_btn_bg(cv, 3 + i * (w + 2), y, w, 31, 5, C_BTN, u3_press_look(id, held_on(id)));
+		y += off;
 		snprintf(lbl, sizeof lbl, "%d", i + 1);
 		cv.text(font_big, 3 + i * (w + 2) + 5, y + 7, lbl, C_TEXT);
 		if (u3s.valid && m.present) {
-			char nm[8]; snprintf(nm, sizeof nm, "%.6s", m.name);
-			cv.text(font_small, 3 + i * (w + 2) + 18, y + 4, nm, C_DIM);
+			std::string nm = fit_str(font_small, m.name, w - 20);
+			cv.text(font_small, 3 + i * (w + 2) + 18, y + 4, nm.c_str(), C_DIM);
 			int bw = w - 22, pct = m.maxhp ? m.hp * bw / m.maxhp : 0;
 			uint32_t col = m.status == 'P' ? 0xB46CFF : (m.status == 'D' || m.status == 'A') ? 0x6A6A70 : C_GOOD;
 			cv.fill(3 + i * (w + 2) + 18, y + 20, bw, 4, 0x15171C);
 			cv.fill(3 + i * (w + 2) + 18, y + 20, pct, 4, col);
 		}
+		y -= off;
 		reg(3 + i * (w + 2), y, w, 31, id);
 	}
 	button(3 + 4 * (w + 2), y, 52, 31, ID_DIGITS, "0-9", font_bold);
@@ -352,7 +397,7 @@ static void draw_map() {
 		int L = map_level >= 0 ? map_level : (u3_map_current_area() == a && u3s.map == U3MAP_DUNGEON ? u3s.dlevel : 0);
 		u3_draw_dungeon(cv, a, L, 0, 26, 214, 214, true);
 		cv.fill(214, 24, 106, 216, C_PANEL);
-		cv.text(font_small, 220, 28, title, C_DIM);
+		cv.text(font_small, 220, 28, fit_str(font_small, title, 96).c_str(), C_DIM);
 		char lt[16]; snprintf(lt, sizeof lt, "Level %d", L + 1);
 		cv.text(font_bold, 220, 42, lt, C_INFO);
 		for (int i = 0; i < 8; i++) {
@@ -374,7 +419,7 @@ static void draw_map() {
 	if (map_zoom == 0) { map_cx = 32; map_cy = 32; }
 	u3_draw_area(cv, a, 0, 26, mw, mh, map_cx, map_cy, ts, true);
 	cv.fill(mw, 24, 320 - mw, 216, C_PANEL);
-	cv.text(font_small, mw + 6, 28, title, C_DIM);
+	cv.text(font_small, mw + 6, 28, fit_str(font_small, title, 320 - mw - 8).c_str(), C_DIM);
 	if (u3_map_current_area() == a && u3s.valid) {
 		char pos[24]; snprintf(pos, sizeof pos, "%d, %d", u3s.x, u3s.y);
 		cv.text(font_small, mw + 6, 42, pos, C_FAINT);
@@ -432,15 +477,20 @@ static void draw_log() {
 		const U3Line &l = u3_log[log_view[first + r]];
 		int y = top + r * lh;
 		int id = ID_LOG_LINE + log_view[first + r];
-		bool down = touching && touch_id == id && hit(touch_x, touch_y) == id;
-		if (down) cv.fill(0, y, 320, lh, C_BTN_DOWN);
+		int look = u3_press_look(id, held_on(id));
+		int off = 0;
+		if (look) off = u3_btn_bg(cv, 0, y, 320, lh, 3, l.pinned ? 0x221D12 : C_BG, look);
 		else if (l.pinned) cv.fill(0, y, 320, lh, 0x221D12);
+		y += off;
 		if (l.pinned) cv.text(font_bold, 6, y + 1, "*", C_ACCENT);
 		cv.text(l.pinned ? font_bold : font_ui, 18, y + 1, l.text.c_str(), l.pinned ? 0xF4E2B8 : C_TEXT);
 		if (l.pinned || log_pinned_only) {
-			int ww = u3_text_width(font_small, l.where.c_str());
-			cv.text(font_small, 314 - ww, y + 3, l.where.c_str(), C_FAINT);
+			int tw = u3_text_width(l.pinned ? font_bold : font_ui, l.text.c_str());
+			std::string wh = fit_str(font_small, l.where, 314 - (18 + tw + 8));
+			int ww = u3_text_width(font_small, wh.c_str());
+			if (!wh.empty() && wh != "...") cv.text(font_small, 314 - ww, y + 3, wh.c_str(), C_FAINT);
 		}
+		y -= off;
 		reg(0, y, 320, lh, id);
 	}
 	// scrollbar
@@ -456,13 +506,14 @@ static int confirm = 0;   // 1 = reset map
 static void save_settings();
 
 static void toggle_row(int y, int id, const char *label, const char *desc, bool on) {
-	bool down = touching && touch_id == id && hit(touch_x, touch_y) == id;
-	cv.fill_round(4, y, 312, 34, 6, down ? C_BTN_DOWN : C_BTN);
+	int off = u3_btn_bg(cv, 4, y, 312, 34, 6, C_BTN, u3_press_look(id, held_on(id)));
+	int y0 = y;
+	y += off;
 	cv.text(font_bold, 12, y + 4, label, C_TEXT);
 	cv.text(font_small, 12, y + 19, desc, C_DIM);
 	cv.fill_round(270, y + 8, 38, 18, 9, on ? 0x3E7A4A : 0x3A3F4C);
 	cv.disc(on ? 299 : 279, y + 17, 7, on ? 0xD8F5DC : 0x9AA0AC);
-	reg(4, y, 312, 34, id);
+	reg(4, y0, 312, 34, id);
 }
 
 static void draw_menu() {
@@ -636,24 +687,36 @@ void u3_ui_input() {
 	u32 kd = kh & ~prev_held, ku = ~kh & prev_held;
 	prev_held = kh;
 
-	// --- movement: D-pad (+ circle pad unless reading a book)
+	// --- movement: D-pad and Circle Pad. While the manual (Book tab) is open, neither
+	// moves the game: the sticks scroll the text and the D-Pad moves between sections.
+	bool reading = tab == TAB_BOOK && !kb_open;
 	circlePosition cp; hidCircleRead(&cp);
-	bool cp_move = tab != TAB_BOOK || kb_open;
-	int cx = cp_move ? cp.dx : 0, cy = cp_move ? cp.dy : 0;
-	set_arrow(0, KBD_up, (kh & KEY_DUP) || cy > 70);
-	set_arrow(1, KBD_down, (kh & KEY_DDOWN) || cy < -70);
-	set_arrow(2, KBD_left, (kh & KEY_DLEFT) || cx < -70);
-	set_arrow(3, KBD_right, (kh & KEY_DRIGHT) || cx > 70);
+	int cx = reading ? 0 : cp.dx, cy = reading ? 0 : cp.dy;
+	u32 dk = reading ? 0 : kh;
+	set_arrow(0, KBD_up, (dk & KEY_DUP) || cy > 70);
+	set_arrow(1, KBD_down, (dk & KEY_DDOWN) || cy < -70);
+	set_arrow(2, KBD_left, (dk & KEY_DLEFT) || cx < -70);
+	set_arrow(3, KBD_right, (dk & KEY_DRIGHT) || cx > 70);
+	if (reading) {
+		static uint32_t book_tick_t = 0;
+		if (now - book_tick_t >= 33) { book_tick_t = now; u3_book_tick(); if (u3_book_dirty()) dirty = true; }
+	}
 
 	// --- fast-forward
 	if (u3_settings.turbo_toggle) { if (kd & KEY_ZR) set_turbo(!turbo_on); }
 	else set_turbo((kh & KEY_ZR) != 0);
 
 	// --- buttons
-	if (kd) {
+	if (reading) {
+		// The manual takes every button except SELECT (map) and ZR (fast-forward):
+		// nothing typed while reading reaches the game.
+		int r = u3_book_buttons(kd & ~(u32)(KEY_SELECT | KEY_ZR), kh);
+		if (r == 2) set_tab(book_return_tab);
+		if (kd & KEY_SELECT) set_tab(TAB_MAP);
+		if (r || kd) dirty = true;
+	} else if (kd) {
 		u32 kA = u3_settings.swap_ab ? KEY_B : KEY_A, kB = u3_settings.swap_ab ? KEY_A : KEY_B;
-		bool consumed = (tab == TAB_BOOK && !kb_open) ? u3_book_button(kd) : false;
-		if (!consumed) {
+		{
 			if (kd & kA) u3_key_tap('\n');
 			if (kd & kB) u3_key_tap(27);
 			if (kd & KEY_X) u3_key_tap(' ');
@@ -674,7 +737,10 @@ void u3_ui_input() {
 		if (t.px == 0 && t.py == 0) goto touch_done;   // first sample can be empty
 		touching = true; touch_x0 = touch_x = t.px; touch_y0 = touch_y = t.py; touch_t0 = now;
 		touch_id = hit(t.px, t.py);
-		if (tab == TAB_BOOK && !kb_open && t.py >= 24) u3_book_touch(t.px, t.py, 0);
+		bool book_area = tab == TAB_BOOK && !kb_open && t.py >= 24;
+		bool log_line = touch_id >= ID_LOG_LINE;   // log lines click on release (they also scroll)
+		if (!book_area && !log_line) u3_press_down(touch_id);
+		if (book_area) u3_book_touch(t.px, t.py, 0);
 		dirty = true;
 	} else if ((kh & KEY_TOUCH) && touching) {
 		touchPosition t; hidTouchRead(&t);
@@ -700,7 +766,11 @@ void u3_ui_input() {
 		touching = false;
 		int id = hit(touch_x, touch_y);
 		if (tab == TAB_BOOK && !kb_open && touch_y0 >= 24) u3_book_touch(touch_x, touch_y, 2);
-		else if (id != ID_NONE && id == touch_id) press(id);
+		else if (id != ID_NONE && id == touch_id) {
+			if (id >= ID_LOG_LINE) u3_click();
+			u3_press_up(id);
+			press(id);
+		}
 		touch_id = -1;
 		dirty = true;
 	}
@@ -725,7 +795,6 @@ touch_done:
 		u3_state_update();
 		u3_map_update();
 		u3_top_update(false);
-		if (tab == TAB_BOOK) u3_book_tick();
 		if (u3s.changes != last_state_changes && (tab == TAB_PAD || tab == TAB_MAP)) { last_state_changes = u3s.changes; dirty = true; }
 		if (u3_log_changes != last_log_changes && tab == TAB_LOG) { last_log_changes = u3_log_changes; dirty = true; }
 		if (u3_map_changes != last_map_changes && tab == TAB_MAP) { last_map_changes = u3_map_changes; dirty = true; }
@@ -734,5 +803,6 @@ touch_done:
 	(void)last_state; (void)map_seen_changes; (void)log_seen;
 
 	// --- redraw (cap ~30 fps)
+	if (u3_press_animating()) dirty = true;
 	if (dirty && now - last_draw >= 33) draw_all();
 }

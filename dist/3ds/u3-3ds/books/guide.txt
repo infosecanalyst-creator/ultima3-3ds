@@ -25,7 +25,7 @@ The Book of Play explains races, types and attributes. A balanced first party is
 - Y - open or close the keyboard
 - ZL - Ztats (character status)
 - ZR - fast-forward (hold it; can be switched to a toggle in Menu)
-- L / R - previous / next bottom-screen tab
+- L / R - previous / next bottom-screen tab (in a book: previous / next section)
 - Select - jump to the Map tab and back
 - Start - jump to the Menu tab and back
 
@@ -90,7 +90,16 @@ Tap a line to pin it as a clue. Pinned lines are kept for good with the place yo
 - The original pages - the Book of Play, both spellbooks and the cloth map, with zoom
 - Cluebook - only listed if you turn it on in Menu, because it gives answers away
 
-In a text book, drag or use the circle pad to scroll, and Contents jumps to a section. On page scans, drag to move, use + and - (or push the circle pad hard up and down) to zoom, and X and Y to turn pages.
+Reading works the same way as in every other 3DS port:
+
+- Circle Pad or C-Stick - scroll (hold to keep scrolling; on page scans, move around the page)
+- D-Pad - move between the section buttons on the left; A opens the one you picked
+- L / R - previous / next section (on page scans, the previous / next page)
+- Tap a section to open it; drag the text or page to move it
+- B or START - close the book and go back to where you were
+- Page scans: + and - (or X and Y) zoom in and out
+
+While a book is open, nothing you press reaches the game. Books goes back to the list of books.
 
 The original manuals are not included with this program. The setup script makes them from your own GOG copy of Ultima III.
 
