@@ -6,3 +6,16 @@ ctr/gfx/*.bgr
 ctr/gfx/kbd/*.bgr
 ctr/gfx/*_bgr.h
 ctr/gfx/kbd/*_bgr.h
+*.bgr.o
+*.o
+*.d
+# runtime files the app writes on the SD card
+debug.log
+error.log*
+clues.txt
+settings.cfg
+automap.dat
+# game data and manual scans: bring your own
+dist/3ds/u3-3ds/game/
+dist/3ds/u3-3ds/books/*/
+dist/3ds/u3-3ds/books/manual.txt

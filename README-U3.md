@@ -19,6 +19,24 @@ notes (Exodus Project, doc/u3tech).
     docker build -t u3build tools/   # devkitARM + ffmpeg
     docker run --rm -v $PWD:/src -w /src u3build make -f Makefile.ctr
 
+## Install over Wi-Fi
+
+1. Make a staging folder that mirrors the SD card: `<stage>/3ds/u3-3ds/`. Copy in
+   `u3-3ds.3dsx`, everything under `dist/3ds/u3-3ds/`, and your own patched Ultima III
+   folder as `game/`.
+2. Optional: build the original-manual pages from your GOG PDFs with
+   `tools/make-books.sh <pdf-folder> <stage>`.
+3. Start ftpd on the 3DS, then run `python3 tools/ftp-install.py <stage> <3ds-ip>`.
+
+## Tools
+
+- `tools/Dockerfile` - build image (devkitARM + ffmpeg)
+- `tools/mkfont.py` - regenerates `src/platform/ctr/u3/u3_fonts.c` from DejaVu fonts
+- `tools/make-books.sh`, `tools/ocr-to-book.py` - manual pages and large-text Book of Play from your PDFs
+- `tools/ftp-install.py` - incremental FTP install/update; prints the on-device perf log
+
+See `docs/NOTES.md` for the memory map, testing lessons and open items.
+
 ## SD card layout
 
     /3ds/u3-3ds/u3-3ds.3dsx
@@ -26,5 +44,7 @@ notes (Exodus Project, doc/u3tech).
     /3ds/u3-3ds/game/            Ultima III + Exodus Project upgrade (not included)
     /3ds/u3-3ds/books/           guide.txt, spells.txt (included) + manual scans (generated)
 
-Ultima III is © Electronic Arts. No game data or original manuals are included.
+**Bring your own game files:** you need your own copy of Ultima III (e.g. the GOG release) with the
+Exodus Project upgrade applied. Ultima III is © Electronic Arts. No game data or original manuals
+are included.
 Code is GPL-2.0 (DOSBox); the vendored SDL 1.2 video driver is LGPL-2.1; fonts are DejaVu.
