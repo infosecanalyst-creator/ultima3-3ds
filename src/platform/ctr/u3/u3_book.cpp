@@ -154,11 +154,16 @@ static void layout_text(const char *path) {
 	// split into paragraphs on blank lines
 	int page = 0;
 	size_t pos = 0;
-	while (pos < all.size()) {
-		size_t end = all.find("\n\n", pos);
-		if (end == std::string::npos) end = all.size();
-		std::string para = all.substr(pos, end - pos);
-		pos = end + 2;
+	std::string pending;   // text that followed a heading line in the same paragraph
+	while (pos < all.size() || !pending.empty()) {
+		std::string para;
+		if (!pending.empty()) { para.swap(pending); }
+		else {
+			size_t end = all.find("\n\n", pos);
+			if (end == std::string::npos) end = all.size();
+			para = all.substr(pos, end - pos);
+			pos = end + 2;
+		}
 		while (!para.empty() && (para[0] == '\n' || para[0] == ' ')) para.erase(0, 1);
 		while (!para.empty() && (para[para.size() - 1] == '\n' || para[para.size() - 1] == ' ')) para.erase(para.size() - 1);
 		if (para.empty()) continue;
@@ -176,6 +181,11 @@ static void layout_text(const char *path) {
 			para = nl == std::string::npos ? "" : para.substr(nl + 1);
 		}
 		if (para.empty()) continue;
+		// a "#" heading is always one line; anything after it is its own paragraph
+		if (para[0] == '#') {
+			size_t nl = para.find('\n');
+			if (nl != std::string::npos) { pending = para.substr(nl + 1); para.erase(nl); }
+		}
 		const u3_font *fnt = &font_read;
 		uint32_t col = C_INK;
 		int indent = 0, gap = 6;

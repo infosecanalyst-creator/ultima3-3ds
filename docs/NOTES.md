@@ -77,6 +77,16 @@ base segment is found by scanning for the "Wrong Diskette" string at +0x2B19, wi
 - Save states (this DOSBox has none).
 - QWERTY order for the Commands tab (left alphabetical on purpose, to match the original
   reference card).
-- Click sound and press animation on buttons, per the project-wide standard.
-- Moving the book reader to the standard manual controls (Circle Pad and C-Stick scroll,
-  D-Pad section buttons, L/R sections, B or START to close).
+- The command pad sends keys through a short queue (90 ms hold, 50 ms gap). The project
+  rule is "never queue button presses", so this should become drop-if-busy.
+
+## Done Nov 4
+
+- Quiet click (own ndsp channel) and press animation on every touch button.
+- Book reader on the standard manual controls: Circle Pad and C-Stick scroll, D-Pad moves
+  between section buttons with A to open, L/R for sections, B or START to close. Tested in
+  Azahar.
+- A "#" heading line followed directly by text (no blank line) no longer joins that text
+  into its section button.
+- In Azahar, a mouse click is too short to register as a tap; hold the button for about
+  0.25 s.
