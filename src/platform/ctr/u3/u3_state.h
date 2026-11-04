@@ -31,7 +31,7 @@ struct U3State {
 	int dlevel;          // dungeon level 0-7
 	int facing;          // raw facing byte
 	int moon_t, moon_f;  // 0-7, -1 if not valid
-	int wind;            // 0 calm, 1 N, 2 S, 3 E, 4 W, -1 unknown
+	int wind;            // 0 calm, 1 N, 2 E, 3 S, 4 W, -1 unknown
 	int nparty;
 	U3Member m[4];
 	uint8_t marks_all;

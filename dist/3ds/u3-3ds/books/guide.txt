@@ -18,18 +18,32 @@ The Book of Play explains races, types and attributes. A balanced first party is
 
 # Buttons
 
-- D-pad or circle pad - move (the arrow keys)
+These work the same way in every 3DS port:
+
+- D-pad or circle pad - move (the arrow keys). Hold to keep walking; let go and the party stops at once.
 - A - Enter
 - B - Esc (cancel)
 - X - Space (pass a turn, skip)
 - Y - open or close the keyboard
-- ZL - Ztats (character status)
-- ZR - fast-forward (hold it; can be switched to a toggle in Menu)
+- ZL or SELECT - swap the two screens (see below)
+- ZR - fast-forward (hold it; can be switched to a toggle in Settings)
 - L / R - previous / next bottom-screen tab (in a book: previous / next section)
-- Select - jump to the Map tab and back
-- Start - jump to the Menu tab and back
+- START - the menu: Resume, Manual, Save game, Settings and Exit game. B or START closes it.
 
-A and B can be swapped in Menu.
+A and B can be swapped in Settings.
+
+Presses are never stored up. If the game is still busy with your last press, a new one is ignored rather than played later, so the party never runs on by itself. When the game takes a moment to answer, a small "Working..." bar appears at the top of the game screen; "Saving..." means files are being written to the SD card.
+
+# Swapping the screens
+
+Press ZL (or SELECT) at any time to put the game on the touchscreen, where it fills the whole screen. The tabs then move to the top screen, between the info strips:
+
+- D-pad - move the highlight between the buttons on the top screen; A presses the highlighted button
+- Circle pad - move the party
+- Tap the map on the touchscreen to take one step toward where you tapped
+- L / R still change tabs, and START still opens the menu
+
+Press ZL again to put everything back. "Game on the touchscreen" in Settings does the same, and it is remembered.
 
 # The Commands tab
 
@@ -37,7 +51,7 @@ Every Ultima III command is one letter. The pad shows all 26 with their names. T
 
 The bottom row has 1-4 for choosing a party member (the bars under the names are their health), 0-9 for amounts, and Spells for the spell list.
 
-Most commands ask a follow-up question at the bottom of the game screen, such as a direction or a number. Answer with the D-pad, the pad's buttons, or the keyboard.
+Most commands ask a follow-up question at the bottom of the game screen, such as a direction or a number. When the game asks for a direction, the bottom row turns into North, South, West and East buttons; when it asks yes or no, it shows Yes and No. You can also answer with the D-pad or the pad's buttons. Buttons that can't be used right now (such as an empty party slot) are greyed out and do nothing.
 
 Ultima III has no conversation typing: walk up to someone and use T (Transact) with a direction.
 
@@ -63,7 +77,7 @@ Right strip:
 - Marks and Cards - eight slots that stay blank until someone in the party carries that item
 - In a dungeon: the level you're on and which way you face
 
-Turn the strips off in Menu if you want plain black bars.
+Turn the strips off in Settings if you want plain black bars.
 
 # The Map tab
 
@@ -73,7 +87,7 @@ The map draws itself as you explore. Nothing appears until you've seen it.
 - In dungeons: each level is drawn from what the party could see down the corridors, with doors, ladders (blue arrows), chests, fountains and writings. Traps and other hidden things are never shown. Use the 1-8 buttons to look at other levels. A gold dot marks the level you're on.
 - Places lists every town, castle and dungeon you've explored, so you can review it any time.
 
-The map is saved on the SD card. If you start a brand-new game, use Reset auto-map in Menu.
+The map is saved on the SD card. If you start a brand-new game, use Reset auto-map in Settings.
 
 # The Log tab
 
@@ -88,7 +102,7 @@ Tap a line to pin it as a clue. Pinned lines are kept for good with the place yo
 - Reference card - all 26 commands, A to Z, and their 3DS buttons
 - Book of Play - the original manual as large, readable text. See page jumps to that page of the original.
 - The original pages - the Book of Play, both spellbooks and the cloth map, with zoom
-- Cluebook - only listed if you turn it on in Menu, because it gives answers away
+- Cluebook - only listed if you turn it on in Settings, because it gives answers away
 
 Reading works the same way as in every other 3DS port:
 
@@ -105,7 +119,9 @@ The original manuals are not included with this program. The setup script makes 
 
 # Saving
 
-The game saves when you use Q (Quit) while outdoors. Do that before you stop playing. The next time you start, choose Journey Onward to continue.
+The game saves when you use Q (Quit) while outdoors, or Save game in the START menu (which does the same thing, and is greyed out anywhere else). Do that before you stop playing. The next time you start, choose Journey Onward to continue.
+
+To leave, use Exit game in the START menu. It asks first, because anything since your last save is lost.
 
 Closing the 3DS lid puts everything to sleep. Your map, clues and settings are saved when you leave the program, and when the 3DS sleeps.
 

@@ -50,6 +50,7 @@
 #include "ctr_system.h"
 #include "ctr_input.h"
 #include "u3/u3_ui.h"
+#include "u3/u3_io.h"
 
 extern "C" int u3v_custom_top;
 static Bit8u *u3_frame_pixels = 0;
@@ -656,6 +657,7 @@ int main(int argc, char* argv[]) {
 		; // Unknown error, let's just exit.
 	}
 	u3_ui_save_all();
+	u3w_flush(8000);   // let the background writer finish before leaving
 	SDL_Quit();//Let's hope sdl will quit as well when it catches an exception
 
 #if defined(CTR_ROMFS)

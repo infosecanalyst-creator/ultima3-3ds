@@ -13,6 +13,7 @@ struct U3Settings {
 	bool turbo_toggle;  // ZR toggles fast-forward instead of hold
 	bool swap_ab;       // A=Esc, B=Enter
 	bool cluebook;      // spoiler cluebook unlocked in the book list
+	bool swapped;       // game on the touchscreen, this panel on the top screen (ZL / SELECT)
 };
 extern U3Settings u3_settings;
 
@@ -26,6 +27,10 @@ void u3_ui_save_all();                  // persist map, pins, settings (on exit 
 
 // Top strips (u3_top.cpp)
 void u3_top_update(bool force);
+void u3_top_set_panel(const uint16_t *px);   // non-null: show this 320x240 panel on the top screen
+void u3_top_panel_changed();                 // the panel was redrawn
+void u3_top_loading(bool on, int files);     // loading screen over the game until it draws
+void u3_top_working(int kind, uint32_t now); // 0 none, 1 "Working...", 2 "Saving..."
 
 // Button feedback (u3_sfx.cpp / u3_ui.cpp): every enabled touch button clicks quietly
 // when pressed and shows a press animation (held: pushed in; released: brief flash).
@@ -38,9 +43,9 @@ int  u3_press_look(int id, bool held); // 0 normal, 1 held, 2..256 flash (alpha 
 int  u3_btn_bg(U3Canvas &c, int x, int y, int w, int h, int r, uint32_t bg, int look);
 bool u3_press_animating();
 
-// Key injection
-void u3_key_tap(char c);                // queue a key press for an ASCII char
-void u3_key_special(int kbd_key);       // queue a KBD_KEYS value
+// Key injection. Presses are never queued: a press is only taken when the game has
+// taken the previous one; otherwise it is dropped. Returns whether it was taken.
+bool u3_key_tap(char c);
 
 // Book reader (u3_book.cpp)
 struct U3Canvas;
@@ -52,5 +57,6 @@ int  u3_book_buttons(uint32_t keys_down, uint32_t keys_held);
 void u3_book_tick();                           // Circle Pad / C-Stick scrolling (call often)
 bool u3_book_dirty();
 void u3_book_open_spells(char kind);
+void u3_book_open_guide();
 
 #endif

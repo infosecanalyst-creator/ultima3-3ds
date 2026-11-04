@@ -11,11 +11,93 @@ extern "C" {
 	u32 *u3v_overlay_pixels(void);
 	void u3v_overlay_commit(void);
 	void u3v_overlay_enable(int on);
+	void u3v_present(void);
+	extern volatile int u3v_working;
 }
 
 static U3Canvas ov;
 static bool ov_init = false;
 static uint32_t last_hash = 0xFFFFFFFF;
+static const uint16_t *panel_px = 0;   // the front end's 320x240 panel while the screens are swapped
+
+static bool ensure_ov() {
+	if (!ov_init) {
+		u32 *p = u3v_overlay_pixels();
+		if (!p) return false;
+		ov.init(p, 512, 256, U3_RGBA8);
+		ov_init = true;
+	}
+	return true;
+}
+
+// Copy the RGB565 panel into the middle of the top screen (opaque).
+static void blit_panel() {
+	if (!panel_px) return;
+	uint32_t *dst = (uint32_t *)ov.px;
+	for (int y = 0; y < 240; y++) {
+		const uint16_t *s = panel_px + y * 320;
+		uint32_t *d = dst + y * 512 + 40;
+		for (int x = 0; x < 320; x++) {
+			uint16_t c = s[x];
+			uint32_t r = (c >> 11) & 31, g = (c >> 5) & 63, b = c & 31;
+			r = (r << 3) | (r >> 2); g = (g << 2) | (g >> 4); b = (b << 3) | (b >> 2);
+			d[x] = (r << 24) | (g << 16) | (b << 8) | 0xFF;
+		}
+	}
+}
+
+void u3_top_set_panel(const uint16_t *px) { panel_px = px; last_hash = 0xFFFFFFFF; }
+void u3_top_panel_changed() {
+	if (!panel_px || !ensure_ov()) return;
+	blit_panel();
+	u3v_overlay_commit();
+	u3v_present();
+}
+
+// ---- loading screen (shown over the game area until the game draws its title)
+static bool loading = true;
+static int load_files = 0;
+void u3_top_loading(bool on, int files) { loading = on; load_files = files; }
+
+static void draw_loading(uint32_t now) {
+	ov.fill(40, 0, 320, 240, 0x0D0E12);
+	ov.text_center(font_big, 200, 92, "Ultima III", 0xE8B04A);
+	ov.text_center(font_ui, 200, 116, "Loading the game...", 0xECE8DE);
+	// moving bar: never looks dead
+	ov.fill_round(120, 140, 160, 8, 4, 0x262A33);
+	int t = (int)(now % 1400), seg = 48;
+	int x = 120 + (t * (160 + seg)) / 1400 - seg;
+	ov.clip(120, 140, 160, 8);
+	ov.fill_round(x, 140, seg, 8, 4, 0xE8B04A);
+	ov.noclip();
+	char b[40];
+	if (load_files > 0) { snprintf(b, sizeof b, "%d files read", load_files); ov.text_center(font_small, 200, 156, b, 0x8C919D); }
+}
+
+// ---- "Working" / "Saving" pill: overlay rows 240-255, x 0-159, drawn by the video driver over the game
+static int pill_kind = 0;
+void u3_top_working(int kind, uint32_t now) {
+	if (!ensure_ov()) return;
+	if (kind == 0) {
+		if (pill_kind) { pill_kind = 0; u3v_working = 0; u3v_present(); }
+		return;
+	}
+	pill_kind = kind;
+	ov.clip(0, 240, 160, 16);
+	uint32_t *dst = (uint32_t *)ov.px;
+	for (int y = 240; y < 256; y++) for (int x = 0; x < 160; x++) dst[y * 512 + x] = 0;
+	ov.fill_round(0, 240, 160, 16, 8, 0x15171D, 235);
+	ov.text(font_small, 10, 242, kind == 2 ? "Saving..." : "Working...", 0xECE8DE);
+	ov.fill_round(72, 246, 80, 4, 2, 0x343944);
+	int t = (int)(now % 1000), seg = 24;
+	int x = 72 + (t * (80 + seg)) / 1000 - seg;
+	ov.clip(72, 246, 80, 4);
+	ov.fill_round(x, 246, seg, 4, 2, 0xE8B04A);
+	ov.noclip();
+	u3v_working = 1;
+	u3v_overlay_commit();
+	u3v_present();
+}
 
 enum { STRIP = 40, RX = 360 };
 static const uint32_t PANEL = 0x15171D, PANEL_EDGE = 0x2A2E38, LABEL = 0x8A8F9C, TEXT = 0xE8E4DA;
@@ -112,12 +194,7 @@ static void icon(U3Canvas &c, int which, int cx, int cy, bool have) {
 static const char *MARK_NAMES[8] = { "Kings", "Snake", "Fire", "Force", "Death", "Sol", "Love", "Moons" };
 
 void u3_top_update(bool force) {
-	if (!ov_init) {
-		u32 *p = u3v_overlay_pixels();
-		if (!p) return;
-		ov.init(p, 512, 256, U3_RGBA8);
-		ov_init = true;
-	}
+	if (!ensure_ov()) return;
 	static uint32_t blink_t = 0;
 	uint32_t now = u3_ticks_ms();
 	bool low_food = false;
@@ -127,17 +204,20 @@ void u3_top_update(bool force) {
 			if (minfood < 0 || u3s.m[i].food < minfood) minfood = u3s.m[i].food;
 	low_food = minfood >= 0 && minfood < 50;
 	bool blink = low_food && ((now / 500) & 1);
-	uint32_t h = u3s.changes * 31 + (blink ? 7 : 0) + (u3s.valid ? 1 : 0) + (u3_settings.strips ? 3 : 0);
+	uint32_t h = u3s.changes * 31 + (blink ? 7 : 0) + (u3s.valid ? 1 : 0) + (u3_settings.strips ? 3 : 0) + (panel_px ? 11 : 0);
+	if (loading) force = true;
 	if (!force && h == last_hash && now - blink_t < 2000) return;
 	last_hash = h; blink_t = now;
 
+	// clear rows 0-239 only (rows 240-255 hold the Working pill)
+	memset(ov.px, 0, 512 * 240 * 4);
 	if (!u3_settings.strips) {
-		ov.clear(0, 0);
+		if (loading) draw_loading(now);
+		blit_panel();
 		u3v_overlay_commit();
-		u3v_overlay_enable(0);
+		if (!panel_px && !loading) u3v_overlay_enable(0);
 		return;
 	}
-	ov.clear(0, 0);
 	// panels
 	ov.fill(0, 0, STRIP, 240, PANEL);
 	ov.fill(RX, 0, STRIP, 240, PANEL);
@@ -216,5 +296,7 @@ void u3_top_update(bool force) {
 	}
 	if (u3_turbo_active() && live && u3s.map == U3MAP_DUNGEON) ov.text_center(font_small, RX + 20, 196, ">>", 0xFFE070);
 
+	if (loading) draw_loading(now);
+	blit_panel();
 	u3v_overlay_commit();
 }

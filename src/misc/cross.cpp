@@ -19,6 +19,7 @@
 
 #include "dosbox.h"
 #include "cross.h"
+#include "../platform/ctr/u3/u3_io.h"
 #include "support.h"
 #include <string>
 #include <limits.h>
@@ -305,7 +306,7 @@ FILE *fopen_wrap(const char *path, const char *mode) {
 #endif //HAVE_REALPATH
 #endif
 
-	return fopen(path,mode);
+	return u3w_fopen(path,mode);   // U3 3DS: game files opened for writing go through the background writer
 }
 
 

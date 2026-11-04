@@ -1,5 +1,6 @@
 // u3_text.cpp - message window reader / transcript (see u3_text.h)
 #include "u3_text.h"
+#include "u3_io.h"
 #include "u3_state.h"
 #include <stdio.h>
 #include <string.h>
@@ -152,12 +153,11 @@ void u3_pins_load(const char *path) {
 }
 
 void u3_pins_save(const char *path) {
-	FILE *f = fopen(path, "w");
-	if (!f) return;
+	std::string out;
 	for (size_t i = 0; i < u3_log.size(); i++)
-		if (u3_log[i].pinned) fprintf(f, "%s\t%s\n", u3_log[i].where.c_str(), u3_log[i].text.c_str());
-	for (size_t i = 0; i < typed_words.size(); i++) fprintf(f, "#%s\n", typed_words[i].c_str());
-	fclose(f);
+		if (u3_log[i].pinned) out += u3_log[i].where + "\t" + u3_log[i].text + "\n";
+	for (size_t i = 0; i < typed_words.size(); i++) out += "#" + typed_words[i] + "\n";
+	u3w_put(path, out.data(), out.size());   // background writer
 }
 
 static bool stopword(const std::string &w) {

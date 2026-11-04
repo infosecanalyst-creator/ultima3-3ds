@@ -125,6 +125,15 @@ u32 *u3v_overlay_pixels(void) {
 }
 void u3v_overlay_commit(void) { overlay_dirty = 1; overlay_enabled = 1; }
 void u3v_overlay_enable(int on) { overlay_enabled = on; }
+/* u3v_swap: 1 puts the game on the bottom screen (320x240, fills it) and leaves the top
+ *   screen to the overlay, which then carries the front end's panel as well as the strips.
+ * u3v_working: draw the overlay's "Working" pill (rows 240-255, x 0-159) over the game.   */
+int u3v_swap = 0;
+volatile int u3v_working = 0;
+static C3D_Mtx projection3;   /* 0..320 across the bottom target */
+static void drawBuffers(_THIS);
+/* Push the overlay and redraw both screens even if the game's own picture hasn't changed. */
+void u3v_present(void) { if (current_video) drawBuffers(current_video); }
 
 // video thread variables and functions
 volatile bool runThread = false;
@@ -540,19 +549,37 @@ static void videoThread(void* data)
 					C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &projection);
 					C3D_TexBind(0, &spritesheet_tex);
 					C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_ONE, GPU_ZERO, GPU_ONE, GPU_ZERO);
-					if (u3v_custom_top)
-						drawTexture(u3v_game_x, u3v_game_y, u3v_game_w, u3v_game_h, this->hidden->l1, this->hidden->r1, this->hidden->t1, this->hidden->b1);
-					else
+					if (u3v_custom_top) {
+						if (!u3v_swap)
+							drawTexture(u3v_game_x, u3v_game_y, u3v_game_w, u3v_game_h, this->hidden->l1, this->hidden->r1, this->hidden->t1, this->hidden->b1);
+					} else
 						drawTexture((400-this->hidden->w1*this->hidden->scalex)/2,(240-this->hidden->h1*this->hidden->scaley)/2, this->hidden->w1*this->hidden->scalex, this->hidden->h1*this->hidden->scaley, this->hidden->l1, this->hidden->r1, this->hidden->t1, this->hidden->b1);
 					if (overlay_ready && overlay_enabled) {
 						C3D_TexBind(0, &overlay_tex);
 						C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA, GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA);
 						drawTexture(0, 0, 400, 240, 0.0f, 400.0f/512.0f, 0.0f, 240.0f/256.0f);
+						if (u3v_custom_top && u3v_working && !u3v_swap)
+							drawTexture(u3v_game_x + (u3v_game_w - 160) / 2, 3, 160, 16, 0.0f, 160.0f/512.0f, 240.0f/256.0f, 1.0f);
 						C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_ONE, GPU_ZERO, GPU_ONE, GPU_ZERO);
 						C3D_TexBind(0, &spritesheet_tex);
 					}
 				}
-				if (this->hidden->screens & SDL_BOTTOMSCR) {
+				if (u3v_custom_top && u3v_swap) {
+					/* swapped: the game fills the bottom screen (4:3 at 320x240) */
+					C3D_RenderTargetClear(VideoSurface2, C3D_CLEAR_ALL, RenderClearColor, 0);
+					C3D_FrameDrawOn(VideoSurface2);
+					C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &projection3);
+					C3D_TexBind(0, &spritesheet_tex);
+					C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_ONE, GPU_ZERO, GPU_ONE, GPU_ZERO);
+					drawTexture(0, 0, 320, 240, this->hidden->l1, this->hidden->r1, this->hidden->t1, this->hidden->b1);
+					if (overlay_ready && u3v_working) {
+						C3D_TexBind(0, &overlay_tex);
+						C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA, GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA);
+						drawTexture(80, 3, 160, 16, 0.0f, 160.0f/512.0f, 240.0f/256.0f, 1.0f);
+						C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_ONE, GPU_ZERO, GPU_ONE, GPU_ZERO);
+						C3D_TexBind(0, &spritesheet_tex);
+					}
+				} else if (this->hidden->screens & SDL_BOTTOMSCR) {
 					C3D_RenderTargetClear(VideoSurface2, C3D_CLEAR_ALL, RenderClearColor, 0);
 					C3D_FrameDrawOn(VideoSurface2);
 					C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &projection2);
@@ -742,6 +769,7 @@ static void sceneInit(GSPGPU_FramebufferFormat mode, bool scale) {
 	// Note: we're setting top to 240 here so origin is at top left.
 	Mtx_OrthoTilt(&projection, 0.0, 400.0, 240.0, 0.0, 0.0, 1.0, true);
 	Mtx_OrthoTilt(&projection2, 0.0, 400.0, 240.0, 0.0, 0.0, 1.0, true);
+	Mtx_OrthoTilt(&projection3, 0.0, 320.0, 240.0, 0.0, 0.0, 1.0, true);
 
 	// Configure buffers
 	C3D_BufInfo* bufInfo = C3D_GetBufInfo();

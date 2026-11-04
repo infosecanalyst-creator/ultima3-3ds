@@ -1,5 +1,7 @@
 // u3_map.cpp - explored-area tracking and map drawing (see u3_map.h)
 #include "u3_map.h"
+#include "u3_io.h"
+#include <vector>
 #include "u3_state.h"
 #include <stdio.h>
 #include <string.h>
@@ -78,11 +80,11 @@ void u3_map_save(bool force) {
 	if (!u3_areas || !dirty) return;
 	uint32_t now = u3_ticks_ms();
 	if (!force && now - last_save < 20000) return;
-	FILE *f = fopen(save_file, "wb");
-	if (!f) return;
-	fwrite("U3MAP001", 1, 8, f);
-	fwrite(u3_areas, sizeof(U3Area), U3_AREAS, f);
-	fclose(f);
+	// queued for the background writer: the game never waits on the SD card
+	std::vector<uint8_t> buf(8 + sizeof(U3Area) * U3_AREAS);
+	memcpy(&buf[0], "U3MAP001", 8);
+	memcpy(&buf[8], u3_areas, sizeof(U3Area) * U3_AREAS);
+	u3w_put(save_file, &buf[0], buf.size());
 	dirty = false;
 	last_save = now;
 }

@@ -502,6 +502,11 @@ static void to_shelf() {
 	dirty = true;
 }
 
+void u3_book_open_guide() {
+	if (!avail_checked) check_avail();
+	if (cur_book != 0) open_book(0);
+}
+
 void u3_book_open_spells(char) {
 	if (!avail_checked) check_avail();
 	if (avail[BK_SPELLS] && cur_book != BK_SPELLS) open_book(BK_SPELLS);

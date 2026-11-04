@@ -52,6 +52,20 @@ static struct {
 	bool scheduled;
 } keyb;
 
+bool keyb_typematic = false;
+
+/* True while a key is still on its way to the game or waiting in the BIOS buffer. */
+bool KEYBOARD_Busy(void) {
+	if (keyb.used || keyb.p60changed) return true;
+	return mem_readw(0x41a) != mem_readw(0x41c);
+}
+
+/* Throw away keys the game hasn't taken (U3 3DS: presses are never kept for later). */
+void KEYBOARD_DropTyped(void) {
+	keyb.used = 0;
+	mem_writew(0x41a, mem_readw(0x41c));
+}
+
 static void KEYBOARD_SetPort60(Bit8u val) {
 	keyb.p60changed=true;
 	keyb.p60data=val;
@@ -357,7 +371,10 @@ void KEYBOARD_AddKey(KBD_KEYS keytype,bool pressed) {
 		break;
 	}
 	/* Add the actual key in the keyboard queue */
-	if (pressed) {
+	if (pressed && !keyb_typematic) {
+		/* U3 3DS front end: no hardware key repeat; it repeats held keys itself, and only
+		   once the game has taken the previous one, so presses never pile up. */
+	} else if (pressed) {
 		if (keyb.repeat.key == keytype) keyb.repeat.wait = keyb.repeat.rate;
 		else keyb.repeat.wait = keyb.repeat.pause;
 		keyb.repeat.key = keytype;

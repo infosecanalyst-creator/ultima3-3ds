@@ -85,8 +85,9 @@ Let a turn pass without doing anything.
 
 # On the 3DS
 
-- Every command is on the Commands tab. Tap it, then answer the question with the D-pad, the number buttons or the keyboard.
-- A is Enter, B is Esc, X is Space (Pass), ZL is Ztats.
+- Every command is on the Commands tab. Tap it, then answer the question with the direction or Yes/No buttons that appear, the D-pad, or the number buttons.
+- A is Enter, B is Esc, X is Space (Pass). Ztats is Z on the Commands tab.
+- ZL swaps the screens; START opens the menu (save, manual, exit).
 - O and Y open the keyboard for you.
 
 The original reference card isn't in the GOG release. If you have a scan, put its pages (JPG) in /3ds/u3-3ds/books/refcard and they'll show up next to this list.

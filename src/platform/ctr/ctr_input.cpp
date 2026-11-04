@@ -1542,7 +1542,7 @@ void GetInput()
 	// Closing from the HOME menu: aptMainLoop() returns false. Leave right away
 	// (saving the map, clues and settings) instead of waiting to be killed.
 	if (!aptMainLoop()) {
-		u3_ui_save_all();
+		u3_ui_save_all();   // queued; main() waits for the writer before exiting
 		throw(0);
 	}
 	hidScanInput();
