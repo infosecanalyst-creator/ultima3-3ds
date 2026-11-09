@@ -13,6 +13,7 @@ struct U3Settings {
 	bool turbo_toggle;  // ZR toggles fast-forward instead of hold
 	bool swap_ab;       // A=Esc, B=Enter
 	bool cluebook;      // spoiler cluebook unlocked in the book list
+	bool lefty;         // left-handed: D-pad and A/B/X/Y swap places
 	bool swapped;       // game on the touchscreen, this panel on the top screen (ZL / SELECT)
 };
 extern U3Settings u3_settings;

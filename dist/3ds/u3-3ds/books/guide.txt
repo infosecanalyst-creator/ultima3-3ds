@@ -32,6 +32,8 @@ These work the same way in every 3DS port:
 
 A and B can be swapped in Settings.
 
+Left-handed play (Settings): the D-Pad and the A, B, X and Y buttons swap places (Y and Up, A and Right, B and Down, X and Left). It applies everywhere, including this manual, and is remembered.
+
 Presses are never stored up. If the game is still busy with your last press, a new one is ignored rather than played later, so the party never runs on by itself. When the game takes a moment to answer, a small "Working..." bar appears at the top of the game screen; "Saving..." means files are being written to the SD card.
 
 # Swapping the screens

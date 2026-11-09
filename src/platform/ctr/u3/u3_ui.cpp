@@ -668,14 +668,15 @@ static void save_settings();
 static void apply_swap();
 
 static void toggle_row(int y, int id, const char *label, const char *desc, bool on) {
-	int off = u3_btn_bg(cv, 4, y, 312, 32, 6, C_BTN, u3_press_look(id, held_on(id)));
+	const int h = 29;
+	int off = u3_btn_bg(cv, 4, y, 312, h, 6, C_BTN, u3_press_look(id, held_on(id)));
 	int y0 = y;
 	y += off;
-	cv.text(font_bold, 12, y + 3, fit_str(font_bold, label, 252).c_str(), C_TEXT);
-	cv.text(font_small, 12, y + 18, fit_str(font_small, desc, 252).c_str(), C_DIM);
-	cv.fill_round(270, y + 7, 38, 18, 9, on ? 0x3E7A4A : 0x3A3F4C);
-	cv.disc(on ? 299 : 279, y + 16, 7, on ? 0xD8F5DC : 0x9AA0AC);
-	reg(4, y0, 312, 32, id);
+	cv.text(font_bold, 12, y + 1, fit_str(font_bold, label, 252).c_str(), C_TEXT);
+	cv.text(font_small, 12, y + 15, fit_str(font_small, desc, 252).c_str(), C_DIM);
+	cv.fill_round(270, y + 6, 38, 18, 9, on ? 0x3E7A4A : 0x3A3F4C);
+	cv.disc(on ? 299 : 279, y + 15, 7, on ? 0xD8F5DC : 0x9AA0AC);
+	reg(4, y0, 312, h, id);
 }
 
 static void draw_settings() {
@@ -686,12 +687,13 @@ static void draw_settings() {
 		button(170, 130, 110, 40, ID_CONFIRM_NO, "Keep it", font_bold);
 		return;
 	}
-	toggle_row(27, ID_SET + 4, "Game on the touchscreen", "Swap the screens. ZL or SELECT swaps any time", u3_settings.swapped);
-	toggle_row(62, ID_SET + 0, "Info strips", "Moons, wind, party health, food, Marks and Cards", u3_settings.strips);
-	toggle_row(97, ID_SET + 1, "Fast-forward toggles", "Off: hold ZR. On: tap ZR to switch it on and off", u3_settings.turbo_toggle);
-	toggle_row(132, ID_SET + 2, "Swap A and B", "Off: A = Enter, B = Esc", u3_settings.swap_ab);
-	toggle_row(167, ID_SET + 3, "Show the cluebook", "Adds the original cluebook (spoilers!) to the Book tab", u3_settings.cluebook);
-	button(4, 204, 154, 32, ID_SET + 10, "Reset auto-map", font_ui);
+	toggle_row(24, ID_SET + 4, "Game on the touchscreen", "Swap the screens. ZL or SELECT swaps any time", u3_settings.swapped);
+	toggle_row(54, ID_SET + 0, "Info strips", "Moons, wind, party health, food, Marks and Cards", u3_settings.strips);
+	toggle_row(84, ID_SET + 1, "Fast-forward toggles", "Off: hold ZR. On: tap ZR to switch it on and off", u3_settings.turbo_toggle);
+	toggle_row(114, ID_SET + 2, "Swap A and B", "Off: A = Enter, B = Esc", u3_settings.swap_ab);
+	toggle_row(144, ID_SET + 5, "Left-handed", "D-Pad and A/B/X/Y swap places", u3_settings.lefty);
+	toggle_row(174, ID_SET + 3, "Show the cluebook", "Adds the original cluebook (spoilers!) to the Book tab", u3_settings.cluebook);
+	button(4, 206, 154, 30, ID_SET + 10, "Reset auto-map", font_ui);
 	cv.text(font_small, 166, 206, "START: save, manual,", C_FAINT);
 	cv.text(font_small, 166, 220, "exit the game", C_FAINT);
 }
@@ -701,6 +703,7 @@ static void settings_press(int id) {
 	case ID_SET + 0: u3_settings.strips = !u3_settings.strips; u3_top_update(true); u3v_present(); break;
 	case ID_SET + 1: u3_settings.turbo_toggle = !u3_settings.turbo_toggle; set_turbo(false); break;
 	case ID_SET + 2: u3_settings.swap_ab = !u3_settings.swap_ab; break;
+	case ID_SET + 5: u3_settings.lefty = !u3_settings.lefty; break;
 	case ID_SET + 3: u3_settings.cluebook = !u3_settings.cluebook; break;
 	case ID_SET + 4: u3_settings.swapped = !u3_settings.swapped; apply_swap(); break;
 	case ID_SET + 10: confirm = 1; focus_id = ID_CONFIRM_NO; break;
@@ -761,8 +764,8 @@ static void smenu_press(int id) {
 // ------------------------------------------------------------------ settings file
 static void save_settings() {
 	char buf[200];
-	int n = snprintf(buf, sizeof buf, "strips=%d\nturbo_toggle=%d\nswap_ab=%d\ncluebook=%d\nswapped=%d\n",
-	                 u3_settings.strips, u3_settings.turbo_toggle, u3_settings.swap_ab, u3_settings.cluebook, u3_settings.swapped);
+	int n = snprintf(buf, sizeof buf, "strips=%d\nturbo_toggle=%d\nswap_ab=%d\ncluebook=%d\nswapped=%d\nlefty=%d\n",
+	                 u3_settings.strips, u3_settings.turbo_toggle, u3_settings.swap_ab, u3_settings.cluebook, u3_settings.swapped, u3_settings.lefty);
 	u3w_put(U3_DIR "/settings.cfg", buf, (size_t)n);
 }
 static void load_settings() {
@@ -776,6 +779,7 @@ static void load_settings() {
 		else if (sscanf(line, "swap_ab=%d", &v) == 1) u3_settings.swap_ab = v;
 		else if (sscanf(line, "cluebook=%d", &v) == 1) u3_settings.cluebook = v;
 		else if (sscanf(line, "swapped=%d", &v) == 1) u3_settings.swapped = v;
+		else if (sscanf(line, "lefty=%d", &v) == 1) u3_settings.lefty = v;
 	}
 	fclose(f);
 }
@@ -967,6 +971,20 @@ static int dpad_dir(u32 kh, uint32_t now) {
 	return d;
 }
 
+// Left-handed play: the D-pad and the face buttons swap places
+// (Y<->Up, A<->Right, B<->Down, X<->Left), applied where the pad is read.
+static u32 lefty_remap(u32 m) {
+	static const u32 pr[4][2] = { { KEY_Y, KEY_DUP }, { KEY_A, KEY_DRIGHT }, { KEY_B, KEY_DDOWN }, { KEY_X, KEY_DLEFT } };
+	if (!u3_settings.lefty) return m;
+	u32 o = m;
+	for (int i = 0; i < 4; i++) {
+		o &= ~(pr[i][0] | pr[i][1]);
+		if (m & pr[i][0]) o |= pr[i][1];
+		if (m & pr[i][1]) o |= pr[i][0];
+	}
+	return o;
+}
+
 void u3_ui_input() {
 	uint32_t now = u3_ticks_ms();
 	if (!inited) { ui_init(); start_t = now; }
@@ -976,7 +994,7 @@ void u3_ui_input() {
 	// SDL's event pump also calls hidScanInput(), so hidKeysDown() is unreliable here:
 	// derive presses/releases from the held state ourselves.
 	static u32 prev_held = 0;
-	u32 kh = hidKeysHeld();
+	u32 kh = lefty_remap(hidKeysHeld());
 	u32 kd = kh & ~prev_held;
 	prev_held = kh;
 
