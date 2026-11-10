@@ -1,0 +1,1303 @@
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/include/font_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/include/font_bgr.h dependency dropped.
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_low_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_low_bgr.h dependency dropped.
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_up_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_up_bgr.h dependency dropped.
+ctr_bottom_kbd_low.png
+u3vshader.v.pica
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_sym_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_sym_bgr.h dependency dropped.
+ctr_bottom_kbd_up.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_sym_alt_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_sym_alt_bgr.h dependency dropped.
+ctr_bottom_kbd_sym.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_num_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_kbd_num_bgr.h dependency dropped.
+ctr_bottom_kbd_sym_alt.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_mouse_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_mouse_bgr.h dependency dropped.
+ctr_bottom_kbd_num.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_mapper_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_mapper_bgr.h dependency dropped.
+ctr_bottom_mouse.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_mapper_joy_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_mapper_joy_bgr.h dependency dropped.
+ctr_bottom_mapper.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_system_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_system_bgr.h dependency dropped.
+ctr_bottom_mapper_joy.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_idle_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_idle_bgr.h dependency dropped.
+ctr_bottom_system.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_disable_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_disable_bgr.h dependency dropped.
+ctr_bottom_idle.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_load_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/ctr_bottom_load_bgr.h dependency dropped.
+ctr_bottom_disable.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/btn_save_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/btn_save_bgr.h dependency dropped.
+ctr_bottom_load.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/btn_mapper_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/btn_mapper_bgr.h dependency dropped.
+btn_save.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_key_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_key_bgr.h dependency dropped.
+btn_mapper.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_fkey_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_fkey_bgr.h dependency dropped.
+key_key.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_alt_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_alt_bgr.h dependency dropped.
+key_fkey.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_lalt_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_lalt_bgr.h dependency dropped.
+key_alt.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_ralt_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_ralt_bgr.h dependency dropped.
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_ctrl_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_ctrl_bgr.h dependency dropped.
+key_ralt.png
+key_lalt.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_lctrl_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_lctrl_bgr.h dependency dropped.
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_rctrl_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_rctrl_bgr.h dependency dropped.
+key_ctrl.png
+key_lctrl.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_enter_top_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_enter_top_bgr.h dependency dropped.
+key_rctrl.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_enter_bot_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_enter_bot_bgr.h dependency dropped.
+key_enter_top.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_shift_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_shift_bgr.h dependency dropped.
+key_enter_bot.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_lshift_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_lshift_bgr.h dependency dropped.
+key_shift.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_rshift_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_rshift_bgr.h dependency dropped.
+key_lshift.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_caps_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_caps_bgr.h dependency dropped.
+key_rshift.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_space_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_space_bgr.h dependency dropped.
+key_caps.png
+make[1]: Circular /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_tab_bgr.h <- /__w/ultima3-3ds/ultima3-3ds/ctr/gfx/kbd/key_tab_bgr.h dependency dropped.
+key_space.png
+key_tab.png
+font.bgr
+Assembler messages:
+{standard input}:1683: Warning: end of file in comment; newline inserted
+ctr_bottom_kbd_up.bgr
+Assembler messages:
+{standard input}:9570: Warning: end of file in comment; newline inserted
+ctr_bottom_kbd_sym.bgr
+Assembler messages:
+{standard input}:9141: Warning: end of file in comment; newline inserted
+ctr_bottom_kbd_sym_alt.bgr
+Assembler messages:
+{standard input}:9144: Warning: end of file in comment; newline inserted
+ctr_bottom_kbd_num.bgr
+Assembler messages:
+{standard input}:9240: Warning: end of file in comment; newline inserted
+ctr_bottom_mouse.bgr
+Assembler messages:
+{standard input}:9456: Warning: end of file in comment; newline inserted
+ctr_bottom_mapper.bgr
+Assembler messages:
+{standard input}:9192: Warning: end of file in comment; newline inserted
+ctr_bottom_mapper_joy.bgr
+Assembler messages:
+{standard input}:9298: Warning: end of file in comment; newline inserted
+ctr_bottom_system.bgr
+Assembler messages:
+{standard input}:9165: Warning: end of file in comment; newline inserted
+ctr_bottom_idle.bgr
+Assembler messages:
+{standard input}:9214: Warning: end of file in comment; newline inserted
+ctr_bottom_disable.bgr
+Assembler messages:
+{standard input}:9234: Warning: end of file in comment; newline inserted
+ctr_bottom_load.bgr
+Assembler messages:
+{standard input}:9237: Warning: end of file in comment; newline inserted
+btn_save.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+btn_mapper.bgr
+Assembler messages:
+{standard input}:1481: Warning: end of file in comment; newline inserted
+key_key.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_fkey.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_alt.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_lalt.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_ralt.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_ctrl.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_lctrl.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_rctrl.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_enter_top.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_enter_bot.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_shift.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_lshift.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_rshift.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_caps.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+key_space.bgr
+Assembler messages:
+{standard input}:515: Warning: end of file in comment; newline inserted
+key_tab.bgr
+Assembler messages:
+{standard input}: Warning: end of file in comment; newline inserted
+ctr_bottom_kbd_low.bgr
+Assembler messages:
+{standard input}:9545: Warning: end of file in comment; newline inserted
+dosbox.cpp
+callback.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/dosbox.cpp: In function 'void DOSBOX_Init()':
+/__w/ultima3-3ds/ultima3-3ds/src/dosbox.cpp:387:24: warning: variable 'secline' set but not used [-Wunused-but-set-variable=]
+  387 |         Section_line * secline;
+      |                        ^~~~~~~
+core_dynrec.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec.cpp:138:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/dyn_cache.h: In function 'void cache_init(bool)':
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/dyn_cache.h:636:35: warning: comparison of integer expressions of different signedness: 'Bits' {aka 'int'} and 'long unsigned int' [-Wsign-compare]
+  636 |                         for (i=0;i<CACHE_BLOCKS-1;i++) {
+      |                                  ~^~~~~~~~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/dyn_fpu.h:52,
+                 from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/decoder.h:25,
+                 from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec.cpp:160:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/../../fpu/fpu_instructions.h: In function 'Real64 FPU_FLD80(PhysPt)':
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/../../fpu/fpu_instructions.h:145:56: warning: comparison of integer expressions of different signedness: 'Bit32s' {aka 'int'} and 'unsigned int' [-Wsign-compare]
+  145 |         if(test.eind.l.lower == 0 && test.eind.l.upper == 0x80000000 && (test.begin&0x7fff) == 0x7fff) {
+      |                                      ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/decoder.h:21:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/decoder_basic.h: At global scope:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/decoder_basic.h:812:13: warning: 'void dyn_lea_mem_mem(HostReg, void*, void*, Bitu, Bits)' defined but not used [-Wunused-function]
+  812 | static void dyn_lea_mem_mem(HostReg ea_reg,void* op1,void* op2,Bitu scale,Bits imm) {
+      |             ^~~~~~~~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/risc_armv4le.h:30,
+                 from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec.cpp:155:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/risc_armv4le-thumb-iw.h:794:13: warning: 'void gen_sub_direct_byte(void*, Bit8s)' defined but not used [-Wunused-function]
+  794 | static void gen_sub_direct_byte(void* dest,Bit8s imm) {
+      |             ^~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/risc_armv4le-thumb-iw.h:749:13: warning: 'void gen_add_direct_byte(void*, Bit8s)' defined but not used [-Wunused-function]
+  749 | static void gen_add_direct_byte(void* dest,Bit8s imm) {
+      |             ^~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/risc_armv4le-thumb-iw.h:622:13: warning: 'void gen_mov_byte_from_reg_low(HostReg, void*)' defined but not used [-Wunused-function]
+  622 | static void gen_mov_byte_from_reg_low(HostReg src_reg,void* dest) {
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~
+core_dyn_x86.cpp
+core_full.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/load.h:347,
+                 from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full.cpp:82:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/string.h: In function 'Bits CPU_Core_Full_Run()':
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/string.h:248:22: warning: 'count_left' may be used uninitialized [-Wmaybe-uninitialized]
+  248 |                 count+=count_left;
+      |                 ~~~~~^~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/string.h:23:23: note: 'count_left' was declared here
+   23 |         Bitu    count,count_left;
+      |                       ^~~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/load.h:39:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/ea_lookup.h:253:37: warning: 'seg_base' may be used uninitialized [-Wmaybe-uninitialized]
+  253 |                 inst.rm_eaa=seg_base+off;
+      |                             ~~~~~~~~^~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/ea_lookup.h:148:17: note: 'seg_base' was declared here
+  148 |         EAPoint seg_base;
+      |                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/ea_lookup.h:249:20: warning: 'off' may be used uninitialized [-Wmaybe-uninitialized]
+  249 |         inst.rm_off=off;
+      |         ~~~~~~~~~~~^~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/ea_lookup.h:149:16: note: 'off' was declared here
+  149 |         Bit32u off;
+      |                ^~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/ea_lookup.h:126:37: warning: 'seg_base' may be used uninitialized [-Wmaybe-uninitialized]
+  126 |                 inst.rm_eaa=seg_base+off;
+      |                             ~~~~~~~~^~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/ea_lookup.h:20:17: note: 'seg_base' was declared here
+   20 |         EAPoint seg_base;
+      |                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/ea_lookup.h:122:21: warning: 'off' may be used uninitialized [-Wmaybe-uninitialized]
+  122 |         inst.rm_off=off;
+      |                     ^~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_full/ea_lookup.h:21:16: note: 'off' was declared here
+   21 |         Bit16u off;
+      |                ^~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/decoder_basic.h: In function 'void dyn_fill_ea(HostReg, bool)':
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/decoder_basic.h:960:23: warning: 'base_reg' may be used uninitialized [-Wmaybe-uninitialized]
+  960 |                 Bit8u base_reg;
+      |                       ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/decoder_basic.h:948:25: warning: 'imm' may be used uninitialized [-Wmaybe-uninitialized]
+  948 |                         if (imm) gen_add_imm(ea_reg,(Bit32u)imm);
+      |                         ^~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_dynrec/decoder_basic.h:906:22: note: 'imm' was declared here
+  906 |                 Bits imm;
+      |                      ^~~
+core_normal.cpp
+core_prefetch.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal.cpp:136:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h: In function 'void DoString(STRING_OP)':
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h:253:22: warning: 'count_left' may be used uninitialized [-Wmaybe-uninitialized]
+  253 |                 count+=count_left;
+      |                 ~~~~~^~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h:35:23: note: 'count_left' was declared here
+   35 |         Bitu    count,count_left;
+      |                       ^~~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_prefetch.cpp:206:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h: In function 'void DoString(STRING_OP)':
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h:253:22: warning: 'count_left' may be used uninitialized [-Wmaybe-uninitialized]
+  253 |                 count+=count_left;
+      |                 ~~~~~^~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h:35:23: note: 'count_left' was declared here
+   35 |         Bitu    count,count_left;
+      |                       ^~~~~~~~~~
+core_simple.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/cpu/core_simple.cpp:132:
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h: In function 'void DoString(STRING_OP)':
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h:253:22: warning: 'count_left' may be used uninitialized [-Wmaybe-uninitialized]
+  253 |                 count+=count_left;
+      |                 ~~~~~^~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/cpu/core_normal/string.h:35:23: note: 'count_left' was declared here
+   35 |         Bitu    count,count_left;
+      |                       ^~~~~~~~~~
+cpu.cpp
+flags.cpp
+modrm.cpp
+paging.cpp
+cdrom_aspi_win32.cpp
+cdrom.cpp
+cdrom_image.cpp
+cdrom_ioctl_linux.cpp
+cdrom_ioctl_os2.cpp
+cdrom_ioctl_win32.cpp
+dos_classes.cpp
+dos.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/dos/dos_classes.cpp: In member function 'bool DOS_PSP::SetNumFiles(Bit16u)':
+/__w/ultima3-3ds/ultima3-3ds/src/dos/dos_classes.cpp:405:42: warning: comparison of integer expressions of different signedness: 'int' and 'Bitu' {aka 'unsigned int'} [-Wsign-compare]
+  405 |         if (fileNum > 20 && ((fileNum+2) > sGet(sPSP,max_files))) {
+dos_devices.cpp
+dos_execute.cpp
+dos_files.cpp
+dos_ioctl.cpp
+dos_keyboard_layout.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/dos/dos_keyboard_layout.cpp: In member function 'Bitu keyboard_layout::read_codepage_file(const char*, Bit32s)':
+/__w/ultima3-3ds/ultima3-3ds/src/dos/dos_keyboard_layout.cpp:897:48: warning: variable 'font_data_length' set but not used [-Wunused-but-set-variable=]
+  897 |                         Bit16u number_of_fonts,font_data_length;
+      |                                                ^~~~~~~~~~~~~~~~
+dos_memory.cpp
+In member function 'Bitu keyboard_layout::read_keyboard_file(const char*, Bit32s, Bit32s)',
+    inlined from 'void keyboard_layout::read_keyboard_file(Bit32s)' at /__w/ultima3-3ds/ultima3-3ds/src/dos/dos_keyboard_layout.cpp:148:27:
+/__w/ultima3-3ds/ultima3-3ds/src/dos/dos_keyboard_layout.cpp:262:40: warning: 'char* strcpy(char*, const char*)' source argument is the same as destination [-Wrestrict]
+  262 |         if (specific_layout==-1) strcpy(current_keyboard_file_name, keyboard_file_name);
+      |                                  ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In member function 'Bitu keyboard_layout::read_keyboard_file(const char*, Bit32s, Bit32s)',
+    inlined from 'void keyboard_layout::read_keyboard_file(Bit32s)' at /__w/ultima3-3ds/ultima3-3ds/src/dos/dos_keyboard_layout.cpp:148:27,
+    inlined from 'bool keyboard_layout::map_key(Bitu, Bit16u, bool, bool)' at /__w/ultima3-3ds/ultima3-3ds/src/dos/dos_keyboard_layout.cpp:568:28:
+/__w/ultima3-3ds/ultima3-3ds/src/dos/dos_keyboard_layout.cpp:262:40: warning: 'char* strcpy(char*, const char*)' source argument is the same as destination [-Wrestrict]
+  262 |         if (specific_layout==-1) strcpy(current_keyboard_file_name, keyboard_file_name);
+      |                                  ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+dos_misc.cpp
+dos_mscdex.cpp
+dos_programs.cpp
+dos_tables.cpp
+drive_cache.cpp
+drive_fat.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp: In constructor 'fatDrive::fatDrive(const char*, Bit32u, Bit32u, Bit32u, Bit32u, Bit32u)':
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:734:75: warning: taking address of packed member of 'partTable' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  734 |                                 mbrData.pentry[m].absSectStart = var_read(&mbrData.pentry[m].absSectStart);
+      |                                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:735:71: warning: taking address of packed member of 'partTable' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  735 |                                 mbrData.pentry[m].partSize = var_read(&mbrData.pentry[m].partSize);
+      |                                                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:760:46: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  760 |         bootbuffer.bytespersector = var_read(&bootbuffer.bytespersector);
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:761:47: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  761 |         bootbuffer.reservedsectors = var_read(&bootbuffer.reservedsectors);
+      |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:762:46: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  762 |         bootbuffer.rootdirentries = var_read(&bootbuffer.rootdirentries);
+      |                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:763:48: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  763 |         bootbuffer.totalsectorcount = var_read(&bootbuffer.totalsectorcount);
+      |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:764:45: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  764 |         bootbuffer.sectorsperfat = var_read(&bootbuffer.sectorsperfat);
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:765:47: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  765 |         bootbuffer.sectorspertrack = var_read(&bootbuffer.sectorspertrack);
+      |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:766:41: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  766 |         bootbuffer.headcount = var_read(&bootbuffer.headcount);
+      |                                         ^~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:767:49: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  767 |         bootbuffer.hiddensectorcount = var_read(&bootbuffer.hiddensectorcount);
+      |                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:768:45: warning: taking address of packed member of 'bootstrap' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  768 |         bootbuffer.totalsecdword = var_read(&bootbuffer.totalsecdword);
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp: In function 'void copyDirEntry(const direntry*, direntry*)':
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:1075:19: warning: taking address of packed member of 'direntry' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1075 |         var_write(&dst->crtTime, src->crtTime);
+      |                   ^~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:1076:19: warning: taking address of packed member of 'direntry' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1076 |         var_write(&dst->crtDate, src->crtDate);
+      |                   ^~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:1077:19: warning: taking address of packed member of 'direntry' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1077 |         var_write(&dst->accessDate, src->accessDate);
+      |                   ^~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:1078:19: warning: taking address of packed member of 'direntry' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1078 |         var_write(&dst->hiFirstClust, src->hiFirstClust);
+      |                   ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:1079:19: warning: taking address of packed member of 'direntry' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1079 |         var_write(&dst->modTime, src->modTime);
+      |                   ^~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:1080:19: warning: taking address of packed member of 'direntry' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1080 |         var_write(&dst->modDate, src->modDate);
+      |                   ^~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:1081:19: warning: taking address of packed member of 'direntry' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1081 |         var_write(&dst->loFirstClust, src->loFirstClust);
+      |                   ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_fat.cpp:1082:19: warning: taking address of packed member of 'direntry' may result in an unaligned pointer value [-Waddress-of-packed-member]
+ 1082 |         var_write(&dst->entrysize, src->entrysize);
+      |                   ^~~~~~~~~~~~~~~
+In member function 'void DOS_Drive_Cache::SetBaseDir(const char*)',
+    inlined from 'void DOS_Drive_Cache::SetBaseDir(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/dos/drive_cache.cpp:133:6,
+    inlined from 'void DOS_Drive_Cache::EmptyCache()' at /__w/ultima3-3ds/ultima3-3ds/src/dos/drive_cache.cpp:105:34:
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_cache.cpp:137:15: warning: 'char* strcpy(char*, const char*)' source argument is the same as destination [-Wrestrict]
+  137 |         strcpy(basePath,baseDir);
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~
+drive_iso.cpp
+drive_local.cpp
+drive_overlay.cpp
+drives.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp: In member function 'virtual bool OverlayFile::Write(Bit8u*, Bit16u*)':
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp:217:84: warning: format '%d' expects argument of type 'int', but argument 2 has type 'long unsigned int' [-Wformat=]
+  217 |                                 if (logoverlay) LOG_MSG("OPTIMISE: switching took %d",GetTicks() - a);
+      |                                                                                   ~^
+      |                                                                                    |
+      |                                                                                    int
+      |                                                                                   %ld
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp: In member function 'void Overlay_Drive::update_cache(bool)':
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp:722:63: warning: format '%d' expects argument of type 'int', but argument 2 has type 'long unsigned int' [-Wformat=]
+  722 |         if (logoverlay) LOG_MSG("OPTIMISE: update cache took %d",GetTicks()-a);
+      |                                                              ~^
+      |                                                               |
+      |                                                               int
+      |                                                              %ld
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp: In member function 'virtual bool Overlay_Drive::FileUnlink(char*)':
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp:908:65: warning: format '%d' expects argument of type 'int', but argument 2 has type 'long unsigned int' [-Wformat=]
+  908 |                 if (logoverlay) LOG_MSG("OPTIMISE: unlink took %d",GetTicks()-a);
+      |                                                                ~^
+      |                                                                 |
+      |                                                                 int
+      |                                                                %ld
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp: In member function 'virtual bool Overlay_Drive::Rename(char*, char*)':
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp:1148:82: warning: format '%d' expects argument of type 'int', but argument 2 has type 'long unsigned int' [-Wformat=]
+ 1148 |                 if (logoverlay) LOG_MSG("OPTIMISE: update rename with copy took %d",GetTicks()-aa);
+      |                                                                                 ~^
+      |                                                                                  |
+      |                                                                                  int
+      |                                                                                 %ld
+/__w/ultima3-3ds/ultima3-3ds/src/dos/drive_overlay.cpp:1157:65: warning: format '%d' expects argument of type 'int', but argument 2 has type 'long unsigned int' [-Wformat=]
+ 1157 |                 if (logoverlay) LOG_MSG("OPTIMISE: rename took %d",GetTicks()-a);
+      |                                                                ~^
+      |                                                                 |
+      |                                                                 int
+      |                                                                %ld
+drive_virtual.cpp
+fpu.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/fpu/fpu.cpp:47:
+/__w/ultima3-3ds/ultima3-3ds/src/fpu/fpu_instructions.h: In function 'Real64 FPU_FLD80(PhysPt)':
+/__w/ultima3-3ds/ultima3-3ds/src/fpu/fpu_instructions.h:145:56: warning: comparison of integer expressions of different signedness: 'Bit32s' {aka 'int'} and 'unsigned int' [-Wsign-compare]
+  145 |         if(test.eind.l.lower == 0 && test.eind.l.upper == 0x80000000 && (test.begin&0x7fff) == 0x7fff) {
+      |                                      ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+adlib.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/adlib.cpp: In member function 'void Adlib::Capture::CloseFile()':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/adlib.cpp:347:36: warning: taking address of packed member of 'Adlib::RawHeader' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  347 |                         var_write( &header.versionHigh, header.versionHigh );
+      |                                    ^~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/adlib.cpp:348:36: warning: taking address of packed member of 'Adlib::RawHeader' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  348 |                         var_write( &header.versionLow, header.versionLow );
+      |                                    ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/adlib.cpp:349:36: warning: taking address of packed member of 'Adlib::RawHeader' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  349 |                         var_write( &header.commands, header.commands );
+      |                                    ^~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/adlib.cpp:350:36: warning: taking address of packed member of 'Adlib::RawHeader' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  350 |                         var_write( &header.milliseconds, header.milliseconds );
+      |                                    ^~~~~~~~~~~~~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/adlib.cpp:32:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h: At global scope:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h:132:13: warning: 'void auto_free(const device_t::machine_t&, void*)' defined but not used [-Wunused-function]
+  132 | static void auto_free(const device_t::machine_t& machine, void * buffer) {
+      |             ^~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/adlib.cpp:40:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp: In function 'void OPL2::adlib_getsample(Bit16s*, Bits)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1101:63: warning: storing the address of local variable 'trem_lut' in 'OPL2::tremval4' [-Wdangling-pointer=]
+ 1101 |                                 if (cptr[9].tremolo) tremval4 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:49: note: 'OPL2::tremval4' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1091:63: warning: storing the address of local variable 'trem_lut' in 'OPL2::tremval2' [-Wdangling-pointer=]
+ 1091 |                                 if (cptr[9].tremolo) tremval2 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:27: note: 'OPL2::tremval2' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                           ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1089:63: warning: storing the address of local variable 'trem_lut' in 'OPL2::tremval1' [-Wdangling-pointer=]
+ 1089 |                                 if (cptr[0].tremolo) tremval1 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:16: note: 'OPL2::tremval1' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1061:63: warning: storing the address of local variable 'trem_lut' in 'OPL2::tremval3' [-Wdangling-pointer=]
+ 1061 |                                 if (cptr[0].tremolo) tremval3 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:38: note: 'OPL2::tremval3' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                                      ^~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/adlib.cpp:69:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp: In function 'void OPL3::adlib_getsample(Bit16s*, Bits)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1101:63: warning: storing the address of local variable 'trem_lut' in 'OPL3::tremval4' [-Wdangling-pointer=]
+ 1101 |                                 if (cptr[9].tremolo) tremval4 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:49: note: 'OPL3::tremval4' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1091:63: warning: storing the address of local variable 'trem_lut' in 'OPL3::tremval2' [-Wdangling-pointer=]
+ 1091 |                                 if (cptr[9].tremolo) tremval2 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:27: note: 'OPL3::tremval2' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                           ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1089:63: warning: storing the address of local variable 'trem_lut' in 'OPL3::tremval1' [-Wdangling-pointer=]
+ 1089 |                                 if (cptr[0].tremolo) tremval1 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:16: note: 'OPL3::tremval1' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1061:63: warning: storing the address of local variable 'trem_lut' in 'OPL3::tremval3' [-Wdangling-pointer=]
+ 1061 |                                 if (cptr[0].tremolo) tremval3 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:38: note: 'OPL3::tremval3' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                                      ^~~~~~~~
+cmos.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp: In function 'void OPL2::adlib_write(Bitu, Bit8u)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:682:77: warning: array subscript 22 is above array bounds of 'const Bit8u [22]' {aka 'const unsigned char [22]'} [-Warray-bounds=]
+  682 |                         Bitu modop = regbase2modop[second_set?(base+22):base];
+      |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:89:20: note: while referencing 'OPL2::regbase2modop'
+   89 | static const Bit8u regbase2modop[22] = {
+      |                    ^~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:652:77: warning: array subscript 22 is above array bounds of 'const Bit8u [22]' {aka 'const unsigned char [22]'} [-Warray-bounds=]
+  652 |                         Bitu modop = regbase2modop[second_set?(base+22):base];
+      |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:89:20: note: while referencing 'OPL2::regbase2modop'
+   89 | static const Bit8u regbase2modop[22] = {
+      |                    ^~~~~~~~~~~~~
+dbopl.cpp
+disney.cpp
+dma.cpp
+gameblaster.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/gameblaster.cpp:30:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h:132:13: warning: 'void auto_free(const device_t::machine_t&, void*)' defined but not used [-Wunused-function]
+  132 | static void auto_free(const device_t::machine_t& machine, void * buffer) {
+      |             ^~~~~~~~~
+gus.cpp
+hardware.cpp
+iohandler.cpp
+ipx.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipx.cpp: In function 'void pingAck(IPaddress)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipx.cpp:512:14: warning: variable 'result' set but not used [-Wunused-but-set-variable=]
+  512 |         Bits result;
+      |              ^~~~~~
+ipxserver.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipxserver.cpp: In function 'void ackClient(IPaddress)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipxserver.cpp:128:14: warning: variable 'result' set but not used [-Wunused-but-set-variable=]
+  128 |         Bits result;
+      |              ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipxserver.cpp: In function 'void IPX_ServerLoop()':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipxserver.cpp:192:93: warning: format '%d' expects argument of type 'int', but argument 2 has type 'long unsigned int' [-Wformat=]
+  192 |                                                         LOG_MSG("IPXSERVER: Reconnect from %d.%d.%d.%d", CONVIP(tmpAddr.host));
+      |                                                                                            ~^
+      |                                                                                             |
+      |                                                                                             int
+      |                                                                                            %ld
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipxserver.cpp:192:96: warning: format '%d' expects argument of type 'int', but argument 3 has type 'long unsigned int' [-Wformat=]
+  192 |                                                         LOG_MSG("IPXSERVER: Reconnect from %d.%d.%d.%d", CONVIP(tmpAddr.host));
+      |                                                                                               ~^
+      |                                                                                                |
+      |                                                                                                int
+      |                                                                                               %ld
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipxserver.cpp:192:99: warning: format '%d' expects argument of type 'int', but argument 4 has type 'long unsigned int' [-Wformat=]
+  192 |                                                         LOG_MSG("IPXSERVER: Reconnect from %d.%d.%d.%d", CONVIP(tmpAddr.host));
+      |                                                                                                  ~^
+      |                                                                                                   |
+      |                                                                                                   int
+      |                                                                                                  %ld
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/ipxserver.cpp:192:102: warning: format '%d' expects argument of type 'int', but argument 5 has type 'long unsigned int' [-Wformat=]
+  192 |                                                         LOG_MSG("IPXSERVER: Reconnect from %d.%d.%d.%d", CONVIP(tmpAddr.host));
+      |                                                                                                     ~^
+      |                                                                                                      |
+      |                                                                                                      int
+      |                                                                                                     %ld
+joystick.cpp
+keyboard.cpp
+memory.cpp
+mixer.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp: In function 'bool mem_unalignedwritew_checked(PhysPt, Bit16u)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp:482:9: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+  482 |         if (mem_writeb_checked(address,(Bit8u)(val & 0xff))) return true;val>>=8;
+      |         ^~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp:482:74: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+  482 |         if (mem_writeb_checked(address,(Bit8u)(val & 0xff))) return true;val>>=8;
+      |                                                                          ^~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp: In function 'bool mem_unalignedwrited_checked(PhysPt, Bit32u)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp:488:9: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+  488 |         if (mem_writeb_checked(address,(Bit8u)(val & 0xff))) return true;val>>=8;
+      |         ^~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp:488:74: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+  488 |         if (mem_writeb_checked(address,(Bit8u)(val & 0xff))) return true;val>>=8;
+      |                                                                          ^~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp:489:9: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+  489 |         if (mem_writeb_checked(address+1,(Bit8u)(val & 0xff))) return true;val>>=8;
+      |         ^~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp:489:76: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+  489 |         if (mem_writeb_checked(address+1,(Bit8u)(val & 0xff))) return true;val>>=8;
+      |                                                                            ^~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp:490:9: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+  490 |         if (mem_writeb_checked(address+2,(Bit8u)(val & 0xff))) return true;val>>=8;
+      |         ^~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/memory.cpp:490:76: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+  490 |         if (mem_writeb_checked(address+2,(Bit8u)(val & 0xff))) return true;val>>=8;
+      |                                                                            ^~~
+mpu401.cpp
+opl.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp: In function 'void adlib_getsample(Bit16s*, Bits)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1101:63: warning: storing the address of local variable 'trem_lut' in 'tremval4' [-Wdangling-pointer=]
+ 1101 |                                 if (cptr[9].tremolo) tremval4 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:49: note: 'tremval4' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1091:63: warning: storing the address of local variable 'trem_lut' in 'tremval2' [-Wdangling-pointer=]
+ 1091 |                                 if (cptr[9].tremolo) tremval2 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:27: note: 'tremval2' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                           ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1089:63: warning: storing the address of local variable 'trem_lut' in 'tremval1' [-Wdangling-pointer=]
+ 1089 |                                 if (cptr[0].tremolo) tremval1 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:16: note: 'tremval1' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:1061:63: warning: storing the address of local variable 'trem_lut' in 'tremval3' [-Wdangling-pointer=]
+ 1061 |                                 if (cptr[0].tremolo) tremval3 = trem_lut;       // tremolo enabled, use table
+      |                                                      ~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:965:16: note: 'trem_lut' declared here
+  965 |         Bit32s trem_lut[BLOCKBUF_SIZE];
+      |                ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:53:38: note: 'tremval3' declared here
+   53 | static Bit32s *tremval1, *tremval2, *tremval3, *tremval4;
+      |                                      ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp: In function 'void adlib_write(Bitu, Bit8u)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:682:77: warning: array subscript 22 is above array bounds of 'const Bit8u [22]' {aka 'const unsigned char [22]'} [-Warray-bounds=]
+  682 |                         Bitu modop = regbase2modop[second_set?(base+22):base];
+      |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:89:20: note: while referencing 'regbase2modop'
+   89 | static const Bit8u regbase2modop[22] = {
+      |                    ^~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:652:77: warning: array subscript 22 is above array bounds of 'const Bit8u [22]' {aka 'const unsigned char [22]'} [-Warray-bounds=]
+  652 |                         Bitu modop = regbase2modop[second_set?(base+22):base];
+      |                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/opl.cpp:89:20: note: while referencing 'regbase2modop'
+   89 | static const Bit8u regbase2modop[22] = {
+      |                    ^~~~~~~~~~~~~
+pci_bus.cpp
+pcspeaker.cpp
+pic.cpp
+sblaster.cpp
+tandy_sound.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/tandy_sound.cpp:33:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h:132:13: warning: 'void auto_free(const device_t::machine_t&, void*)' defined but not used [-Wunused-function]
+  132 | static void auto_free(const device_t::machine_t& machine, void * buffer) {
+      |             ^~~~~~~~~
+timer.cpp
+vga_attr.cpp
+vga.cpp
+vga_crtc.cpp
+vga_dac.cpp
+vga_draw.cpp
+vga_gfx.cpp
+vga_memory.cpp
+vga_misc.cpp
+vga_other.cpp
+vga_paradise.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_paradise.cpp:26:16: warning: anonymous non-C-compatible type given name for linkage purposes by 'typedef' declaration [-Wnon-c-typedef-for-linkage]
+   26 | typedef struct {
+      |                ^
+      |                SVGA_PVGA1A_DATA
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_paradise.cpp:35:21: note: type is not C-compatible because it contains 'bool SVGA_PVGA1A_DATA::locked()' declaration
+   35 |         inline bool locked() { return (PR5&7)!=5; }
+      |                     ^~~~~~
+vga_s3.cpp
+vga_seq.cpp
+vga_tseng.cpp
+vga_xga.cpp
+In function 'Bitu XGA_GetMixResult(Bitu, Bitu, Bitu)',
+    inlined from 'void XGA_DrawLineVector(Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:323:31:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:236:44: warning: 'srcval' may be used uninitialized [-Wmaybe-uninitialized]
+  236 |                         destval = ~(srcval | dstdata);
+      |                                    ~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp: In function 'void XGA_DrawLineVector(Bitu)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:247:14: note: 'srcval' was declared here
+  247 |         Bitu srcval;
+      |              ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp: In function 'void XGA_DrawLineBresenham(Bitu)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:422:67: warning: 'srcval' may be used uninitialized [-Wmaybe-uninitialized]
+  422 |                                         destval = XGA_GetMixResult(mixmode, srcval, dstdata);
+      |                                                   ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:341:14: note: 'srcval' was declared here
+  341 |         Bitu srcval;
+      |              ^~~~~~
+In function 'Bitu XGA_GetMixResult(Bitu, Bitu, Bitu)',
+    inlined from 'void XGA_DrawRectangle(Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:499:32:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:236:44: warning: 'srcval' may be used uninitialized [-Wmaybe-uninitialized]
+  236 |                         destval = ~(srcval | dstdata);
+      |                                    ~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp: In function 'void XGA_DrawRectangle(Bitu)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:457:14: note: 'srcval' was declared here
+  457 |         Bitu srcval;
+      |              ^~~~~~
+In function 'Bitu XGA_GetMixResult(Bitu, Bitu, Bitu)',
+    inlined from 'void XGA_BlitRect(Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:799:30:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:236:44: warning: 'srcval' may be used uninitialized [-Wmaybe-uninitialized]
+  236 |                         destval = ~(srcval | dstdata);
+      |                                    ~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp: In function 'void XGA_BlitRect(Bitu)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:724:14: note: 'srcval' was declared here
+  724 |         Bitu srcval;
+      |              ^~~~~~
+fmopl.cpp
+In function 'Bitu XGA_GetMixResult(Bitu, Bitu, Bitu)',
+    inlined from 'void XGA_DrawPattern(Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:883:30:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:236:44: warning: 'srcval' may be used uninitialized [-Wmaybe-uninitialized]
+  236 |                         destval = ~(srcval | dstdata);
+      |                                    ~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp: In function 'void XGA_DrawPattern(Bitu)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/vga_xga.cpp:816:14: note: 'srcval' was declared here
+  816 |         Bitu srcval;
+      |              ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp: In member function 'void {anonymous}::FM_OPL::WriteReg(int, int)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp:1700:35: warning: comparison of integer expressions of different signedness: 'uint32_t' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+ 1700 |                 if(CH->block_fnum != block_fnum)
+      |                    ~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp:1735:64: warning: invalid conversion from 'int*' to 'int32_t*' {aka 'long int*'} [-fpermissive]
+ 1735 |                 CH->SLOT[SLOT1].connect1 = CH->SLOT[SLOT1].CON ? &output[0] : &phase_modulation;
+      |                                            ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                |
+      |                                                                int*
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp: In member function 'void {anonymous}::FM_OPL::ResetChip()':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp:1770:28: warning: comparison of integer expressions of different signedness: 'int' and 'unsigned int' [-Wsign-compare]
+ 1770 |         for(int ch = 0; ch < sizeof( P_CH )/ sizeof(P_CH[0]); ch++)
+      |                         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp:1774:40: warning: comparison of integer expressions of different signedness: 'int' and 'unsigned int' [-Wsign-compare]
+ 1774 |                 for(int slot = 0; slot < sizeof( CH.SLOT ) / sizeof( CH.SLOT[0]); slot++)
+      |                                   ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp: In member function 'void {anonymous}::FM_OPL::postload()':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp:1801:28: warning: comparison of integer expressions of different signedness: 'int' and 'unsigned int' [-Wsign-compare]
+ 1801 |         for(int ch = 0; ch < sizeof( P_CH )/ sizeof(P_CH[0]); ch++)
+      |                         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp:1809:40: warning: comparison of integer expressions of different signedness: 'int' and 'unsigned int' [-Wsign-compare]
+ 1809 |                 for(int slot = 0; slot < sizeof( CH.SLOT ) / sizeof( CH.SLOT[0]); slot++)
+      |                                   ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp:1838:50: warning: invalid conversion from 'int*' to 'int32_t*' {aka 'long int*'} [-fpermissive]
+ 1838 |                         SLOT.connect1 = SLOT.CON ? &output[0] : &phase_modulation;
+      |                                         ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                  |
+      |                                                  int*
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp: At global scope:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/fmopl.cpp:1799:6: warning: 'void {anonymous}::FM_OPL::postload()' defined but not used [-Wunused-function]
+ 1799 | void FM_OPL::postload()
+      |      ^~~~~~
+saa1099.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/saa1099.cpp:71:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/saa1099.h: In constructor 'saa1099_device::saa1099_device(const machine_config&, const char*, device_t*, uint32_t)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/saa1099.h:116:16: warning: 'saa1099_device::m_sample_rate' will be initialized after [-Wreorder]
+  116 |         double m_sample_rate;
+      |                ^~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/saa1099.h:56:18: warning:   'uint32_t saa1099_device::sample_rate' [-Wreorder]
+   56 |         uint32_t sample_rate;
+      |                  ^~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/saa1099.cpp:141:1: warning:   when initialized here [-Wreorder]
+  141 | saa1099_device::saa1099_device(const machine_config &mconfig, const char *tag, device_t *owner, uint32_t clock)
+      | ^~~~~~~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/saa1099.cpp:70:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h: At global scope:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h:132:13: warning: 'void auto_free(const device_t::machine_t&, void*)' defined but not used [-Wunused-function]
+  132 | static void auto_free(const device_t::machine_t& machine, void * buffer) {
+      |             ^~~~~~~~~
+sn76496.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/sn76496.cpp: In member function 'virtual void sn76496_base_device::sound_stream_update(device_sound_interface::sound_stream&, stream_sample_t**, stream_sample_t**, int)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/sn76496.cpp:430:102: warning: comparison of integer expressions of different signedness: 'long unsigned int' and 'long int' [-Wsign-compare]
+  430 |                                 if (((m_RNG & m_whitenoise_tap1)!=0) != (((m_RNG & m_whitenoise_tap2)!=(m_ncr_style_psg?m_whitenoise_tap2:0)) && in_noise_mode()))
+      |                                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/sn76496.cpp:139:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h: At global scope:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h:132:13: warning: 'void auto_free(const device_t::machine_t&, void*)' defined but not used [-Wunused-function]
+  132 | static void auto_free(const device_t::machine_t& machine, void * buffer) {
+      |             ^~~~~~~~~
+ymdeltat.cpp
+ymf262.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymdeltat.cpp:67:
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/emu.h:132:13: warning: 'void auto_free(const device_t::machine_t&, void*)' defined but not used [-Wunused-function]
+  132 | static void auto_free(const device_t::machine_t& machine, void * buffer) {
+      |             ^~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymf262.cpp: In function 'void OPL3_SLOT_CONNECT({anonymous}::OPL3*, {anonymous}::OPL3_SLOT*)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymf262.cpp:633:33: warning: invalid conversion from 'int*' to 'int32_t*' {aka 'long int*'} [-fpermissive]
+  633 |                 slot->connect = &chip->chanout[slot->conn_enum];
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                 |
+      |                                 int*
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymf262.cpp:635:33: warning: invalid conversion from 'int*' to 'int32_t*' {aka 'long int*'} [-fpermissive]
+  635 |                 slot->connect = &chip->phase_modulation;
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~
+      |                                 |
+      |                                 int*
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymf262.cpp:637:33: warning: invalid conversion from 'int*' to 'int32_t*' {aka 'long int*'} [-fpermissive]
+  637 |                 slot->connect = &chip->phase_modulation2;
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~
+      |                                 |
+      |                                 int*
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymf262.cpp: In function 'void advance({anonymous}::OPL3*)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymf262.cpp:760:57: warning: comparison of integer expressions of different signedness: 'int32_t' {aka 'long int'} and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  760 |                                         if ( op->volume >= op->sl )
+      |                                              ~~~~~~~~~~~^~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymf262.cpp: In function 'void OPL3WriteReg({anonymous}::OPL3*, int, int)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/mame/ymf262.cpp:1977:35: warning: comparison of integer expressions of different signedness: 'uint32_t' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+ 1977 |                 if(CH->block_fnum != block_fnum)
+      |                    ~~~~~~~~~~~~~~~^~~~~~~~~~~~~
+directserial.cpp
+libserial.cpp
+misc_util.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/misc_util.cpp: In member function 'bool TCPClientSocket::SendArray(Bit8u*, Bitu)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/misc_util.cpp:230:50: warning: comparison of integer expressions of different signedness: 'int' and 'Bitu' {aka 'unsigned int'} [-Wsign-compare]
+  230 |         if(SDLNet_TCP_Send(mysock, data, bufsize)!=bufsize) {
+      |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/misc_util.cpp: In member function 'bool TCPClientSocket::SendByteBuffered(Bit8u)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/misc_util.cpp:244:71: warning: comparison of integer expressions of different signedness: 'int' and 'Bitu' {aka 'unsigned int'} [-Wsign-compare]
+  244 |                 if(SDLNet_TCP_Send(mysock, sendbuffer, sendbuffersize)!=sendbuffersize) {
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/misc_util.cpp: In member function 'void TCPClientSocket::FlushBuffer()':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/misc_util.cpp:276:41: warning: comparison of integer expressions of different signedness: 'int' and 'Bitu' {aka 'unsigned int'} [-Wsign-compare]
+  275 |                 if(SDLNet_TCP_Send(mysock, sendbuffer,
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  276 |                         sendbufferindex)!=sendbufferindex) {
+      |                         ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+nullmodem.cpp
+serialdummy.cpp
+serialport.cpp
+softmodem.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/softmodem.cpp: In member function 'void CSerialModem::Timer2()':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/softmodem.cpp:669:23: warning: unused variable 'args' [-Wunused-variable]
+  669 |         unsigned long args = 1;
+      |                       ^~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/softmodem.cpp: In member function 'void CSerialModem::SendRes(ResTypes)':
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/softmodem.cpp:163:30: warning: 'string' may be used uninitialized [-Wmaybe-uninitialized]
+  163 |                 else SendLine(string);
+      |                      ~~~~~~~~^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/softmodem.cpp:147:22: note: 'string' was declared here
+  147 |         char const * string;Bitu code;
+      |                      ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/softmodem.cpp:162:47: warning: 'code' may be used uninitialized [-Wmaybe-uninitialized]
+  162 |                 if(numericresponse) SendNumber(code);
+      |                                     ~~~~~~~~~~^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/hardware/serialport/softmodem.cpp:147:34: note: 'code' was declared here
+  147 |         char const * string;Bitu code;
+      |                                  ^~~~
+bios.cpp
+bios_disk.cpp
+bios_keyboard.cpp
+ems.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/ints/ems.cpp: In function 'Bit8u EMM_RestoreMappingTable()':
+/__w/ultima3-3ds/ultima3-3ds/src/ints/ems.cpp:439:15: warning: variable 'result' set but not used [-Wunused-but-set-variable=]
+  439 |         Bit8u result;
+      |               ^~~~~~
+int10_char.cpp
+int10.cpp
+int10_memory.cpp
+int10_misc.cpp
+int10_modes.cpp
+int10_pal.cpp
+int10_put_pixel.cpp
+int10_vesa.cpp
+int10_video_state.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp: In function 'Bit8u VESA_GetSVGAModeInformation(Bit16u, Bit16u, Bit16u)':
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:152:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  152 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth/8);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:160:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  160 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:169:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  169 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*2);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:186:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  186 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*2);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:201:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  201 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*4);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:218:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  218 |                 var_write(&minfo.BytesPerScanLine, mblock->twidth * 2);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:241:19: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  241 |         var_write(&minfo.ModeAttributes, modeAttributes);
+      |                   ^~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:245:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  245 |                 var_write(&minfo.WinGranularity,32);
+      |                           ^~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:246:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  246 |                 var_write(&minfo.WinSize,32);
+      |                           ^~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:247:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  247 |                 var_write(&minfo.WinASegment,0xb800);
+      |                           ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:248:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  248 |                 var_write(&minfo.XResolution,mblock->twidth);
+      |                           ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:249:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  249 |                 var_write(&minfo.YResolution,mblock->theight);
+      |                           ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:251:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  251 |                 var_write(&minfo.WinGranularity,64);
+      |                           ^~~~~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:252:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  252 |                 var_write(&minfo.WinSize,64);
+      |                           ^~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:253:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  253 |                 var_write(&minfo.WinASegment,0xa000);
+      |                           ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:254:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  254 |                 var_write(&minfo.XResolution,mblock->swidth);
+      |                           ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:255:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  255 |                 var_write(&minfo.YResolution,mblock->sheight);
+      |                           ^~~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:257:19: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  257 |         var_write(&minfo.WinFuncPtr,int10.rom.set_window);
+      |                   ^~~~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/ints/int10_vesa.cpp:262:42: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  262 |         if (!int10.vesa_nolfb) var_write(&minfo.PhysBasePtr,S3_LFB_BASE);
+      |                                          ^~~~~~~~~~~~~~~~~~
+int10_vptable.cpp
+mouse.cpp
+xms.cpp
+cross.cpp
+messages.cpp
+programs.cpp
+setup.cpp
+support.cpp
+midi.cpp
+render.cpp
+render_scalers.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:302:33: warning: 'void NormalDh_9_8_L(const void*)' defined but not used [-Wunused-function]
+  302 | #define SCALERNAME              NormalDh
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:13: note: in expansion of macro 'conc4d'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:20: note: in expansion of macro 'SCALERNAME'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:302:33: warning: 'void NormalDh_9_8_R(const void*)' defined but not used [-Wunused-function]
+  302 | #define SCALERNAME              NormalDh
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:13: note: in expansion of macro 'conc4d'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:20: note: in expansion of macro 'SCALERNAME'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:290:33: warning: 'void NormalDw_9_8_L(const void*)' defined but not used [-Wunused-function]
+  290 | #define SCALERNAME              NormalDw
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:13: note: in expansion of macro 'conc4d'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:20: note: in expansion of macro 'SCALERNAME'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:290:33: warning: 'void NormalDw_9_8_R(const void*)' defined but not used [-Wunused-function]
+  290 | #define SCALERNAME              NormalDw
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:13: note: in expansion of macro 'conc4d'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:20: note: in expansion of macro 'SCALERNAME'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:271:33: warning: 'void Normal3x_9_8_L(const void*)' defined but not used [-Wunused-function]
+  271 | #define SCALERNAME              Normal3x
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:13: note: in expansion of macro 'conc4d'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:20: note: in expansion of macro 'SCALERNAME'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:271:33: warning: 'void Normal3x_9_8_R(const void*)' defined but not used [-Wunused-function]
+  271 | #define SCALERNAME              Normal3x
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:13: note: in expansion of macro 'conc4d'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:20: note: in expansion of macro 'SCALERNAME'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:257:33: warning: 'void Normal2x_9_8_L(const void*)' defined but not used [-Wunused-function]
+  257 | #define SCALERNAME              Normal2x
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:13: note: in expansion of macro 'conc4d'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:20: note: in expansion of macro 'SCALERNAME'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:257:33: warning: 'void Normal2x_9_8_R(const void*)' defined but not used [-Wunused-function]
+  257 | #define SCALERNAME              Normal2x
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:13: note: in expansion of macro 'conc4d'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:20: note: in expansion of macro 'SCALERNAME'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:246:33: warning: 'void Normal1x_9_8_L(const void*)' defined but not used [-Wunused-function]
+  246 | #define SCALERNAME              Normal1x
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:13: note: in expansion of macro 'conc4d'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:28:20: note: in expansion of macro 'SCALERNAME'
+   28 | static void conc4d(SCALERNAME,SBPP,DBPP,L)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:246:33: warning: 'void Normal1x_9_8_R(const void*)' defined but not used [-Wunused-function]
+  246 | #define SCALERNAME              Normal1x
+      |                                 ^~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:48:31: note: in definition of macro '_conc7'
+   48 | #define _conc7(A,B,C,D,E,F,G) A ## B ## C ## D ## E ## F ## G
+      |                               ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:13: note: in expansion of macro 'conc4d'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |             ^~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_simple.h:30:20: note: in expansion of macro 'SCALERNAME'
+   30 | static void conc4d(SCALERNAME,SBPP,DBPP,R)(const void *s) {
+      |                    ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:186:20: warning: 'void Cache_9_8(const void*)' defined but not used [-Wunused-function]
+  186 | static void conc3d(Cache,SBPP,DBPP) (const void * s) {
+      |                    ^~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_scalers.cpp:47:27: note: in definition of macro '_conc5'
+   47 | #define _conc5(A,B,C,D,E) A ## B ## C ## D ## E
+      |                           ^
+/__w/ultima3-3ds/ultima3-3ds/src/gui/render_templates.h:186:13: note: in expansion of macro 'conc3d'
+  186 | static void conc3d(Cache,SBPP,DBPP) (const void * s) {
+      |             ^~~~~~
+sdl_gui.cpp
+sdl_mapper.cpp
+In file included from /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:36:
+In constructor 'CEvent::CEvent(const char*)',
+    inlined from 'CTriggeredEvent::CTriggeredEvent(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:131:60,
+    inlined from 'CJButtonEvent::CJButtonEvent(const char*, Bitu, Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1533:92,
+    inlined from 'void AddJButtonButton_hidden(Bitu, Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1734:36:
+/__w/ultima3-3ds/ultima3-3ds/include/support.h:35:41: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 15 bytes from a string of length 63 [-Wstringop-truncation]
+   35 | #define safe_strncpy(a,b,n) do { strncpy((a),(b),(n)-1); (a)[(n)-1] = 0; } while (0)
+      |                                  ~~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:101:17: note: in expansion of macro 'safe_strncpy'
+  101 |                 safe_strncpy(entry,_entry,16);
+      |                 ^~~~~~~~~~~~
+In constructor 'CEvent::CEvent(const char*)',
+    inlined from 'CContinuousEvent::CContinuousEvent(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:157:61,
+    inlined from 'CJAxisEvent::CJAxisEvent(const char*, Bitu, Bitu, bool, CJAxisEvent*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1503:133,
+    inlined from 'CJAxisEvent* AddJAxisButton_hidden(Bitu, Bitu, bool, CJAxisEvent*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1722:62:
+/__w/ultima3-3ds/ultima3-3ds/include/support.h:35:41: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 15 bytes from a string of length 63 [-Wstringop-truncation]
+   35 | #define safe_strncpy(a,b,n) do { strncpy((a),(b),(n)-1); (a)[(n)-1] = 0; } while (0)
+      |                                  ~~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:101:17: note: in expansion of macro 'safe_strncpy'
+  101 |                 safe_strncpy(entry,_entry,16);
+      |                 ^~~~~~~~~~~~
+In constructor 'CEvent::CEvent(const char*)',
+    inlined from 'CContinuousEvent::CContinuousEvent(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:157:61,
+    inlined from 'CJAxisEvent::CJAxisEvent(const char*, Bitu, Bitu, bool, CJAxisEvent*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1503:133,
+    inlined from 'CJAxisEvent* AddJAxisButton_hidden(Bitu, Bitu, bool, CJAxisEvent*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1722:62:
+/__w/ultima3-3ds/ultima3-3ds/include/support.h:35:41: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 15 bytes from a string of length 63 [-Wstringop-truncation]
+   35 | #define safe_strncpy(a,b,n) do { strncpy((a),(b),(n)-1); (a)[(n)-1] = 0; } while (0)
+      |                                  ~~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:101:17: note: in expansion of macro 'safe_strncpy'
+  101 |                 safe_strncpy(entry,_entry,16);
+      |                 ^~~~~~~~~~~~
+In constructor 'CEvent::CEvent(const char*)',
+    inlined from 'CTriggeredEvent::CTriggeredEvent(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:131:60,
+    inlined from 'CModEvent::CModEvent(const char*, Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1561:74,
+    inlined from 'void AddModButton(Bitu, Bitu, Bitu, Bitu, const char*, Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1747:42:
+/__w/ultima3-3ds/ultima3-3ds/include/support.h:35:41: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 15 bytes from a string of length 63 [-Wstringop-truncation]
+   35 | #define safe_strncpy(a,b,n) do { strncpy((a),(b),(n)-1); (a)[(n)-1] = 0; } while (0)
+      |                                  ~~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:101:17: note: in expansion of macro 'safe_strncpy'
+  101 |                 safe_strncpy(entry,_entry,16);
+      |                 ^~~~~~~~~~~~
+In constructor 'CEvent::CEvent(const char*)',
+    inlined from 'CTriggeredEvent::CTriggeredEvent(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:131:60,
+    inlined from 'CJButtonEvent::CJButtonEvent(const char*, Bitu, Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1533:92,
+    inlined from 'void AddJButtonButton(Bitu, Bitu, Bitu, Bitu, const char*, Bitu, Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1728:58:
+/__w/ultima3-3ds/ultima3-3ds/include/support.h:35:41: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 15 bytes from a string of length 63 [-Wstringop-truncation]
+   35 | #define safe_strncpy(a,b,n) do { strncpy((a),(b),(n)-1); (a)[(n)-1] = 0; } while (0)
+      |                                  ~~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:101:17: note: in expansion of macro 'safe_strncpy'
+  101 |                 safe_strncpy(entry,_entry,16);
+      |                 ^~~~~~~~~~~~
+In constructor 'CEvent::CEvent(const char*)',
+    inlined from 'CTriggeredEvent::CTriggeredEvent(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:131:60,
+    inlined from 'CJHatEvent::CJHatEvent(const char*, Bitu, Bitu, Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1546:96,
+    inlined from 'void AddJHatButton(Bitu, Bitu, Bitu, Bitu, const char*, Bitu, Bitu, Bitu)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1740:56:
+/__w/ultima3-3ds/ultima3-3ds/include/support.h:35:41: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 15 bytes from a string of length 63 [-Wstringop-truncation]
+   35 | #define safe_strncpy(a,b,n) do { strncpy((a),(b),(n)-1); (a)[(n)-1] = 0; } while (0)
+      |                                  ~~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:101:17: note: in expansion of macro 'safe_strncpy'
+  101 |                 safe_strncpy(entry,_entry,16);
+      |                 ^~~~~~~~~~~~
+In constructor 'CEvent::CEvent(const char*)',
+    inlined from 'CContinuousEvent::CContinuousEvent(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:157:61,
+    inlined from 'CJAxisEvent::CJAxisEvent(const char*, Bitu, Bitu, bool, CJAxisEvent*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1503:133,
+    inlined from 'CJAxisEvent* AddJAxisButton(Bitu, Bitu, Bitu, Bitu, const char*, Bitu, Bitu, bool, CJAxisEvent*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1715:75:
+/__w/ultima3-3ds/ultima3-3ds/include/support.h:35:41: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 15 bytes from a string of length 63 [-Wstringop-truncation]
+   35 | #define safe_strncpy(a,b,n) do { strncpy((a),(b),(n)-1); (a)[(n)-1] = 0; } while (0)
+      |                                  ~~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:101:17: note: in expansion of macro 'safe_strncpy'
+  101 |                 safe_strncpy(entry,_entry,16);
+      |                 ^~~~~~~~~~~~
+In constructor 'CEvent::CEvent(const char*)',
+    inlined from 'CContinuousEvent::CContinuousEvent(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:157:61,
+    inlined from 'CJAxisEvent::CJAxisEvent(const char*, Bitu, Bitu, bool, CJAxisEvent*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1503:133,
+    inlined from 'CJAxisEvent* AddJAxisButton(Bitu, Bitu, Bitu, Bitu, const char*, Bitu, Bitu, bool, CJAxisEvent*)' at /__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:1715:75:
+/__w/ultima3-3ds/ultima3-3ds/include/support.h:35:41: warning: 'char* strncpy(char*, const char*, size_t)' output may be truncated copying 15 bytes from a string of length 63 [-Wstringop-truncation]
+   35 | #define safe_strncpy(a,b,n) do { strncpy((a),(b),(n)-1); (a)[(n)-1] = 0; } while (0)
+      |                                  ~~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/gui/sdl_mapper.cpp:101:17: note: in expansion of macro 'safe_strncpy'
+  101 |                 safe_strncpy(entry,_entry,16);
+      |                 ^~~~~~~~~~~~
+shell_batch.cpp
+shell_cmds.cpp
+shell.cpp
+shell_misc.cpp
+ctr_gfx.cpp
+ctr_input.cpp
+ctr_main.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_main.cpp: In function 'void GFX_Start()':
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_main.cpp:413:47: warning: invalid conversion from 'void (*)()' to 'ThreadFunc' {aka 'void (*)(void*)'} [-fpermissive]
+  413 |                         thread = threadCreate(GFX_EndUpdate_Thread, 0, 2 * 1024, 0x18, 1, true);
+      |                                               ^~~~~~~~~~~~~~~~~~~~
+      |                                               |
+      |                                               void (*)()
+In file included from /opt/devkitpro/libctru/include/3ds.h:26,
+                 from /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_system.h:4,
+                 from /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_main.cpp:50:
+/opt/devkitpro/libctru/include/3ds/thread.h:51:32: note: initializing argument 1 of 'Thread_tag* threadCreate(ThreadFunc, void*, size_t, int, int, bool)'
+   51 | Thread threadCreate(ThreadFunc entrypoint, void* arg, size_t stack_size, int prio, int core_id, bool detached);
+      |                     ~~~~~~~~~~~^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_main.cpp: In function 'void GUI_StartUp(Section*)':
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_main.cpp:428:24: warning: unused variable 'section' [-Wunused-variable]
+  428 |         Section_prop * section=static_cast<Section_prop *>(sec);
+      |                        ^~~~~~~
+ctr_misc.cpp
+ctr_system.cpp
+u3_book.cpp
+u3_gfx.cpp
+u3_io.cpp
+u3_map.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_map.cpp: In function 'void u3_draw_area(U3Canvas&, int, int, int, int, int, float, float, int, bool)':
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_map.cpp:213:25: warning: this 'while' clause does not guard... [-Wmisleading-indentation]
+  213 |                         while (px < 0) px += 64; while (px >= 64) px -= 64;
+      |                         ^~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_map.cpp:213:50: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'while'
+  213 |                         while (px < 0) px += 64; while (px >= 64) px -= 64;
+      |                                                  ^~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_map.cpp:214:25: warning: this 'while' clause does not guard... [-Wmisleading-indentation]
+  214 |                         while (py < 0) py += 64; while (py >= 64) py -= 64;
+      |                         ^~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_map.cpp:214:50: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'while'
+  214 |                         while (py < 0) py += 64; while (py >= 64) py -= 64;
+      |                                                  ^~~~~
+u3_sfx.cpp
+u3_state.cpp
+u3_text.cpp
+u3_top.cpp
+In file included from /opt/devkitpro/devkitARM/arm-none-eabi/include/c++/16.1.0/map:64,
+                 from /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_text.cpp:8:
+/opt/devkitpro/devkitARM/arm-none-eabi/include/c++/16.1.0/bits/stl_tree.h: In function 'std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::iterator std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_emplace_hint_unique(const_iterator, _Args&& ...) [with _Args = {const std::piecewise_construct_t&, std::tuple<const long long unsigned int&>, std::tuple<>}; _Key = long long unsigned int; _Val = std::pair<const long long unsigned int, char>; _KeyOfValue = std::_Select1st<std::pair<const long long unsigned int, char> >; _Compare = std::less<long long unsigned int>; _Alloc = std::allocator<std::pair<const long long unsigned int, char> >]':
+/opt/devkitpro/devkitARM/arm-none-eabi/include/c++/16.1.0/bits/stl_tree.h:3250:7: note: parameter passing for argument of type 'std::_Rb_tree<long long unsigned int, std::pair<const long long unsigned int, char>, std::_Select1st<std::pair<const long long unsigned int, char> >, std::less<long long unsigned int>, std::allocator<std::pair<const long long unsigned int, char> > >::const_iterator' changed in GCC 7.1
+ 3250 |       _Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /opt/devkitpro/devkitARM/arm-none-eabi/include/c++/16.1.0/map:65:
+In member function 'std::map<_Key, _Tp, _Compare, _Alloc>::mapped_type& std::map<_Key, _Tp, _Compare, _Alloc>::operator[](const key_type&) [with _Key = long long unsigned int; _Tp = char; _Compare = std::less<long long unsigned int>; _Alloc = std::allocator<std::pair<const long long unsigned int, char> >]',
+    inlined from 'bool u3_text_init(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_text.cpp:34:18:
+/opt/devkitpro/devkitARM/arm-none-eabi/include/c++/16.1.0/bits/stl_map.h:540:44: note: parameter passing for argument of type 'std::_Rb_tree<long long unsigned int, std::pair<const long long unsigned int, char>, std::_Select1st<std::pair<const long long unsigned int, char> >, std::less<long long unsigned int>, std::allocator<std::pair<const long long unsigned int, char> > >::const_iterator' changed in GCC 7.1
+  540 |           __i = _M_t._M_emplace_hint_unique(__i, std::piecewise_construct,
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  541 |                                             std::tuple<const key_type&>(__k),
+      |                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  542 |                                             std::tuple<>());
+      |                                             ~~~~~~~~~~~~~~~
+In member function 'std::map<_Key, _Tp, _Compare, _Alloc>::mapped_type& std::map<_Key, _Tp, _Compare, _Alloc>::operator[](const key_type&) [with _Key = long long unsigned int; _Tp = char; _Compare = std::less<long long unsigned int>; _Alloc = std::allocator<std::pair<const long long unsigned int, char> >]',
+    inlined from 'bool u3_text_init(const char*)' at /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_text.cpp:37:101:
+/opt/devkitpro/devkitARM/arm-none-eabi/include/c++/16.1.0/bits/stl_map.h:540:44: note: parameter passing for argument of type 'std::_Rb_tree<long long unsigned int, std::pair<const long long unsigned int, char>, std::_Select1st<std::pair<const long long unsigned int, char> >, std::less<long long unsigned int>, std::allocator<std::pair<const long long unsigned int, char> > >::const_iterator' changed in GCC 7.1
+  540 |           __i = _M_t._M_emplace_hint_unique(__i, std::piecewise_construct,
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  541 |                                             std::tuple<const key_type&>(__k),
+      |                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  542 |                                             std::tuple<>());
+      |                                             ~~~~~~~~~~~~~~~
+u3_ui.cpp
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp: In function 'void u3_ui_input()':
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:1105:33: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+ 1105 |                                 if (map_cx < 0) map_cx += 64; if (map_cx >= 64) map_cx -= 64;
+      |                                 ^~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:1105:63: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+ 1105 |                                 if (map_cx < 0) map_cx += 64; if (map_cx >= 64) map_cx -= 64;
+      |                                                               ^~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:1106:33: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+ 1106 |                                 if (map_cy < 0) map_cy += 64; if (map_cy >= 64) map_cy -= 64;
+      |                                 ^~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:1106:63: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+ 1106 |                                 if (map_cy < 0) map_cy += 64; if (map_cy >= 64) map_cy -= 64;
+      |                                                               ^~
+ctr_memory.c
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_memory.c: In function '_SetMemoryPermission':
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_memory.c:45:28: warning: passing argument 1 of 'svcDuplicateHandle' from incompatible pointer type [-Wincompatible-pointer-types]
+   45 |         svcDuplicateHandle(&currentHandle, 0xFFFF8001);
+      |                            ^~~~~~~~~~~~~~
+      |                            |
+      |                            unsigned int *
+In file included from /opt/devkitpro/libctru/include/3ds.h:20,
+                 from /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_memory.c:3:
+/opt/devkitpro/libctru/include/3ds/svc.h:1165:35: note: expected 'Handle *' {aka 'long unsigned int *'} but argument is of type 'unsigned int *'
+ 1165 | Result svcDuplicateHandle(Handle* out, Handle original);
+      |                           ~~~~~~~~^~~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_memory.c:46:58: warning: passing argument 2 of 'svcControlProcessMemory' makes integer from pointer without a cast [-Wint-conversion]
+   46 |         int res = svcControlProcessMemory(currentHandle, buffer, 0, size, MEMOP_PROT, permission);
+      |                                                          ^~~~~~
+      |                                                          |
+      |                                                          void *
+/opt/devkitpro/libctru/include/3ds/svc.h:623:52: note: expected 'u32' {aka 'long unsigned int'} but argument is of type 'void *'
+  623 | Result svcControlProcessMemory(Handle process, u32 addr0, u32 addr1, u32 size, u32 type, u32 perm);
+      |                                                ~~~~^~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_memory.c: In function '_InitializeSvcHack':
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_memory.c:61:29: warning: passing argument 1 of 'svcBackdoor' from incompatible pointer type [-Wincompatible-pointer-types]
+   61 |                 svcBackdoor((ctr_callback_type)ctrEnableAllServices);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                             |
+      |                             int (*)(void)
+/opt/devkitpro/libctru/include/3ds/svc.h:1437:26: note: expected 's32 (*)(void)' {aka 'long int (*)(void)'} but argument is of type 'int (*)(void)'
+ 1437 | Result svcBackdoor(s32 (*callback)(void));
+      |                    ~~~~~~^~~~~~~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/ctr_memory.c:62:29: warning: passing argument 1 of 'svcBackdoor' from incompatible pointer type [-Wincompatible-pointer-types]
+   62 |                 svcBackdoor((ctr_callback_type)ctrEnableAllServices);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                             |
+      |                             int (*)(void)
+/opt/devkitpro/libctru/include/3ds/svc.h:1437:26: note: expected 's32 (*)(void)' {aka 'long int (*)(void)'} but argument is of type 'int (*)(void)'
+ 1437 | Result svcBackdoor(s32 (*callback)(void));
+      |                    ~~~~~~^~~~~~~~~~~~~~~
+font2.c
+font.c
+text.c
+SDLnet.c
+SDLnetselect.c
+SDLnetTCP.c
+SDLnetUDP.c
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:564:61: warning: '%d' directive output may be truncated writing between 1 and 11 bytes into a region of size 10 [-Wformat-truncation=]
+  564 |                 char lt[16]; snprintf(lt, sizeof lt, "Level %d", L + 1);
+      |                                                             ^~
+In function 'void draw_map()',
+    inlined from 'void draw_all()' at /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:865:25,
+    inlined from 'void u3_ui_input()' at /__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:1190:46:
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:564:54: note: directive argument in the range [-2147483647, 2147483647]
+  564 |                 char lt[16]; snprintf(lt, sizeof lt, "Level %d", L + 1);
+      |                                                      ^~~~~~~~~~
+/__w/ultima3-3ds/ultima3-3ds/src/platform/ctr/u3/u3_ui.cpp:564:38: note: 'snprintf' output between 8 and 18 bytes into a destination of size 16
+  564 |                 char lt[16]; snprintf(lt, sizeof lt, "Level %d", L + 1);
+      |                              ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+u3_fonts.c
+SDL_n3dsvideo.c
+SDL_n3dsaudio.c
+ctr_cache.s
+linking u3-3ds.elf
+/opt/devkitpro/devkitARM/arm-none-eabi/bin/ld: warning: /opt/devkitpro/devkitARM/lib/gcc/arm-none-eabi/16.1.0/armv6k/fpu/crtn.o: missing .note.GNU-stack section implies executable stack
+/opt/devkitpro/devkitARM/arm-none-eabi/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+built ... u3-3ds.3dsx
