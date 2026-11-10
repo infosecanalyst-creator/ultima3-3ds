@@ -13,6 +13,7 @@ extern "C" {
 	void u3v_overlay_enable(int on);
 	void u3v_present(void);
 	extern volatile int u3v_working;
+	extern int u3v_game_x, u3v_game_w;
 }
 
 static U3Canvas ov;
@@ -211,6 +212,9 @@ void u3_top_update(bool force) {
 
 	// clear rows 0-239 only (rows 240-255 hold the Working pill)
 	memset(ov.px, 0, 512 * 240 * 4);
+	// UI rule 8: without the strips the game fills the whole top screen (no black side bars)
+	u3v_game_x = u3_settings.strips ? STRIP : 0;
+	u3v_game_w = u3_settings.strips ? 400 - 2 * STRIP : 400;
 	if (!u3_settings.strips) {
 		if (loading) draw_loading(now);
 		blit_panel();
