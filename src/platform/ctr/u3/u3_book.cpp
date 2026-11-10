@@ -57,9 +57,12 @@ static bool avail_checked = false;
 
 // ---- layout
 enum {
-	TOOL_Y = 24, TOOL_H = 26, BODY_Y = 50,
-	RAIL_W = 94, RAIL_BTN_H = 21, RAIL_STEP = 23, RAIL_ROWS = 8,
-	VIEW_X = 96, VIEW_W = 320 - 96, VIEW_H = 240 - 50,
+	// Rule 11: buttons >= 24 px tall, >= 4 px apart, >= 6 px from the screen edges.
+	TOOL_Y = 32, TOOL_H = 32, BODY_Y = 64,
+	RAIL_W = 94, RAIL_BTN_H = 24, RAIL_STEP = 28, RAIL_ROWS = 6,
+	RAIL_X = 6, RAIL_BW = RAIL_W - 8,
+	VIEW_X = 96, VIEW_W = 320 - 96, VIEW_H = 240 - 64,
+	SHELF_STEP = 38, SHELF_H = 34,
 	TEXT_X = VIEW_X + 6, TEXT_W = VIEW_W - 6 - 10,   // room for the scrollbar
 	SHELF_ROWS_MAX = 10,
 };
@@ -70,6 +73,7 @@ static std::vector<Hit> hits;
 static int down_id = 0;
 static int drag_x, drag_y, start_x, start_y;
 static bool dragging = false;
+static int shelf_top = 0, shelf_acc = 0;   // first shelf row shown; drag remainder
 enum { FX_BASE = 20000 };
 enum { B_SHELF = 1, B_ZOOMIN, B_ZOOMOUT, B_SCAN, B_BOOK = 100, B_SEC = 1000 };
 
@@ -359,20 +363,20 @@ static void draw_rail(U3Canvas &c) {
 	int n = (int)secs.size();
 	for (int r = 0; r < RAIL_ROWS && rail_top + r < n; r++) {
 		int i = rail_top + r;
-		int y = BODY_Y + 2 + r * RAIL_STEP;
+		int y = BODY_Y + 2 + r * RAIL_STEP;   // last row ends at 230
 		int id = B_SEC + i;
 		bool here = i == cur;
-		int off = u3_btn_bg(c, 2, y, RAIL_W - 4, RAIL_BTN_H, 4, here ? C_ACCENT_BG : C_BTN, look_of(id));
+		int off = u3_btn_bg(c, RAIL_X, y, RAIL_BW, RAIL_BTN_H, 4, here ? C_ACCENT_BG : C_BTN, look_of(id));
 		int indent = secs[i].level == 2 ? 6 : 0;
-		std::string t = fit(font_small, secs[i].label, RAIL_W - 14 - indent);
-		c.text(font_small, 7 + indent, y + (RAIL_BTN_H - font_small.height) / 2 + off, t.c_str(), here ? C_ACCENT : C_TEXT);
-		if (i == focus) { c.frame_round(2, y, RAIL_W - 4, RAIL_BTN_H, 4, C_ACCENT); c.frame_round(3, y + 1, RAIL_W - 6, RAIL_BTN_H - 2, 3, C_ACCENT, 140); }
-		hreg(2, y, RAIL_W - 4, RAIL_BTN_H, id);
+		std::string t = fit(font_small, secs[i].label, RAIL_BW - 8 - indent);
+		c.text(font_small, RAIL_X + 4 + indent, y + (RAIL_BTN_H - font_small.height) / 2 + off, t.c_str(), here ? C_ACCENT : C_TEXT);
+		if (i == focus) { c.frame_round(RAIL_X, y, RAIL_BW, RAIL_BTN_H, 4, C_ACCENT); c.frame_round(RAIL_X + 1, y + 1, RAIL_BW - 2, RAIL_BTN_H - 2, 3, C_ACCENT, 140); }
+		hreg(RAIL_X, y, RAIL_BW, RAIL_BTN_H, id);
 	}
 	// more above / below
 	if (rail_top > 0) c.tri(RAIL_W / 2 - 4, BODY_Y + 1, RAIL_W / 2 + 4, BODY_Y + 1, RAIL_W / 2, BODY_Y - 3 + 1, C_DIM);
 	if (rail_top + RAIL_ROWS < n) {
-		int yb = 238;
+		int yb = 237;
 		c.tri(RAIL_W / 2 - 4, yb - 3, RAIL_W / 2 + 4, yb - 3, RAIL_W / 2, yb + 1, C_DIM);
 	}
 }
@@ -380,18 +384,18 @@ static void draw_rail(U3Canvas &c) {
 static void draw_toolbar(U3Canvas &c, bool scans) {
 	const Book &b = BOOKS[cur_book];
 	c.fill(0, TOOL_Y, 320, TOOL_H, C_PANEL);
-	bbutton(c, 3, TOOL_Y + 3, 60, 20, B_SHELF, "Books");
-	int right = 317;
+	bbutton(c, 6, TOOL_Y + 4, 60, 24, B_SHELF, "Books");
+	int right = 314;
 	if (scans) {
-		bbutton(c, right - 34, TOOL_Y + 3, 34, 20, B_ZOOMIN, "+");
-		bbutton(c, right - 72, TOOL_Y + 3, 34, 20, B_ZOOMOUT, "-");
+		bbutton(c, right - 34, TOOL_Y + 4, 34, 24, B_ZOOMIN, "+");
+		bbutton(c, right - 72, TOOL_Y + 4, 34, 24, B_ZOOMOUT, "-");
 		right -= 76;
 	} else {
 		bool has_scans = (cur_book == BK_PLAY && avail[BK_PLAY_PAGES]) || (cur_book == BK_REFCARD_PAGES - 1 && avail[BK_REFCARD_PAGES]);
-		if (has_scans) { bbutton(c, right - 74, TOOL_Y + 3, 74, 20, B_SCAN, "See page"); right -= 78; }
+		if (has_scans) { bbutton(c, right - 74, TOOL_Y + 4, 74, 24, B_SCAN, "See page"); right -= 78; }
 	}
-	std::string t = fit(font_bold, b.title, right - 70);
-	c.text(font_bold, 69, TOOL_Y + (TOOL_H - font_bold.height) / 2, t.c_str(), C_DIM);
+	std::string t = fit(font_bold, b.title, right - 76);
+	c.text(font_bold, 72, TOOL_Y + (TOOL_H - font_bold.height) / 2, t.c_str(), C_DIM);
 }
 
 static void draw_text(U3Canvas &c) {
@@ -455,30 +459,37 @@ static void draw_shelf(U3Canvas &c) {
 	int n = shelf_rows(ids);
 	if (focus >= n) focus = n - 1;
 	if (focus < 0) focus = 0;
-	int step = n > 0 ? 213 / n : 29;
-	if (step > 29) step = 29;
-	int h = step - 2;
-	bool two_lines = h >= 26;
-	int y = TOOL_Y + 3;
-	for (int k = 0; k < n; k++) {
+	// Two-line rows (title + what it is), scrolled so the focused book is always shown.
+	const int vis = (234 - (TOOL_Y + 4) + 4) / SHELF_STEP;
+	if (focus < shelf_top) shelf_top = focus;
+	if (focus >= shelf_top + vis) shelf_top = focus - vis + 1;
+	if (shelf_top > n - vis) shelf_top = n - vis;
+	if (shelf_top < 0) shelf_top = 0;
+	int h = SHELF_H;
+	bool two_lines = true;
+	int step = SHELF_STEP;
+	int y = TOOL_Y + 4;
+	if (shelf_top > 0) c.tri(160 - 5, TOOL_Y + 2, 160 + 5, TOOL_Y + 2, 160, TOOL_Y - 2, C_DIM);
+	if (shelf_top + vis < n) c.tri(160 - 5, 235, 160 + 5, 235, 160, 239, C_DIM);
+	for (int k = shelf_top; k < n && k < shelf_top + vis; k++) {
 		int i = ids[k];
 		bool ok = avail[i];
-		int off = ok ? u3_btn_bg(c, 4, y, 312, h, 5, C_BTN, look_of(B_BOOK + i)) : (c.fill_round(4, y, 312, h, 5, 0x1A1C22), 0);
+		int off = ok ? u3_btn_bg(c, 6, y, 308, h, 5, C_BTN, look_of(B_BOOK + i)) : (c.fill_round(6, y, 308, h, 5, 0x1A1C22), 0);
 		uint32_t tc = ok ? (BOOKS[i].spoiler ? 0xFF9C8A : C_TEXT) : C_FAINT;
 		const char *sub = ok ? BOOKS[i].sub : "Not installed";
 		std::string title = fit(font_bold, BOOKS[i].title, 296);
 		if (two_lines) {
-			c.text(font_bold, 12, y + 2 + off, title.c_str(), tc);
-			std::string st = fit(font_small, sub, 296);
-			c.text(font_small, 12, y + 15 + off, st.c_str(), ok ? C_DIM : C_FAINT);
+			c.text(font_bold, 14, y + 3 + off, title.c_str(), tc);
+			std::string st = fit(font_small, sub, 292);
+			c.text(font_small, 14, y + 18 + off, st.c_str(), ok ? C_DIM : C_FAINT);
 		} else {
 			int ty = y + (h - font_bold.height) / 2 + off;
 			int tw = c.text(font_bold, 12, ty, title.c_str(), tc);
 			std::string st = fit(font_small, sub, 300 - (12 + tw + 10));
 			c.text(font_small, 12 + tw + 10, ty + 2, st.c_str(), ok ? C_DIM : C_FAINT);
 		}
-		if (k == focus) { c.frame_round(4, y, 312, h, 5, C_ACCENT); c.frame_round(5, y + 1, 310, h - 2, 4, C_ACCENT, 140); }
-		if (ok) hreg(4, y, 312, h, B_BOOK + i);   // missing books are greyed and do nothing
+		if (k == focus) { c.frame_round(6, y, 308, h, 5, C_ACCENT); c.frame_round(7, y + 1, 306, h - 2, 4, C_ACCENT, 140); }
+		if (ok) hreg(6, y, 308, h, B_BOOK + i);   // missing books are greyed and do nothing
 		y += step;
 	}
 }
@@ -545,7 +556,7 @@ static void action(int id) {
 void u3_book_touch(int x, int y, int phase) {
 	if (phase == 0) {
 		down_id = hfind(x, y);
-		start_x = drag_x = x; start_y = drag_y = y; dragging = false;
+		start_x = drag_x = x; start_y = drag_y = y; dragging = false; shelf_acc = 0;
 		if (down_id) u3_press_down(FX_BASE + down_id);
 		dirty = true;
 	} else if (phase == 1) {
@@ -553,6 +564,15 @@ void u3_book_touch(int x, int y, int phase) {
 		if (!dragging && (abs(x - start_x) > 5 || abs(y - start_y) > 5)) dragging = true;
 		if (!dragging) return;   // ignore jitter until a real drag starts
 		bool in_view = start_x >= VIEW_X && start_y >= BODY_Y;
+		if (cur_book < 0) {   // drag the shelf list a row at a time; focus stays on a shown row
+			shelf_acc += dy;
+			int ids[NBOOKS]; int n = shelf_rows(ids);
+			const int vis = (234 - (TOOL_Y + 4) + 4) / SHELF_STEP;
+			while (shelf_acc <= -SHELF_STEP && shelf_top + vis < n) { shelf_top++; shelf_acc += SHELF_STEP; }
+			while (shelf_acc >= SHELF_STEP && shelf_top > 0) { shelf_top--; shelf_acc -= SHELF_STEP; }
+			if (focus < shelf_top) focus = shelf_top;
+			if (focus >= shelf_top + vis) focus = shelf_top + vis - 1;
+		}
 		if (cur_book >= 0 && in_view && !is_scans()) { tscroll -= dy; clamp_text(); focus = current_section(); keep_focus_visible(); }
 		else if (cur_book >= 0 && in_view && is_scans()) { float s = scan_scale(); ox -= dx / s; oy -= dy / s; clamp_scan(); }
 		drag_x = x; drag_y = y;

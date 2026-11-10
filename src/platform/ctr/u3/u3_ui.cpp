@@ -344,21 +344,23 @@ static int prompt_kind() {
 static int cur_prompt = PROMPT_NONE;
 
 static void draw_tabs() {
-	cv.fill(0, 0, 320, 24, C_PANEL);
-	int x = 0;
-	static const int W[TAB_COUNT] = { 84, 52, 56, 52, 76 };
+	// Rule 11: tabs 24 px tall, 4 px apart, 6 px in from the screen edges.
+	cv.fill(0, 0, 320, 32, C_PANEL);
+	int x = 6;
+	static const int W[TAB_COUNT] = { 80, 46, 50, 44, 72 };
 	for (int t = 0; t < TAB_COUNT; t++) {
 		bool sel = t == tab && !kb_open;
 		int look = u3_press_look(ID_TAB + t, held_on(ID_TAB + t));
 		int off = 0;
-		if (sel && look == 0) cv.fill(x, 0, W[t], 24, C_BG);
-		else if (look) off = u3_btn_bg(cv, x + 1, 1, W[t] - 2, 22, 4, sel ? C_BG : C_PANEL, look);
+		if (sel && look == 0) cv.fill_round(x, 6, W[t], 24, 4, C_BG);
+		else if (look) off = u3_btn_bg(cv, x, 6, W[t], 24, 4, sel ? C_BG : C_PANEL, look);
+		else cv.fill_round(x, 6, W[t], 24, 4, 0x22262E);
 		const u3_font &f = sel ? font_bold : font_ui;
 		std::string nm = fit_str(f, TAB_NAMES[t], W[t] - 6);
-		cv.text_center(f, x + W[t] / 2, 5 + off, nm.c_str(), sel ? C_ACCENT : C_DIM);
-		if (sel) cv.hline(x + 8, 22, W[t] - 16, C_ACCENT);
-		reg(x, 0, W[t], 24, ID_TAB + t);
-		x += W[t];
+		cv.text_center(f, x + W[t] / 2, 10 + off, nm.c_str(), sel ? C_ACCENT : C_DIM);
+		if (sel) cv.hline(x + 8, 27, W[t] - 16, C_ACCENT);
+		reg(x, 6, W[t], 24, ID_TAB + t);
+		x += W[t] + 4;
 	}
 }
 
@@ -373,7 +375,7 @@ static void arrow_glyph(int cx, int cy, int dir, uint32_t col) {
 }
 
 static void draw_pad() {
-	const int cols = 5, cw = 62, ch = 28, gx = 2, gy = 2, x0 = 3, y0 = 27;
+	const int cols = 5, cw = 58, ch = 24, gx = 4, gy = 4, x0 = 6, y0 = 34;   // rule 11
 	for (int i = 0; i < 30; i++) {
 		int cx = x0 + (i % cols) * (cw + gx), cy = y0 + (i / cols) * (ch + gy);
 		if (i < 26) {
@@ -382,8 +384,11 @@ static void draw_pad() {
 			bool rel = cmd_relevant(c.key);
 			int off = u3_btn_bg(cv, cx, cy, cw, ch, 5, rel ? C_ACCENT_BG : C_BTN, u3_press_look(id, held_on(id)));
 			char k[2] = { c.key, 0 };
-			cv.text(font_big, cx + 4, cy + (ch - font_big.height) / 2 + off, k, rel ? C_ACCENT : C_TEXT);
-			cv.text(font_small, cx + 18, cy + (ch - font_small.height) / 2 + 1 + off, c.word, rel ? 0xF4E2B8 : C_DIM);
+			cv.text(font_bold, cx + 3, cy + (ch - font_bold.height) / 2 + off, k, rel ? C_ACCENT : C_TEXT);
+			int wx = cx + 3 + u3_text_width(font_bold, k) + 2;
+			if (wx < cx + 14) wx = cx + 14;
+			cv.text(font_small, wx, cy + (ch - font_small.height) / 2 + 1 + off,
+			        fit_str(font_small, c.word, cx + cw - 2 - wx).c_str(), rel ? 0xF4E2B8 : C_DIM);
 			reg(cx, cy, cw, ch, id);
 		} else {
 			static const char *L[4] = { "Pass", "Esc", "Enter", "Abc" };
@@ -391,57 +396,58 @@ static void draw_pad() {
 			button(cx, cy, cw, ch, I[i - 26], L[i - 26], font_bold, 0x2C3340, C_INFO);
 		}
 	}
-	int y = y0 + 6 * (ch + gy) + 2;
+	int y = y0 + 6 * (ch + gy);   // 202; bottom row is 30 tall, ends at 232
+	const int rh = 30;
 	// The game is asking for a direction or yes/no: those keys take over the bottom row.
 	if (cur_prompt == PROMPT_DIR) {
 		static const int order[4] = { 2, 0, 1, 3 };   // left, up, down, right
 		static const char *nm[4] = { "North", "South", "West", "East" };
 		for (int k = 0; k < 4; k++) {
-			int d = order[k], id = ID_DIR + d, bx = 3 + k * 64;
-			int off = u3_btn_bg(cv, bx, y, 62, 31, 5, C_ACCENT_BG, u3_press_look(id, held_on(id)));
-			arrow_glyph(bx + 13, y + 15 + off, d, C_ACCENT);
-			cv.text(font_small, bx + 24, y + 9 + off, nm[d], 0xF4E2B8);
-			reg(bx, y, 62, 31, id);
+			int d = order[k], id = ID_DIR + d, bx = 6 + k * 66;
+			int off = u3_btn_bg(cv, bx, y, 62, rh, 5, C_ACCENT_BG, u3_press_look(id, held_on(id)));
+			arrow_glyph(bx + 13, y + rh / 2 + off, d, C_ACCENT);
+			cv.text(font_small, bx + 24, y + (rh - font_small.height) / 2 + off, nm[d], 0xF4E2B8);
+			reg(bx, y, 62, rh, id);
 		}
-		button(3 + 4 * 64, y, 58, 31, ID_ESC, "Esc", font_bold, 0x2C3340, C_INFO);
+		button(6 + 4 * 66, y, 44, rh, ID_ESC, "Esc", font_bold, 0x2C3340, C_INFO);
 		return;
 	}
 	if (cur_prompt == PROMPT_YN) {
-		button(3, y, 126, 31, ID_YES, "Yes", font_bold, C_ACCENT_BG, C_ACCENT);
-		button(131, y, 126, 31, ID_NO, "No", font_bold, C_ACCENT_BG, C_ACCENT);
-		button(259, y, 58, 31, ID_ESC, "Esc", font_bold, 0x2C3340, C_INFO);
+		button(6, y, 122, rh, ID_YES, "Yes", font_bold, C_ACCENT_BG, C_ACCENT);
+		button(132, y, 122, rh, ID_NO, "No", font_bold, C_ACCENT_BG, C_ACCENT);
+		button(258, y, 56, rh, ID_ESC, "Esc", font_bold, 0x2C3340, C_INFO);
 		return;
 	}
 	// party / numbers row. In the game, slots with nobody in them are greyed and inert;
 	// outside it (character creation, the roster) 1-4 are plain number keys.
 	bool in_party = u3s.valid && u3s.nparty > 0;
-	int w = 50;
+	int w = 48;
 	for (int i = 0; i < 4; i++) {
 		char lbl[24];
 		const U3Member &m = u3s.m[i];
 		int id = ID_NUM + i + 1;
-		int bx = 3 + i * (w + 2);
+		int bx = 6 + i * (w + 4);
 		snprintf(lbl, sizeof lbl, "%d", i + 1);
 		if (in_party && !m.present) {
-			cv.fill_round(bx, y, w, 31, 5, C_OFF_BG);
-			cv.text(font_big, bx + 5, y + 7, lbl, C_OFF_FG);
+			cv.fill_round(bx, y, w, rh, 5, C_OFF_BG);
+			cv.text(font_big, bx + 5, y + (rh - font_big.height) / 2, lbl, C_OFF_FG);
 			continue;
 		}
-		int off = u3_btn_bg(cv, bx, y, w, 31, 5, C_BTN, u3_press_look(id, held_on(id)));
-		cv.text(font_big, bx + 5, y + 7 + off, lbl, C_TEXT);
+		int off = u3_btn_bg(cv, bx, y, w, rh, 5, C_BTN, u3_press_look(id, held_on(id)));
+		cv.text(font_big, bx + 5, y + (rh - font_big.height) / 2 + off, lbl, C_TEXT);
 		if (in_party && m.present) {
 			std::string nm = fit_str(font_small, m.name, w - 20);
-			cv.text(font_small, bx + 18, y + 4 + off, nm.c_str(), C_DIM);
+			cv.text(font_small, bx + 18, y + 3 + off, nm.c_str(), C_DIM);
 			int bw = w - 22, pct = m.maxhp ? m.hp * bw / m.maxhp : 0;
 			if (pct > bw) pct = bw;
 			uint32_t col = m.status == 'P' ? 0xB46CFF : (m.status == 'D' || m.status == 'A') ? 0x6A6A70 : C_GOOD;
-			cv.fill(bx + 18, y + 20 + off, bw, 4, 0x15171C);
-			cv.fill(bx + 18, y + 20 + off, pct, 4, col);
+			cv.fill(bx + 18, y + 19 + off, bw, 4, 0x15171C);
+			cv.fill(bx + 18, y + 19 + off, pct, 4, col);
 		}
-		reg(bx, y, w, 31, id);
+		reg(bx, y, w, rh, id);
 	}
-	button(3 + 4 * (w + 2), y, 52, 31, ID_DIGITS, "0-9", font_bold);
-	button(3 + 4 * (w + 2) + 54, y, 60, 31, ID_SPELLS, "Spells", font_bold, 0x2E2840, 0xC8B4FF);
+	button(6 + 4 * (w + 4), y, 36, rh, ID_DIGITS, "0-9", font_bold);
+	button(6 + 4 * (w + 4) + 40, y, 60, rh, ID_SPELLS, "Spells", font_bold, 0x2E2840, 0xC8B4FF);
 }
 
 // ------------------------------------------------------------------ keyboard
@@ -451,43 +457,43 @@ static const char *KB_ROWS[2][3] = {
 };
 
 static void draw_keyboard() {
-	cv.fill(0, 24, 320, 216, C_BG);
+	cv.fill(0, 32, 320, 208, C_BG);
 	// chips row
-	cv.fill(0, 24, 320, 30, C_PANEL);
-	int x = 4;
+	cv.fill(0, 32, 320, 30, C_PANEL);
+	int x = 6;
 	if (chips.empty()) {
-		cv.text(font_small, 8, 33, "Pinned clue words appear here", C_FAINT);
+		cv.text(font_small, 8, 40, "Pinned clue words appear here", C_FAINT);
 	} else {
-		for (int i = chip_scroll; i < (int)chips.size() && x < 316; i++) {
+		for (int i = chip_scroll; i < (int)chips.size() && x < 314; i++) {
 			int w = u3_text_width(font_bold, chips[i].c_str()) + 14;
-			if (x + w > 316) break;
-			button(x, 27, w, 24, ID_CHIP + i, chips[i].c_str(), font_bold, C_ACCENT_BG, C_ACCENT);
+			if (x + w > 314) break;
+			button(x, 35, w, 24, ID_CHIP + i, chips[i].c_str(), font_bold, C_ACCENT_BG, C_ACCENT);
 			x += w + 4;
 		}
 	}
 	// typed preview
-	cv.text(font_small, 6, 58, kb_typed.empty() ? "Type, then Enter" : "Typed:", C_DIM);
-	if (!kb_typed.empty()) cv.text(font_bold, 44, 57, fit_str(font_bold, kb_typed, 270).c_str(), C_TEXT);
-	// keys
-	const int kw = 30, kh = 34, ky0 = 74;
+	cv.text(font_small, 6, 67, kb_typed.empty() ? "Type, then Enter" : "Typed:", C_DIM);
+	if (!kb_typed.empty()) cv.text(font_bold, 44, 66, fit_str(font_bold, kb_typed, 270).c_str(), C_TEXT);
+	// keys (rule 11: 27 x 32, 4 px apart, 6 px from the edges)
+	const int kw = 27, kh = 32, ky0 = 86, kg = 4;
 	for (int r = 0; r < 3; r++) {
 		const char *row = KB_ROWS[kb_mode][r];
 		int n = (int)strlen(row);
-		int rx = (320 - (n * (kw + 2) - 2)) / 2;
+		int rx = (320 - (n * (kw + kg) - kg)) / 2;
 		for (int i = 0; i < n; i++) {
 			if (row[i] == ' ') continue;
 			char lbl[2] = { row[i], 0 };
-			button(rx + i * (kw + 2), ky0 + r * (kh + 3), kw, kh, ID_KEY + (unsigned char)row[i], lbl, font_big);
+			button(rx + i * (kw + kg), ky0 + r * (kh + kg), kw, kh, ID_KEY + (unsigned char)row[i], lbl, font_big);
 		}
 	}
-	int y = ky0 + 3 * (kh + 3);
-	button(4, y, 50, 36, ID_KB_MODE, kb_mode ? "ABC" : "123", font_bold, 0x2C3340, C_INFO);
-	button(56, y, 44, 36, ID_KB_ESC, "Esc", font_bold, 0x2C3340, C_INFO);
-	button(102, y, 104, 36, ID_KB_SPACE, "space", font_ui);
-	button(208, y, 40, 36, ID_KB_BACK, "<-", font_bold);
-	button(250, y, 66, 36, ID_KB_ENTER, "Enter", font_bold, C_ACCENT_BG, C_ACCENT);
-	// close strip at the top-right of the tab bar
-	button(258, 2, 60, 20, ID_KB_CLOSE, "Close", font_small, C_BTN, C_DIM);
+	int y = ky0 + 3 * (kh + kg);   // 194; row ends at 228
+	button(6, y, 48, 34, ID_KB_MODE, kb_mode ? "ABC" : "123", font_bold, 0x2C3340, C_INFO);
+	button(58, y, 44, 34, ID_KB_ESC, "Esc", font_bold, 0x2C3340, C_INFO);
+	button(106, y, 104, 34, ID_KB_SPACE, "space", font_ui);
+	button(214, y, 40, 34, ID_KB_BACK, "<-", font_bold);
+	button(258, y, 56, 34, ID_KB_ENTER, "Enter", font_bold, C_ACCENT_BG, C_ACCENT);
+	// close button over the last tab
+	button(244, 6, 70, 24, ID_KB_CLOSE, "Close", font_ui, C_BTN, C_DIM);
 }
 
 static void kb_press(int id) {
@@ -531,19 +537,19 @@ static void draw_map() {
 	int a = map_view_area();
 	char title[64];
 	if (map_picker) {
-		cv.text(font_bold, 8, 28, "Explored places", C_TEXT);
-		button(244, 26, 72, 22, ID_MAP_BACK, "Back", font_ui);
-		int y = 52, col = 0;
-		button(4, y, 154, 24, ID_MAP_PLACE + 0, "Sosaria", font_ui, map_view_area() == 0 ? C_ACCENT_BG : C_BTN);
+		cv.text(font_bold, 8, 39, "Explored places", C_TEXT);
+		button(242, 34, 72, 24, ID_MAP_BACK, "Back", font_ui);
+		int y = 62, col = 0;
+		button(6, y, 152, 24, ID_MAP_PLACE + 0, "Sosaria", font_ui, map_view_area() == 0 ? C_ACCENT_BG : C_BTN);
 		col = 1;
 		for (int p = 0; p < U3_NUM_PLACES; p++) {
 			if (!u3_area_known(p + 1)) continue;
-			int bx = 4 + col * 158, by = y;
-			button(bx, by, 154, 24, ID_MAP_PLACE + p + 1, u3_place_names[p], font_small,
+			int bx = 6 + col * 156, by = y;
+			button(bx, by, 152, 24, ID_MAP_PLACE + p + 1, u3_place_names[p], font_small,
 			       map_view_area() == p + 1 ? C_ACCENT_BG : C_BTN);
 			col++;
-			if (col == 2) { col = 0; y += 26; }
-			if (y > 212) break;
+			if (col == 2) { col = 0; y += 28; }
+			if (y > 206) break;
 		}
 		return;
 	}
@@ -552,42 +558,42 @@ static void draw_map() {
 	else snprintf(title, sizeof title, "%s", u3_place_names[a - 1]);
 	if (dungeon) {
 		int L = map_level >= 0 ? map_level : (u3_map_current_area() == a && u3s.map == U3MAP_DUNGEON ? u3s.dlevel : 0);
-		u3_draw_dungeon(cv, a, L, 0, 26, 214, 214, true);
-		cv.fill(214, 24, 106, 216, C_PANEL);
-		cv.text(font_small, 220, 28, fit_str(font_small, title, 96).c_str(), C_DIM);
+		u3_draw_dungeon(cv, a, L, 0, 32, 208, 208, true);
+		cv.fill(208, 32, 112, 208, C_PANEL);
+		cv.text(font_small, 214, 36, fit_str(font_small, title, 100).c_str(), C_DIM);
 		char lt[16]; snprintf(lt, sizeof lt, "Level %d", L + 1);
-		cv.text(font_bold, 220, 42, lt, C_INFO);
+		cv.text(font_bold, 214, 50, lt, C_INFO);
 		for (int i = 0; i < 8; i++) {
 			char b[4]; snprintf(b, sizeof b, "%d", i + 1);
 			bool known = u3_dungeon_level_known(a, i);
 			bool here = u3_map_current_area() == a && u3s.map == U3MAP_DUNGEON && u3s.dlevel == i;
-			int bx = 220 + (i % 2) * 48, by = 62 + (i / 2) * 34;
-			if (!known && !here && i != L) { button_off(bx, by, 44, 30, b, font_big); continue; }   // nothing seen there yet
+			int bx = 214 + (i % 2) * 52, by = 70 + (i / 2) * 32;
+			if (!known && !here && i != L) { button_off(bx, by, 48, 28, b, font_big); continue; }   // nothing seen there yet
 			uint32_t bg = i == L ? C_ACCENT_BG : C_BTN;
 			uint32_t fg = i == L ? C_ACCENT : C_TEXT;
-			button(bx, by, 44, 30, ID_MAP_LEVEL + i, b, font_big, bg, fg);
-			if (here) cv.disc(bx + 38, by + 6, 3, 0xFFE070);
+			button(bx, by, 48, 28, ID_MAP_LEVEL + i, b, font_big, bg, fg);
+			if (here) cv.disc(bx + 42, by + 6, 3, 0xFFE070);
 		}
-		button(220, 204, 92, 30, ID_MAP_PLACES, "Places", font_ui);
+		button(214, 204, 100, 30, ID_MAP_PLACES, "Places", font_ui);
 		return;
 	}
 	// 64x64 area
 	int ts = map_zoom == 0 ? 3 : 8;
-	int mw = 236, mh = 214;
+	int mw = 236, mh = 208;
 	if (map_follow && u3_map_current_area() == a) { map_cx = u3s.x + 0.5f; map_cy = u3s.y + 0.5f; }
 	if (map_zoom == 0) { map_cx = 32; map_cy = 32; }
-	u3_draw_area(cv, a, 0, 26, mw, mh, map_cx, map_cy, ts, true);
-	cv.fill(mw, 24, 320 - mw, 216, C_PANEL);
-	cv.text(font_small, mw + 6, 28, fit_str(font_small, title, 320 - mw - 8).c_str(), C_DIM);
+	u3_draw_area(cv, a, 0, 32, mw, mh, map_cx, map_cy, ts, true);
+	cv.fill(mw, 32, 320 - mw, 208, C_PANEL);
+	cv.text(font_small, mw + 6, 36, fit_str(font_small, title, 320 - mw - 12).c_str(), C_DIM);
 	if (u3_map_current_area() == a && u3s.valid) {
 		char pos[24]; snprintf(pos, sizeof pos, "%d, %d", u3s.x, u3s.y);
-		cv.text(font_small, mw + 6, 42, pos, C_FAINT);
+		cv.text(font_small, mw + 6, 50, pos, C_FAINT);
 	}
-	button(mw + 6, 62, 72, 32, ID_MAP_ZOOM, map_zoom == 0 ? "Zoom in" : "Whole", font_ui);
-	if (map_zoom == 0) button_off(mw + 6, 98, 72, 32, "Center", font_ui);   // the whole map is already shown
-	else button(mw + 6, 98, 72, 32, ID_MAP_CENTER, "Center", font_ui, map_follow ? C_ACCENT_BG : C_BTN, map_follow ? C_ACCENT : C_TEXT);
+	button(mw + 6, 70, 72, 32, ID_MAP_ZOOM, map_zoom == 0 ? "Zoom in" : "Whole", font_ui);
+	if (map_zoom == 0) button_off(mw + 6, 106, 72, 32, "Center", font_ui);   // the whole map is already shown
+	else button(mw + 6, 106, 72, 32, ID_MAP_CENTER, "Center", font_ui, map_follow ? C_ACCENT_BG : C_BTN, map_follow ? C_ACCENT : C_TEXT);
 	button(mw + 6, 204, 72, 30, ID_MAP_PLACES, "Places", font_ui);
-	if (map_zoom == 1 && !u3v_swap) cv.text(font_small, mw + 6, 140, "Drag to pan", C_FAINT);
+	if (map_zoom == 1 && !u3v_swap) cv.text(font_small, mw + 6, 148, "Drag to pan", C_FAINT);
 }
 
 static void map_press(int id) {
@@ -619,10 +625,10 @@ static void build_log_view() {
 
 static void draw_log() {
 	build_log_view();
-	cv.fill(0, 24, 320, 24, C_PANEL);
-	button(4, 26, 92, 20, ID_LOG_FILTER, log_pinned_only ? "Show all" : "Pinned only", font_small);
-	cv.text(font_small, 104, 29, "Tap a line to pin it as a clue", C_FAINT);
-	const int lh = 17, top = 50, rows = (240 - top) / lh;
+	cv.fill(0, 32, 320, 30, C_PANEL);
+	button(6, 35, 92, 24, ID_LOG_FILTER, log_pinned_only ? "Show all" : "Pinned only", font_small);
+	cv.text(font_small, 106, 41, "Tap a line to pin it as a clue", C_FAINT);
+	const int lh = 17, top = 64, rows = (240 - top) / lh;
 	int n = (int)log_view.size();
 	if (log_scroll > n - rows) log_scroll = n - rows;
 	if (log_scroll < 0) log_scroll = 0;
@@ -656,8 +662,9 @@ static void draw_log() {
 	}
 	// scrollbar
 	if (n > rows) {
-		int sh = 190 * rows / n; if (sh < 12) sh = 12;
-		int sy = top + (190 - sh) * (n - rows - log_scroll) / (n - rows);
+		const int sbh = rows * lh;
+		int sh = sbh * rows / n; if (sh < 12) sh = 12;
+		int sy = top + (sbh - sh) * (n - rows - log_scroll) / (n - rows);
 		cv.fill(316, sy, 3, sh, C_FAINT);
 	}
 }
@@ -668,15 +675,15 @@ static void save_settings();
 static void apply_swap();
 
 static void toggle_row(int y, int id, const char *label, const char *desc, bool on) {
-	const int h = 29;
-	int off = u3_btn_bg(cv, 4, y, 312, h, 6, C_BTN, u3_press_look(id, held_on(id)));
+	const int h = 25;   // rule 11: rows 4 px apart, 6 px in from the edges
+	int off = u3_btn_bg(cv, 6, y, 308, h, 6, C_BTN, u3_press_look(id, held_on(id)));
 	int y0 = y;
 	y += off;
-	cv.text(font_bold, 12, y + 1, fit_str(font_bold, label, 252).c_str(), C_TEXT);
-	cv.text(font_small, 12, y + 15, fit_str(font_small, desc, 252).c_str(), C_DIM);
-	cv.fill_round(270, y + 6, 38, 18, 9, on ? 0x3E7A4A : 0x3A3F4C);
-	cv.disc(on ? 299 : 279, y + 15, 7, on ? 0xD8F5DC : 0x9AA0AC);
-	reg(4, y0, 312, h, id);
+	cv.text(font_bold, 12, y, fit_str(font_bold, label, 250).c_str(), C_TEXT);
+	cv.text(font_small, 12, y + 12, fit_str(font_small, desc, 250).c_str(), C_DIM);
+	cv.fill_round(266, y + 3, 38, 18, 9, on ? 0x3E7A4A : 0x3A3F4C);
+	cv.disc(on ? 295 : 275, y + 12, 7, on ? 0xD8F5DC : 0x9AA0AC);
+	reg(6, y0, 308, h, id);
 }
 
 static void draw_settings() {
@@ -687,15 +694,15 @@ static void draw_settings() {
 		button(170, 130, 110, 40, ID_CONFIRM_NO, "Keep it", font_bold);
 		return;
 	}
-	toggle_row(24, ID_SET + 4, "Game on the touchscreen", "Swap the screens. ZL or SELECT swaps any time", u3_settings.swapped);
-	toggle_row(54, ID_SET + 0, "Info strips", "Moons, wind, party health, food, Marks and Cards", u3_settings.strips);
-	toggle_row(84, ID_SET + 1, "Fast-forward toggles", "Off: hold ZR. On: tap ZR to switch it on and off", u3_settings.turbo_toggle);
-	toggle_row(114, ID_SET + 2, "Swap A and B", "Off: A = Enter, B = Esc", u3_settings.swap_ab);
-	toggle_row(144, ID_SET + 5, "Left-handed", "D-Pad and A/B/X/Y swap places", u3_settings.lefty);
-	toggle_row(174, ID_SET + 3, "Show the cluebook", "Adds the original cluebook (spoilers!) to the Book tab", u3_settings.cluebook);
-	button(4, 206, 154, 30, ID_SET + 10, "Reset auto-map", font_ui);
-	cv.text(font_small, 166, 206, "START: save, manual,", C_FAINT);
-	cv.text(font_small, 166, 220, "exit the game", C_FAINT);
+	toggle_row(34, ID_SET + 4, "Game on the touchscreen", "Swap the screens. ZL or SELECT swaps any time", u3_settings.swapped);
+	toggle_row(63, ID_SET + 0, "Info strips", "Moons, wind, party health, food, Marks and Cards", u3_settings.strips);
+	toggle_row(92, ID_SET + 1, "Fast-forward toggles", "Off: hold ZR. On: tap ZR to switch it on and off", u3_settings.turbo_toggle);
+	toggle_row(121, ID_SET + 2, "Swap A and B", "Off: A = Enter, B = Esc", u3_settings.swap_ab);
+	toggle_row(150, ID_SET + 5, "Left-handed", "D-Pad and A/B/X/Y swap places", u3_settings.lefty);
+	toggle_row(179, ID_SET + 3, "Show the cluebook", "Adds the original cluebook (spoilers!) to Book", u3_settings.cluebook);
+	button(6, 208, 150, 26, ID_SET + 10, "Reset auto-map", font_ui);
+	cv.text(font_small, 164, 208, "START: save, manual,", C_FAINT);
+	cv.text(font_small, 164, 221, "exit the game", C_FAINT);
 }
 
 static void settings_press(int id) {
@@ -856,7 +863,7 @@ static void draw_all() {
 		switch (tab) {
 		case TAB_PAD: draw_pad(); break;
 		case TAB_MAP: draw_map(); break;
-		case TAB_BOOK: u3_book_draw(cv, 24); break;
+		case TAB_BOOK: u3_book_draw(cv, 32); break;
 		case TAB_LOG: draw_log(); break;
 		case TAB_SET: draw_settings(); break;
 		}
@@ -1083,7 +1090,7 @@ void u3_ui_input() {
 		if (t.px == 0 && t.py == 0) goto touch_done;   // first sample can be empty
 		touching = true; touch_x0 = touch_x = t.px; touch_y0 = touch_y = t.py; touch_t0 = now;
 		touch_id = hit(t.px, t.py);
-		bool book_area = reading && t.py >= 24;
+		bool book_area = reading && t.py >= 32;
 		bool log_line = touch_id >= ID_LOG_LINE && !smenu;   // log lines click on release (they also scroll)
 		if (!book_area && !log_line) u3_press_down(touch_id);
 		if (book_area) u3_book_touch(t.px, t.py, 0);
@@ -1092,8 +1099,8 @@ void u3_ui_input() {
 		touchPosition t; hidTouchRead(&t);
 		int dx = t.px - touch_x, dy = t.py - touch_y;
 		if (dx || dy) {
-			if (reading && touch_y0 >= 24) { u3_book_touch(t.px, t.py, 1); }
-			else if (!smenu && tab == TAB_MAP && !kb_open && !map_picker && map_zoom == 1 && touch_x0 < 236 && touch_y0 > 26) {
+			if (reading && touch_y0 >= 32) { u3_book_touch(t.px, t.py, 1); }
+			else if (!smenu && tab == TAB_MAP && !kb_open && !map_picker && map_zoom == 1 && touch_x0 < 236 && touch_y0 > 32) {
 				map_follow = false; map_cx -= dx / 8.0f; map_cy -= dy / 8.0f;
 				if (map_cx < 0) map_cx += 64; if (map_cx >= 64) map_cx -= 64;
 				if (map_cy < 0) map_cy += 64; if (map_cy >= 64) map_cy -= 64;
@@ -1111,7 +1118,7 @@ void u3_ui_input() {
 	} else if (touching && !(kh & KEY_TOUCH)) {
 		touching = false;
 		int id = hit(touch_x, touch_y);
-		if (reading && touch_y0 >= 24) u3_book_touch(touch_x, touch_y, 2);
+		if (reading && touch_y0 >= 32) u3_book_touch(touch_x, touch_y, 2);
 		else if (id != ID_NONE && id == touch_id) {
 			if (id >= ID_LOG_LINE && !smenu) u3_click();
 			u3_press_up(id);
