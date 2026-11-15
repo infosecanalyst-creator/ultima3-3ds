@@ -19,3 +19,6 @@ automap.dat
 dist/3ds/u3-3ds/game/
 dist/3ds/u3-3ds/books/*/
 dist/3ds/u3-3ds/books/manual.txt
+u3build.log
+*.bgr
+*.bgr.o

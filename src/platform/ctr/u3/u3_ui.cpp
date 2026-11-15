@@ -35,9 +35,10 @@ uint32_t u3_ticks_ms() { return (uint32_t)(svcGetSystemTick() / (SYSCLOCK_ARM11 
 
 // ------------------------------------------------------------------ palette
 enum : uint32_t {
-	C_BG = 0x111318, C_PANEL = 0x1B1E25, C_BTN = 0x262A33, C_BTN_HI = 0x343944, C_BTN_DOWN = 0x4A5263,
-	C_EDGE = 0x353A46, C_TEXT = 0xECE8DE, C_DIM = 0x8C919D, C_FAINT = 0x5A6070, C_ACCENT = 0xE8B04A,
-	C_ACCENT_BG = 0x3A2F1A, C_GOOD = 0x5CCB6A, C_INFO = 0x7FD4FF, C_OFF_BG = 0x1A1C22, C_OFF_FG = 0x4A4F5C
+	// house palette (claude/3ds-look-and-feel.md): navy, blue faces, gold accents
+	C_BG = 0x080C28, C_PANEL = 0x283878, C_BTN = 0x283878, C_BTN_HI = 0x3C50A8, C_BTN_DOWN = 0xDCB43C,
+	C_EDGE = 0x7896E6, C_TEXT = 0xEBF0FA, C_DIM = 0xAAB9E1, C_FAINT = 0x6070A0, C_ACCENT = 0xFFCC40,
+	C_ACCENT_BG = 0x3A3420, C_GOOD = 0x5CCB6A, C_INFO = 0x7FD4FF, C_OFF_BG = 0x1A1C22, C_OFF_FG = 0x4A4F5C
 };
 
 // ------------------------------------------------------------------ canvas
@@ -99,7 +100,7 @@ int u3_press_look(int id, bool held) {
 int u3_btn_bg(U3Canvas &c, int x, int y, int w, int h, int r, uint32_t bg, int look) {
 	if (look == 1) {   // pushed in: darker, one pixel smaller, content drops a pixel
 		c.fill_round(x, y, w, h, r, 0x0C0D10);
-		c.fill_round(x + 1, y + 1, w - 2, h - 2, r, u3_mix(bg, 0x7A8496, 90));
+		c.fill_round(x + 1, y + 1, w - 2, h - 2, r, 0xDCB43C);   // house: pressed = gold
 		return 1;
 	}
 	c.fill_round(x, y, w, h, r, bg);
@@ -126,6 +127,7 @@ static inline bool held_on(int id) { return touching && touch_id == id && hit(to
 static void button(int x, int y, int w, int h, int id, const char *label, const u3_font &f = font_ui,
                    uint32_t bg = C_BTN, uint32_t fg = C_TEXT) {
 	int off = u3_btn_bg(cv, x, y, w, h, 5, bg, u3_press_look(id, held_on(id)));
+	if (!off) cv.frame_round(x, y, w, h, 5, C_EDGE, 200);
 	std::string t = fit_str(f, label, w - 6);
 	int tw = u3_text_width(f, t.c_str());
 	cv.text(f, x + (w - tw) / 2, y + (h - f.height) / 2 + off, t.c_str(), fg);
@@ -714,32 +716,35 @@ static void settings_press(int id) {
 // ------------------------------------------------------------------ START menu drawing
 static void draw_smenu() {
 	cv.fill(0, 0, 320, 240, C_BG);
-	cv.fill(0, 0, 320, 24, C_PANEL);
-	cv.text(font_bold, 10, 4, "Ultima III", C_ACCENT);
-	const char *hint = "B or START closes";
-	cv.text(font_small, 312 - u3_text_width(font_small, hint), 7, hint, C_DIM);
+	cv.fill(0, 0, 320, 22, C_PANEL);
+	cv.fill(0, 22, 320, 1, C_EDGE);
+	cv.text(font_bold, 8, 3, smenu_confirm ? "EXIT GAME" : "MENU", C_ACCENT);
+	cv.fill(0, 224, 320, 16, C_PANEL);
+	cv.fill(0, 224, 320, 1, C_EDGE);
+	const char *hint = "A Select   B Back   ZL Swap";
+	cv.text_center(font_small, 160, 226, hint, C_ACCENT);
 	if (smenu_confirm) {
 		cv.text_center(font_bold, 160, 52, "Exit Ultima III?", C_TEXT);
 		cv.text_center(font_small, 160, 76, "Anything since your last save is lost.", C_DIM);
 		cv.text_center(font_small, 160, 92, "Save game (outdoors) first to keep it.", C_DIM);
-		button(30, 124, 124, 44, ID_SM_EXIT_YES, "Exit game", font_bold, 0x4A2222, 0xFFB0B0);
-		button(166, 124, 124, 44, ID_SM_EXIT_NO, "Keep playing", font_bold);
+		button(30, 124, 124, 44, ID_SM_EXIT_YES, "YES", font_bold);
+		button(166, 124, 124, 44, ID_SM_EXIT_NO, "NO", font_bold);
 		return;
 	}
-	const int x = 50, w = 220, h = 36, step = 41;
-	int y = 32;
-	button(x, y, w, h, ID_SM_RESUME, "Resume", font_bold, C_ACCENT_BG, C_ACCENT); y += step;
-	button(x, y, w, h, ID_SM_MANUAL, "Manual", font_bold); y += step;
-	if (can_save()) button(x, y, w, h, ID_SM_SAVE, "Save game", font_bold);
+	const int x = 50, w = 220, h = 32, step = 39;
+	int y = 30;
+	button(x, y, w, h, ID_SM_RESUME, "RESUME", font_bold); y += step;
+	button(x, y, w, h, ID_SM_MANUAL, "MANUAL", font_bold); y += step;
+	if (can_save()) button(x, y, w, h, ID_SM_SAVE, "SAVE GAME", font_bold);
 	else {
 		cv.fill_round(x, y, w, h, 5, C_OFF_BG);
-		cv.text(font_bold, x + 14, y + (h - font_bold.height) / 2, "Save game", C_OFF_FG);
+		cv.text(font_bold, x + 14, y + (h - font_bold.height) / 2, "SAVE GAME", C_OFF_FG);
 		const char *why = u3s.valid && u3s.nparty > 0 ? "outdoors only" : "start a game first";
 		cv.text(font_small, x + w - 10 - u3_text_width(font_small, why), y + (h - font_small.height) / 2 + 1, why, C_OFF_FG);
 	}
 	y += step;
-	button(x, y, w, h, ID_SM_SETTINGS, "Settings", font_bold); y += step;
-	button(x, y, w, h, ID_SM_EXIT, "Exit game", font_bold, 0x3A2626, 0xFFC0C0);
+	button(x, y, w, h, ID_SM_SETTINGS, "SETTINGS", font_bold); y += step;
+	button(x, y, w, h, ID_SM_EXIT, "EXIT GAME", font_bold);
 }
 
 static void smenu_press(int id) {
