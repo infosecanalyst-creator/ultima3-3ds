@@ -25,7 +25,7 @@ These work the same way in every 3DS port:
 - B - Esc (cancel)
 - X - Space (pass a turn, skip)
 - Y - open or close the keyboard
-- ZL or SELECT - swap the two screens (see below)
+- ZL - swap the two screens (see below)
 - ZR - fast-forward (hold it; can be switched to a toggle in Settings)
 - L / R - previous / next bottom-screen tab (in a book: previous / next section)
 - START - the menu: Resume, Manual, Save game, Settings and Exit game. B or START closes it.
@@ -38,7 +38,7 @@ Presses are never stored up. If the game is still busy with your last press, a n
 
 # Swapping the screens
 
-Press ZL (or SELECT) at any time to put the game on the touchscreen, where it fills the whole screen. The tabs then move to the top screen, between the info strips:
+Press ZL at any time to put the game on the touchscreen, where it fills the whole screen. The tabs then move to the top screen, between the info strips:
 
 - D-pad - move the highlight between the buttons on the top screen; A presses the highlighted button
 - Circle pad - move the party
