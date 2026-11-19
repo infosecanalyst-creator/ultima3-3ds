@@ -1,7 +1,7 @@
 // u3_ui.cpp - Ultima III 3DS front end: the touch panel, buttons, screen layout and input
 //
 // Shared 3DS conventions (same in every port): A confirm, B back, START opens the menu,
-// ZL swaps the screens (SELECT too), L/R tabs, D-Pad moves a highlight in menus, quiet
+// ZL swaps the screens, L/R tabs, D-Pad moves a highlight in menus, quiet
 // click and press animation on every button, unusable buttons greyed and inert, a
 // "Working..." pill when a press hasn't been answered, presses are never queued.
 #include "u3_ui.h"
@@ -696,7 +696,7 @@ static void draw_settings() {
 		button(170, 130, 110, 40, ID_CONFIRM_NO, "Keep it", font_bold);
 		return;
 	}
-	toggle_row(34, ID_SET + 4, "Game on the touchscreen", "Swap the screens. ZL or SELECT swaps any time", u3_settings.swapped);
+	toggle_row(34, ID_SET + 4, "Game on the touchscreen", "Swap the screens. ZL swaps any time", u3_settings.swapped);
 	toggle_row(63, ID_SET + 0, "Info strips", "Moons, wind, party health, food, Marks and Cards", u3_settings.strips);
 	toggle_row(92, ID_SET + 1, "Fast-forward toggles", "Off: hold ZR. On: tap ZR to switch it on and off", u3_settings.turbo_toggle);
 	toggle_row(121, ID_SET + 2, "Swap A and B", "Off: A = Enter, B = Esc", u3_settings.swap_ab);
@@ -1047,8 +1047,8 @@ void u3_ui_input() {
 
 	// --- buttons
 	u32 kA = u3_settings.swap_ab ? KEY_B : KEY_A, kB = u3_settings.swap_ab ? KEY_A : KEY_B;
-	if (kd & (KEY_ZL | KEY_SELECT)) toggle_swap();   // swap the screens, any time
-	kd &= ~(u32)(KEY_ZL | KEY_SELECT | KEY_ZR);
+	if (kd & KEY_ZL) toggle_swap();   // swap the screens, any time (ZL only: house rule)
+	kd &= ~(u32)(KEY_ZL | KEY_SELECT | KEY_ZR);   // SELECT stays unused
 	if (smenu) {
 		if (kd & kA) press_focused();
 		else if (kd & kB) { if (smenu_confirm) { smenu_confirm = 0; focus_id = ID_SM_EXIT; } else close_smenu(); }
