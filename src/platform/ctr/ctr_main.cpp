@@ -83,16 +83,24 @@ extern ctr_settings_t ctr_settings;
 void MountDOSBoxDir(char DriveLetter, const char *path);
 aptHookCookie cookie;
 volatile bool u3_save_requested = false;   // set by the APT hook, served by GFX_Events (emulation thread)
+volatile bool u3_in_game_apt = false;      // GetInput's aptMainLoop() call is running (ctr_input.cpp)
 void aptHookFunc(APT_HookType hookType, void *param)
 {
 	switch (hookType) {
 		case APTHOOK_ONSUSPEND:
 		case APTHOOK_ONSLEEP:
-			// U3-01/U3-03: never save from here directly. ONEXIT runs inside aptExit, after the
-			// static destructors and the SD unmount (main already saves before leaving), and the
-			// sleep hook can run on the APT thread while the game changes the data. Ask the
-			// emulation thread to save at its next event poll instead.
-			u3_save_requested = true;
+			// U3-01/U3-03: never save from ONEXIT (it runs inside aptExit, after the static
+			// destructors and the SD unmount; main already saves before leaving). libctru calls
+			// these two hooks from inside aptMainLoop(), on the thread that called it. When that is
+			// the game's own poll (GetInput), this IS the game thread between two emulated
+			// milliseconds: save now and let the writer finish (up to 3 s) before HOME or sleep.
+			// From any other aptMainLoop() caller, ask the game thread to save at its next poll.
+			if (u3_in_game_apt) {
+				u3_ui_save_all();
+				u3w_flush(3000);
+			} else {
+				u3_save_requested = true;
+			}
 			break;
 		case APTHOOK_ONRESTORE:
 		case APTHOOK_ONWAKEUP:

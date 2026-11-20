@@ -1541,7 +1541,14 @@ void GetInput()
 
 	// Closing from the HOME menu: aptMainLoop() returns false. Leave right away
 	// (saving the map, clues and settings) instead of waiting to be killed.
-	if (!aptMainLoop()) {
+	// U3-03 / T4: libctru runs the HOME (ONSUSPEND) and sleep (ONSLEEP) hooks inside aptMainLoop(),
+	// on the calling thread, just before it stops the program. Flagging this call lets the hook save
+	// right then, on this (the game's) thread, before HOME or sleep, instead of after the wake.
+	extern volatile bool u3_in_game_apt;
+	u3_in_game_apt = true;
+	bool go_on = aptMainLoop();
+	u3_in_game_apt = false;
+	if (!go_on) {
 		u3_ui_save_all();   // queued; main() waits for the writer before exiting
 		throw(0);
 	}
