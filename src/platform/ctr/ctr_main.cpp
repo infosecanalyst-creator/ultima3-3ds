@@ -82,13 +82,17 @@ extern ctr_settings_t ctr_settings;
 
 void MountDOSBoxDir(char DriveLetter, const char *path);
 aptHookCookie cookie;
+volatile bool u3_save_requested = false;   // set by the APT hook, served by GFX_Events (emulation thread)
 void aptHookFunc(APT_HookType hookType, void *param)
 {
 	switch (hookType) {
 		case APTHOOK_ONSUSPEND:
 		case APTHOOK_ONSLEEP:
-		case APTHOOK_ONEXIT:
-			u3_ui_save_all();
+			// U3-01/U3-03: never save from here directly. ONEXIT runs inside aptExit, after the
+			// static destructors and the SD unmount (main already saves before leaving), and the
+			// sleep hook can run on the APT thread while the game changes the data. Ask the
+			// emulation thread to save at its next event poll instead.
+			u3_save_requested = true;
 			break;
 		case APTHOOK_ONRESTORE:
 		case APTHOOK_ONWAKEUP:
@@ -657,7 +661,7 @@ int main(int argc, char* argv[]) {
 		; // Unknown error, let's just exit.
 	}
 	u3_ui_save_all();
-	u3w_flush(8000);   // let the background writer finish before leaving
+	u3w_shutdown();   // every write reaches the card and the writer stops before anything is torn down
 	SDL_Quit();//Let's hope sdl will quit as well when it catches an exception
 
 #if defined(CTR_ROMFS)

@@ -1545,6 +1545,10 @@ void GetInput()
 		u3_ui_save_all();   // queued; main() waits for the writer before exiting
 		throw(0);
 	}
+	{   // HOME / lid close asked for a save (ctr_main.cpp aptHookFunc): do it here, on this thread
+		extern volatile bool u3_save_requested;
+		if (u3_save_requested) { u3_save_requested = false; u3_ui_save_all(); }
+	}
 	hidScanInput();
 
 	u3_ui_input();   // Ultima III front end replaces the generic keyboard/mouse UI

@@ -766,8 +766,7 @@ static void smenu_press(int id) {
 	case ID_SM_EXIT: smenu_confirm = 1; focus_id = ID_SM_EXIT_NO; break;
 	case ID_SM_EXIT_NO: smenu_confirm = 0; focus_id = ID_SM_EXIT; break;
 	case ID_SM_EXIT_YES:
-		u3_ui_save_all();
-		u3w_flush(8000);
+		u3_ui_save_all();   // main() then waits for every write (u3w_shutdown) before leaving
 		throw(0);
 	}
 	dirty = true;

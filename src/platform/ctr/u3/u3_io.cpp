@@ -59,9 +59,11 @@ static void write_job(const Job &j) {
 	fclose(f);
 }
 
+static volatile bool stop_writer = false;
 static void writer_main(void *) {
 	for (;;) {
 		LightLock_Lock(&lk);
+		if (jobs.empty() && stop_writer) { cur_active = false; LightEvent_Signal(&ev_idle); LightLock_Unlock(&lk); return; }
 		if (jobs.empty()) {
 			cur_active = false;
 			busy_since = 0;
@@ -83,7 +85,7 @@ static void writer_main(void *) {
 }
 
 void u3w_init() {
-	if (started) return;
+	if (started || stop_writer) return;   // after u3w_shutdown, late writes go straight to the card
 	LightLock_Init(&lk);
 	LightEvent_Init(&ev_work, RESET_ONESHOT);
 	LightEvent_Init(&ev_idle, RESET_STICKY);
@@ -91,7 +93,8 @@ void u3w_init() {
 	s32 prio = 0x30;
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
 	// On the game's own core (-2), one priority step above it. On the system core it never ran on hardware.
-	th = threadCreate(writer_main, 0, 32 * 1024, prio > 0x18 ? prio - 1 : prio, -2, true);
+	// joinable, so the exit can wait for the last write before newlib and libctru tear down (U3-02)
+	th = threadCreate(writer_main, 0, 32 * 1024, prio > 0x18 ? prio - 1 : prio, -2, false);
 	started = th != 0;
 }
 
@@ -133,6 +136,20 @@ uint32_t u3w_busy_ms() {
 void u3w_flush(int timeout_ms) {
 	if (!started) return;
 	LightEvent_WaitTimeout(&ev_idle, (s64)timeout_ms * 1000000LL);
+}
+
+// Exit (U3-02): wait for every queued write (a slow card can take many seconds per file),
+// then stop and join the writer, so nothing is still writing when the SD card is unmounted.
+void u3w_shutdown() {
+	if (!started) return;
+	for (int i = 0; i < 120 && LightEvent_WaitTimeout(&ev_idle, 1000000000LL) != 0; i++)
+		;   // up to two minutes, a second at a time
+	stop_writer = true;
+	LightEvent_Signal(&ev_work);
+	threadJoin(th, 5000000000LL);
+	threadFree(th);
+	th = 0;
+	started = false;
 }
 
 // The newest queued (or in-progress) contents for a file, if any.

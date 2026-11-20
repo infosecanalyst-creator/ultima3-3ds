@@ -22,6 +22,7 @@ void u3w_append(const char *path, const char *text);
 uint32_t u3w_busy_ms();
 // Wait until everything queued is on the card (or the timeout passes)
 void u3w_flush(int timeout_ms);
+void u3w_shutdown();   // exit: wait for all writes, then stop and join the writer
 
 // DOSBox file layer hooks
 FILE *u3w_fopen(const char *path, const char *mode);
