@@ -734,9 +734,17 @@ static void draw_smenu() {
 	const char *hint = "A Select   B Back   ZL Swap";
 	cv.text_center(font_small, 160, 226, hint, C_ACCENT);
 	if (smenu_confirm) {
-		cv.text_center(font_bold, 160, 52, "Exit Ultima III?", C_TEXT);
-		cv.text_center(font_small, 160, 76, "Anything since your last save is lost.", C_DIM);
-		cv.text_center(font_small, 160, 92, "Save game (outdoors) first to keep it.", C_DIM);
+		char failed[64], line[96];
+		if (u3w_failed_file(failed, sizeof failed)) {   // U3-04: a write did not reach the SD card
+			cv.text_center(font_bold, 160, 52, "Not saved. Exit anyway?", C_TEXT);
+			snprintf(line, sizeof line, "%.24s could not be written", failed);
+			cv.text_center(font_small, 160, 76, line, C_DIM);
+			cv.text_center(font_small, 160, 92, "to the SD card. Exiting may lose it.", C_DIM);
+		} else {
+			cv.text_center(font_bold, 160, 52, "Exit Ultima III?", C_TEXT);
+			cv.text_center(font_small, 160, 76, "Anything since your last save is lost.", C_DIM);
+			cv.text_center(font_small, 160, 92, "Save game (outdoors) first to keep it.", C_DIM);
+		}
 		button(30, 124, 124, 44, ID_SM_EXIT_YES, "YES", font_bold);
 		button(166, 124, 124, 44, ID_SM_EXIT_NO, "NO", font_bold);
 		return;
@@ -766,8 +774,17 @@ static void smenu_press(int id) {
 	case ID_SM_EXIT: smenu_confirm = 1; focus_id = ID_SM_EXIT_NO; break;
 	case ID_SM_EXIT_NO: smenu_confirm = 0; focus_id = ID_SM_EXIT; break;
 	case ID_SM_EXIT_YES:
-		u3_ui_save_all();   // main() then waits for every write (u3w_shutdown) before leaving
-		throw(0);
+		if (smenu_confirm == 1) {
+			// U3-04: write the map, clues and settings now and check they landed; never leave
+			// after a failed write without saying so ("Not saved ... Exit anyway?", focus NO).
+			u3_ui_save_all();
+			u3_top_working(2, u3_ticks_ms());
+			u3w_flush(10000);
+			u3_top_working(0, u3_ticks_ms());
+			char failed[64];
+			if (u3w_failed_file(failed, sizeof failed)) { smenu_confirm = 2; focus_id = ID_SM_EXIT_NO; break; }
+		}
+		throw(0);   // main() still waits for every write (u3w_shutdown) before leaving
 	}
 	dirty = true;
 }
@@ -777,7 +794,7 @@ static void save_settings() {
 	char buf[200];
 	int n = snprintf(buf, sizeof buf, "strips=%d\nturbo_toggle=%d\nswap_ab=%d\ncluebook=%d\nswapped=%d\nlefty=%d\n",
 	                 u3_settings.strips, u3_settings.turbo_toggle, u3_settings.swap_ab, u3_settings.cluebook, u3_settings.swapped, u3_settings.lefty);
-	u3w_put(U3_DIR "/settings.cfg", buf, (size_t)n);
+	u3w_put_safe(U3_DIR "/settings.cfg", buf, (size_t)n);
 }
 static void load_settings() {
 	FILE *f = fopen(U3_DIR "/settings.cfg", "r");
@@ -1146,6 +1163,12 @@ touch_done:
 		int kind = 0;
 		if (press_t && now - press_t >= 350) kind = 1;
 		if (u3w_busy_ms() >= 500) kind = 2;
+		{   // U3-04: a failed write shows "Save failed (SD card)" for 3 s instead of passing silently
+			static uint32_t fail_t = 0;
+			char failed[64];
+			if (u3w_take_failure(failed, sizeof failed)) { fail_t = now; dbg("write FAILED (see the exit question)", 0, 0); }
+			if (fail_t && now - fail_t < 3000) kind = 3; else fail_t = 0;
+		}
 		if (loading) kind = 0;
 		if (kind) { if (now - pill_t >= 40) { pill_t = now; u3_top_working(kind, now); } }
 		else u3_top_working(0, now);

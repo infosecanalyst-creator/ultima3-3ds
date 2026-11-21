@@ -88,6 +88,16 @@ void u3_top_working(int kind, uint32_t now) {
 	uint32_t *dst = (uint32_t *)ov.px;
 	for (int y = 240; y < 256; y++) for (int x = 0; x < 160; x++) dst[y * 512 + x] = 0;
 	ov.fill_round(0, 240, 160, 16, 8, 0x15171D, 235);
+	if (kind == 3) {   // U3-04: a write failed (no progress bar; the text has the whole pill)
+		ov.fill_round(0, 240, 160, 16, 8, 0x5A1410, 235);
+		const char *msg = u3_text_width(font_small, "Save failed (SD card)") <= 144 ? "Save failed (SD card)" : "Save failed";
+		ov.text(font_small, 10, 242, msg, 0xFFE6E0);
+		ov.noclip();
+		u3v_working = 1;
+		u3v_overlay_commit();
+		u3v_present();
+		return;
+	}
 	ov.text(font_small, 10, 242, kind == 2 ? "Saving..." : "Working...", 0xECE8DE);
 	ov.fill_round(72, 246, 80, 4, 2, 0x343944);
 	int t = (int)(now % 1000), seg = 24;

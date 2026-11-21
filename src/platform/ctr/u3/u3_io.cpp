@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-struct Job { std::string path; std::vector<uint8_t> data; bool append; };
+struct Job { std::string path; std::vector<uint8_t> data; bool append; bool safe = false; };
 
 static LightLock lk;
 static LightEvent ev_work;      // oneshot: work was queued
@@ -28,6 +28,18 @@ static Thread th = 0;
 
 static bool same_path(const std::string &a, const char *b) { return strcasecmp(a.c_str(), b) == 0; }
 
+// U3-04: write failures are remembered (under lk) so the UI can say so: fail_new is shown once
+// as a pill; fail_path stays until that file is written successfully (the exit question uses it).
+static std::string fail_new, fail_path;
+static void note_result(const Job &j, bool ok) {
+	if (j.append) return;                      // the debug log: never worth a warning
+	bool locked = started;
+	if (locked) LightLock_Lock(&lk);
+	if (!ok) { size_t s = j.path.find_last_of('/'); fail_new = fail_path = s == std::string::npos ? j.path : j.path.substr(s + 1); }
+	else if (!fail_path.empty()) { size_t s = j.path.find_last_of('/'); if (same_path(fail_path, (s == std::string::npos ? j.path : j.path.substr(s + 1)).c_str())) fail_path.clear(); }
+	if (locked) LightLock_Unlock(&lk);
+}
+
 // ------------------------------------------------------------------ writer thread
 static FILE *open_retry(const char *path, const char *mode) {
 	// The real 3DS can refuse a file another thread has open; try a few times.
@@ -39,24 +51,57 @@ static FILE *open_retry(const char *path, const char *mode) {
 	return 0;
 }
 
-static void write_job(const Job &j) {
+// The port's own files (map, clues, settings): <name>.tmp, every write and the close checked,
+// then swapped in through <name>.bak (rename over an existing file fails on the 3DS SD card);
+// on any failure the old file stays or is put back.
+static bool write_safe(const Job &j) {
+	std::string tmp = j.path + ".tmp", bak = j.path + ".bak";
+	FILE *f = open_retry(tmp.c_str(), "wb");
+	if (!f) return false;
+	bool ok = j.data.empty() || fwrite(j.data.data(), 1, j.data.size(), f) == j.data.size();
+	if (fflush(f) != 0) ok = false;
+	if (fclose(f) != 0) ok = false;
+	if (!ok) { unlink(tmp.c_str()); return false; }
+	struct stat st;
+	bool had = stat(j.path.c_str(), &st) == 0;
+	if (had) {
+		unlink(bak.c_str());
+		if (rename(j.path.c_str(), bak.c_str()) != 0) { unlink(tmp.c_str()); return false; }
+	}
+	if (rename(tmp.c_str(), j.path.c_str()) != 0) {
+		if (had) rename(bak.c_str(), j.path.c_str());
+		unlink(tmp.c_str());
+		return false;
+	}
+	if (had) unlink(bak.c_str());
+	return true;
+}
+
+static bool write_job_raw(const Job &j) {
 	if (j.append) {
 		FILE *f = open_retry(j.path.c_str(), "ab");
-		if (!f) return;
-		fwrite(j.data.data(), 1, j.data.size(), f);
-		fclose(f);
-		return;
+		if (!f) return false;
+		bool ok = fwrite(j.data.data(), 1, j.data.size(), f) == j.data.size();
+		if (fclose(f) != 0) ok = false;
+		return ok;
 	}
-	// Rewrite in place ("r+b", truncate only if it shrank): much cheaper than "wb" on the 3DS card.
+	if (j.safe) return write_safe(j);
+	// Game files: rewrite in place ("r+b", truncate only if it shrank): much cheaper than "wb" on
+	// the 3DS card. Every step is checked (U3-04).
 	FILE *f = fopen(j.path.c_str(), "r+b");
 	long old = -1;
 	if (f) { fseek(f, 0, SEEK_END); old = ftell(f); fseek(f, 0, SEEK_SET); }
 	else f = open_retry(j.path.c_str(), "wb");
-	if (!f) return;
-	if (!j.data.empty()) fwrite(j.data.data(), 1, j.data.size(), f);
-	fflush(f);
-	if (old > (long)j.data.size()) ftruncate(fileno(f), (off_t)j.data.size());
-	fclose(f);
+	if (!f) return false;
+	bool ok = j.data.empty() || fwrite(j.data.data(), 1, j.data.size(), f) == j.data.size();
+	if (fflush(f) != 0) ok = false;
+	if (old > (long)j.data.size() && ftruncate(fileno(f), (off_t)j.data.size()) != 0) ok = false;
+	if (fclose(f) != 0) ok = false;
+	return ok;
+}
+
+static void write_job(const Job &j) {
+	note_result(j, write_job_raw(j));
 }
 
 static volatile bool stop_writer = false;
@@ -117,6 +162,28 @@ void u3w_put(const char *path, const void *data, size_t n) {
 	Job j; j.path = path; j.append = false;
 	j.data.assign((const uint8_t *)data, (const uint8_t *)data + n);
 	enqueue(j);
+}
+
+void u3w_put_safe(const char *path, const void *data, size_t n) {
+	Job j; j.path = path; j.append = false; j.safe = true;
+	j.data.assign((const uint8_t *)data, (const uint8_t *)data + n);
+	enqueue(j);
+}
+
+bool u3w_take_failure(char *name, size_t cap) {
+	if (started) LightLock_Lock(&lk);
+	bool any = !fail_new.empty();
+	if (any) { snprintf(name, cap, "%s", fail_new.c_str()); fail_new.clear(); }
+	if (started) LightLock_Unlock(&lk);
+	return any;
+}
+
+bool u3w_failed_file(char *name, size_t cap) {
+	if (started) LightLock_Lock(&lk);
+	bool any = !fail_path.empty();
+	if (any) snprintf(name, cap, "%s", fail_path.c_str());
+	if (started) LightLock_Unlock(&lk);
+	return any;
 }
 
 void u3w_append(const char *path, const char *text) {
@@ -237,8 +304,9 @@ FILE *u3w_fopen(const char *path, const char *mode) {
 		fseek(rf, 0, SEEK_END); long n = ftell(rf); fseek(rf, 0, SEEK_SET);
 		if (n > 2 * 1024 * 1024) { fclose(rf); return fopen(path, mode); }   // too big to hold: use the card
 		data.resize(n > 0 ? (size_t)n : 0);
-		if (n > 0) fread(&data[0], 1, (size_t)n, rf);
+		bool got = n <= 0 || fread(&data[0], 1, (size_t)n, rf) == (size_t)n;
 		fclose(rf);
+		if (!got) return fopen(path, mode);   // U3-04: a short read must never be written back as the file
 	}
 	FILE *f = mem_open(path, data, true, false, "rb+");
 	if (f && mode[0] == 'a') fseek(f, 0, SEEK_END);

@@ -16,6 +16,12 @@
 void u3w_init();
 // Replace a file's contents (queued; a later put for the same file replaces an unstarted one)
 void u3w_put(const char *path, const void *data, size_t n);
+// The port's own files: crash-safe (.tmp, checked, swapped in through .bak). U3-04
+void u3w_put_safe(const char *path, const void *data, size_t n);
+// U3-04: a write that failed since the last call (for a "Save failed" pill), and the file whose
+// last write failed and has not been written successfully since (for the exit question).
+bool u3w_take_failure(char *name, size_t cap);
+bool u3w_failed_file(char *name, size_t cap);
 // Append text to a file (queued)
 void u3w_append(const char *path, const char *text);
 // Milliseconds the writer has had work outstanding (0 when idle)

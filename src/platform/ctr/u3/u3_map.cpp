@@ -84,7 +84,8 @@ void u3_map_save(bool force) {
 	std::vector<uint8_t> buf(8 + sizeof(U3Area) * U3_AREAS);
 	memcpy(&buf[0], "U3MAP001", 8);
 	memcpy(&buf[8], u3_areas, sizeof(U3Area) * U3_AREAS);
-	u3w_put(save_file, &buf[0], buf.size());
+	if (force) u3w_put_safe(save_file, &buf[0], buf.size());   // exit / suspend: crash-safe (U3-04)
+	else u3w_put(save_file, &buf[0], buf.size());              // every 20 s while exploring: in place, checked
 	dirty = false;
 	last_save = now;
 }

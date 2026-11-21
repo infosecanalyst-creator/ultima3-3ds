@@ -31,7 +31,7 @@ void u3_top_update(bool force);
 void u3_top_set_panel(const uint16_t *px);   // non-null: show this 320x240 panel on the top screen
 void u3_top_panel_changed();                 // the panel was redrawn
 void u3_top_loading(bool on, int files);     // loading screen over the game until it draws
-void u3_top_working(int kind, uint32_t now); // 0 none, 1 "Working...", 2 "Saving..."
+void u3_top_working(int kind, uint32_t now); // 0 none, 1 "Working...", 2 "Saving...", 3 "Save failed"
 
 // Button feedback (u3_sfx.cpp / u3_ui.cpp): every enabled touch button clicks quietly
 // when pressed and shows a press animation (held: pushed in; released: brief flash).
