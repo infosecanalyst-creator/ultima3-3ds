@@ -21,9 +21,10 @@ notes (Exodus Project, doc/u3tech).
 
 ## Install over Wi-Fi
 
-1. Make a staging folder that mirrors the SD card: `<stage>/3ds/u3-3ds/`. Copy in
-   `u3-3ds.3dsx`, everything under `dist/3ds/u3-3ds/`, and your own patched Ultima III
-   folder as `game/`.
+1. Make a staging folder that mirrors the SD card. Put `u3-3ds.3dsx` directly in
+   `<stage>/3ds/` (as `<stage>/3ds/u3-3ds.3dsx`), and copy everything under
+   `dist/3ds/u3-3ds/` plus your own patched Ultima III folder (as `game/`) into
+   `<stage>/3ds/u3-3ds/`.
 2. Optional: build the original-manual pages from your GOG PDFs with
    `tools/make-books.sh <pdf-folder> <stage>`.
 3. Start ftpd on the 3DS, then run `python3 tools/ftp-install.py <stage> <3ds-ip>`.
@@ -39,7 +40,7 @@ See `docs/NOTES.md` for the memory map, testing lessons and open items.
 
 ## SD card layout
 
-    /3ds/u3-3ds/u3-3ds.3dsx
+    /3ds/u3-3ds.3dsx             the app (directly in /3ds)
     /3ds/u3-3ds/u3.conf          (dist/3ds/u3-3ds/u3.conf)
     /3ds/u3-3ds/game/            Ultima III + Exodus Project upgrade (not included)
     /3ds/u3-3ds/books/           guide.txt, spells.txt (included) + manual scans (generated)

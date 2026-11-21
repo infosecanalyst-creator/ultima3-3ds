@@ -2,7 +2,8 @@
 """ftp-install.py - install or update u3-3ds on a 3DS running ftpd, over Wi-Fi.
 
 Usage: ftp-install.py <sd-staging-dir> [host] [port] [--only PATH ...]
-  <sd-staging-dir> mirrors the SD card root (contains 3ds/u3-3ds/...).
+  <sd-staging-dir> mirrors the SD card root: 3ds/u3-3ds.3dsx (the app lives directly in /3ds)
+  and 3ds/u3-3ds/... (settings, game, books).
   Default host 192.168.1.140, port 5000 (ftpd's default port).
 
 Uploads only files whose size differs from the 3DS copy, so re-running it is cheap and
@@ -26,10 +27,14 @@ def main():
     base = os.path.join(root, '3ds', 'u3-3ds')
     for dp, _, fn in os.walk(base):
         for f in fn:
+            if f.lower().endswith('.3dsx'):
+                continue   # an app left in the old place (/3ds/u3-3ds/): it now goes in /3ds
             files.append(os.path.relpath(os.path.join(dp, f), root).replace(os.sep, '/'))
+    if os.path.isfile(os.path.join(root, '3ds', 'u3-3ds.3dsx')):
+        files.append('3ds/u3-3ds.3dsx')
     if only:
         files = [f for f in files if f in only]
-    files.sort(key=lambda p: (0 if '/game/' in p else 1 if p.count('/') == 2 else 2, p))
+    files.sort(key=lambda p: (0 if '/game/' in p else 1 if p.count('/') <= 2 else 2, p))
 
     made, listing = set(), {}
     def ensure_dir(d):
