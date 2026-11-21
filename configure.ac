@@ -1,14 +1,14 @@
 dnl Init.
 AC_INIT(dosbox,SVN)
 AC_PREREQ(2.50)
-AC_CONFIG_SRCDIR(README)
+AC_CONFIG_SRCDIR(src/dosbox.cpp)
 
 dnl Detect the canonical host and target build environment
 AC_CANONICAL_HOST
 AC_CANONICAL_BUILD
 
 dnl Setup for automake
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_HEADER(config.h)
 
 dnl Checks for programs.

@@ -14,6 +14,13 @@ with a front end built for the 3DS's two screens:
 Game state is read from emulated memory using Michael C. Maggio's EXODUS.BIN disassembly
 notes (Exodus Project, doc/u3tech).
 
+## Download
+
+CI builds every push to `main`: the latest `u3-3ds.3dsx` (with its build log and
+`u3-3ds.elf.gz` / `u3-3ds.sym.gz` symbols) is on the
+[`builds` branch](https://github.com/infosecanalyst-creator/ultima3-3ds/tree/builds);
+`SOURCE_COMMIT` names the commit. The START menu shows the build version in its header.
+
 ## Build
 
     docker build -t u3build tools/   # devkitARM + ffmpeg
@@ -49,3 +56,6 @@ See `docs/NOTES.md` for the memory map, testing lessons and open items.
 Exodus Project upgrade applied. Ultima III is © Electronic Arts. No game data or original manuals
 are included.
 Code is GPL-2.0 (DOSBox); the vendored SDL 1.2 video driver is LGPL-2.1; fonts are DejaVu.
+
+The upstream DOSBox manual that used to be this repository's front page is now
+[`docs/README-DOSBox.txt`](docs/README-DOSBox.txt).
