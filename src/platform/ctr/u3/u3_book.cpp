@@ -1,7 +1,7 @@
 // u3_book.cpp - built-in manual: text books (reflowed) and page scans (pan/zoom).
 // Controls follow the standard shared by all of Ryan's 3DS ports:
 //   Circle Pad and C-Stick scroll (hold to keep scrolling) and never move the game,
-//   D-Pad moves the focus between the section buttons (A opens the focused one),
+//   D-Pad moves between the section buttons (a section opens as it is picked; a scanned page on A),
 //   L/R go to the previous/next section, tapping a section opens it,
 //   B or START closes the manual.
 #include "u3_ui.h"
@@ -61,7 +61,8 @@ enum {
 	TOOL_Y = 32, TOOL_H = 32, BODY_Y = 64,
 	RAIL_W = 94, RAIL_BTN_H = 24, RAIL_STEP = 28, RAIL_ROWS = 6,
 	RAIL_X = 6, RAIL_BW = RAIL_W - 8,
-	VIEW_X = 96, VIEW_W = 320 - 96, VIEW_H = 240 - 64,
+	FOOT_H = 12,   // the footer strip (the reading keys, the same wording in every port)
+	VIEW_X = 96, VIEW_W = 320 - 96, VIEW_H = 240 - 64 - FOOT_H,
 	SHELF_STEP = 38, SHELF_H = 34,
 	TEXT_X = VIEW_X + 6, TEXT_W = VIEW_W - 6 - 10,   // room for the scrollbar
 	SHELF_ROWS_MAX = 10,
@@ -357,13 +358,14 @@ static void go_section(int i) {
 }
 
 // =================================================================== drawing
+static bool more_below = false;   // the rail has sections below the last row shown
 static void draw_rail(U3Canvas &c) {
 	c.fill(0, BODY_Y, RAIL_W, VIEW_H, C_PANEL);
 	int cur = current_section();
 	int n = (int)secs.size();
 	for (int r = 0; r < RAIL_ROWS && rail_top + r < n; r++) {
 		int i = rail_top + r;
-		int y = BODY_Y + 2 + r * RAIL_STEP;   // last row ends at 230
+		int y = BODY_Y + r * RAIL_STEP;   // six rows, 4 px apart, end at 228: the footer strip starts there
 		int id = B_SEC + i;
 		bool here = i == cur;
 		int off = u3_btn_bg(c, RAIL_X, y, RAIL_BW, RAIL_BTN_H, 4, here ? C_ACCENT_BG : C_BTN, look_of(id));
@@ -375,10 +377,20 @@ static void draw_rail(U3Canvas &c) {
 	}
 	// more above / below
 	if (rail_top > 0) c.tri(RAIL_W / 2 - 4, BODY_Y + 1, RAIL_W / 2 + 4, BODY_Y + 1, RAIL_W / 2, BODY_Y - 3 + 1, C_DIM);
-	if (rail_top + RAIL_ROWS < n) {
-		int yb = 237;
-		c.tri(RAIL_W / 2 - 4, yb - 3, RAIL_W / 2 + 4, yb - 3, RAIL_W / 2, yb + 1, C_DIM);
-	}
+	if (rail_top + RAIL_ROWS < n) more_below = true;   // drawn in the footer strip's left corner
+}
+
+// The footer strip: the reading keys in the house wording (text books), or the page keys (scans).
+static void draw_footer(U3Canvas &c, bool scans) {
+	const int y0 = 240 - FOOT_H;
+	c.fill(0, y0, 320, FOOT_H, C_PANEL);
+	if (more_below) c.tri(10 - 4, y0 + 4, 10 + 4, y0 + 4, 10, y0 + 8, C_DIM);
+	more_below = false;
+	const bool lefty = u3_settings.lefty;
+	const char *t = scans ? (lefty ? "Sticks: move   L / R: page   D-Down / START: close" : "Sticks: move   L / R: page   B / START: close")
+	                      : (lefty ? "Sticks: scroll   A/B/X/Y, L / R: section   D-Down / START: close"
+	                               : "Sticks: scroll   D-Pad, L / R: section   B / START: close");
+	c.text(font_small, 316 - u3_text_width(font_small, t), y0 - 1, t, C_DIM);
 }
 
 static void draw_toolbar(U3Canvas &c, bool scans) {
@@ -406,7 +418,7 @@ static void draw_text(U3Canvas &c) {
 	int y = BODY_Y + 6 - tscroll;
 	for (size_t i = 0; i < tlines.size(); i++) {
 		const TLine &t = tlines[i];
-		if (y + t.h >= BODY_Y && y < 240) {
+		if (y + t.h >= BODY_Y && y < BODY_Y + VIEW_H) {
 			if (t.rule) {
 				int mid = VIEW_X + VIEW_W / 2;
 				c.hline(VIEW_X + 8, y + 7, VIEW_W - 16, 0xD6CBB2);
@@ -416,7 +428,7 @@ static void draw_text(U3Canvas &c) {
 			} else if (!t.s.empty()) c.text(*t.f, TEXT_X + t.x, y, t.s.c_str(), t.col);
 		}
 		y += t.h;
-		if (y > 240) break;
+		if (y > BODY_Y + VIEW_H) break;
 	}
 	c.noclip();
 	if (ttotal > VIEW_H) {
@@ -425,12 +437,14 @@ static void draw_text(U3Canvas &c) {
 		int sy = BODY_Y + (VIEW_H - sh) * tscroll / (maxs > 0 ? maxs : 1);
 		c.fill(315, sy, 3, sh, 0xB8AC90);
 	}
+	draw_footer(c, false);
 }
 
 static void draw_scan(U3Canvas &c) {
 	draw_toolbar(c, true);
 	draw_rail(c);
 	c.fill(VIEW_X, BODY_Y, VIEW_W, VIEW_H, 0x0A0B0E);
+	draw_footer(c, true);
 	if (img_err) {
 		c.text_center(font_ui, VIEW_X + VIEW_W / 2, 120, "Couldn't open this page", C_DIM);
 		c.text_center(font_small, VIEW_X + VIEW_W / 2, 140, "(not enough memory?)", C_FAINT);
@@ -609,7 +623,11 @@ int u3_book_buttons(uint32_t kd, uint32_t kh) {
 		return used;
 	}
 	int n = (int)secs.size();
-	if (step && n) { focus += step; keep_focus_visible(); dirty = true; used = 1; }
+	if (step && n) {
+		focus += step; keep_focus_visible(); dirty = true; used = 1;
+		// house standard: a section opens as the D-Pad picks it (page scans still wait for A: each is a big picture to load)
+		if (!is_scans()) go_section(focus);
+	}
 	if (kd & KEY_A) go_section(focus);
 	if (kd & KEY_L) go_section(current_section() - 1);
 	if (kd & KEY_R) go_section(current_section() + 1);

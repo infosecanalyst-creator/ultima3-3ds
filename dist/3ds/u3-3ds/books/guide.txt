@@ -109,7 +109,7 @@ Tap a line to pin it as a clue. Pinned lines are kept for good with the place yo
 Reading works the same way as in every other 3DS port:
 
 - Circle Pad or C-Stick - scroll (hold to keep scrolling; on page scans, move around the page)
-- D-Pad - move between the section buttons on the left; A opens the one you picked
+- D-Pad - move between the section buttons on the left; a section opens as you pick it (on page scans, A opens the page you picked)
 - L / R - previous / next section (on page scans, the previous / next page)
 - Tap a section to open it; drag the text or page to move it
 - B or START - close the book and go back to where you were
