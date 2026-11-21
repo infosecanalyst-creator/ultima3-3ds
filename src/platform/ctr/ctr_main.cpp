@@ -414,7 +414,7 @@ void GFX_Start() {
 		if (!thread_started)
 		{
 			//I think Core 1 at 70% should be plenty even for New 3DS Stuff.
-			thread = threadCreate(GFX_EndUpdate_Thread, 0, 2 * 1024, 0x18, 1, true);
+			thread = threadCreate((ThreadFunc)GFX_EndUpdate_Thread, 0, 2 * 1024, 0x18, 1, true);
 		}
 	#endif
 }
@@ -429,7 +429,6 @@ static void GUI_ShutDown(Section * /*sec*/) {
 
 static void GUI_StartUp(Section * sec) {
 	sec->AddDestroyFunction(&GUI_ShutDown);
-	Section_prop * section=static_cast<Section_prop *>(sec);
 }
 
 static void GUI_ShowSplash() {
@@ -660,6 +659,7 @@ int main(int argc, char* argv[]) {
 	catch(...){
 		; // Unknown error, let's just exit.
 	}
+	u3w_close_open_files();   // U3-06: files the game left open are closed (queued) before the final flush
 	u3_ui_save_all();
 	u3w_shutdown();   // every write reaches the card and the writer stops before anything is torn down
 	SDL_Quit();//Let's hope sdl will quit as well when it catches an exception

@@ -30,6 +30,11 @@ uint32_t u3w_busy_ms();
 void u3w_flush(int timeout_ms);
 void u3w_shutdown();   // exit: wait for all writes, then stop and join the writer
 
+// U3-06: close every game file DOSBox left open (queues their changes); call before u3w_shutdown
+void u3w_close_open_files();
+// U3-05: before reading one of the port's own files: restore it from .bak if a power cut left only that
+void u3w_recover(const char *path);
+
 // DOSBox file layer hooks
 FILE *u3w_fopen(const char *path, const char *mode);
 int u3w_stat(const char *path, struct stat *st);

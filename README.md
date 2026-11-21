@@ -36,6 +36,15 @@ CI builds every push to `main`: the latest `u3-3ds.3dsx` (with its build log and
    `tools/make-books.sh <pdf-folder> <stage>`.
 3. Start ftpd on the 3DS, then run `python3 tools/ftp-install.py <stage> <3ds-ip>`.
 
+## Controls and manual
+
+D-pad / Circle Pad move; A = Enter, B = Esc, X = Space, Y = keyboard, ZL swaps the screens, ZR
+fast-forwards (hold), L/R switch the bottom-screen tab, START opens the menu (Resume, Manual,
+Save game, Settings, Exit game). Tap the command pad, map, log or keyboard on the touch screen.
+The built-in manual is START > MANUAL (the Book tab): Circle Pad and C-Stick scroll, the D-Pad
+moves between section buttons, L/R switch sections, B or START closes it. Settings has a
+left-handed option.
+
 ## Tools
 
 - `tools/Dockerfile` - build image (devkitARM + ffmpeg)

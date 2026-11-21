@@ -566,7 +566,7 @@ static void draw_map() {
 		u3_draw_dungeon(cv, a, L, 0, 32, 208, 208, true);
 		cv.fill(208, 32, 112, 208, C_PANEL);
 		cv.text(font_small, 214, 36, fit_str(font_small, title, 100).c_str(), C_DIM);
-		char lt[16]; snprintf(lt, sizeof lt, "Level %d", L + 1);
+		char lt[24]; snprintf(lt, sizeof lt, "Level %d", L + 1);
 		cv.text(font_bold, 214, 50, lt, C_INFO);
 		for (int i = 0; i < 8; i++) {
 			char b[4]; snprintf(b, sizeof b, "%d", i + 1);
@@ -804,6 +804,7 @@ static void save_settings() {
 	u3w_put_safe(U3_DIR "/settings.cfg", buf, (size_t)n);
 }
 static void load_settings() {
+	u3w_recover(U3_DIR "/settings.cfg");
 	FILE *f = fopen(U3_DIR "/settings.cfg", "r");
 	if (!f) return;
 	char line[128];
@@ -1130,8 +1131,10 @@ void u3_ui_input() {
 			if (reading && touch_y0 >= 32) { u3_book_touch(t.px, t.py, 1); }
 			else if (!smenu && tab == TAB_MAP && !kb_open && !map_picker && map_zoom == 1 && touch_x0 < 236 && touch_y0 > 32) {
 				map_follow = false; map_cx -= dx / 8.0f; map_cy -= dy / 8.0f;
-				if (map_cx < 0) map_cx += 64; if (map_cx >= 64) map_cx -= 64;
-				if (map_cy < 0) map_cy += 64; if (map_cy >= 64) map_cy -= 64;
+				if (map_cx < 0) map_cx += 64;
+				if (map_cx >= 64) map_cx -= 64;
+				if (map_cy < 0) map_cy += 64;
+				if (map_cy >= 64) map_cy -= 64;
 				touch_id = ID_NONE;
 			} else if (!smenu && tab == TAB_LOG && !kb_open && touch_y0 > 48) {
 				static int acc = 0;

@@ -349,6 +349,23 @@ int u3w_unlink(const char *path) {
 	return (r != 0 && dropped) ? 0 : r;
 }
 
+// U3-06: files DOSBox still has open when the game ends (EXIT, HOME > Close) live in memory; closing
+// them queues any changes, so the writer's final flush (u3w_shutdown) puts them on the card.
+void u3w_close_open_files() {
+	std::vector<FILE *> open;
+	for (auto &kv : memfiles) open.push_back(kv.first);
+	for (FILE *f : open) fclose(f);        // mf_close queues a dirty writable file and forgets the handle
+}
+
+// U3-05: a power cut between the two renames in write_safe leaves <name>.bak (the previous good file)
+// and no <name>. Put it back before the port reads one of its own files; drop a half-written .tmp.
+void u3w_recover(const char *path) {
+	std::string p = path, tmp = p + ".tmp", bak = p + ".bak";
+	struct stat st;
+	if (stat(p.c_str(), &st) != 0 && stat(bak.c_str(), &st) == 0) rename(bak.c_str(), p.c_str());
+	unlink(tmp.c_str());
+}
+
 int u3w_rename(const char *from, const char *to) {
 	if (is_game_path(from) && pending(from, 0, 0)) u3w_flush(5000);
 	return rename(from, to);

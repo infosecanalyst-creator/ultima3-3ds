@@ -66,6 +66,7 @@ bool u3_map_init(const char *shapes_path, const char *pal_path, const char *save
 			}
 	}
 	// saved exploration
+	u3w_recover(save_file);
 	f = fopen(save_file, "rb");
 	if (f) {
 		char magic[8];
@@ -211,8 +212,10 @@ void u3_draw_area(U3Canvas &c, int a, int x, int y, int w, int h, float cx, floa
 	if (show_party && u3_map_current_area() == a) {
 		float px = u3s.x - ox, py = u3s.y - oy;
 		if (wrap) {
-			while (px < 0) px += 64; while (px >= 64) px -= 64;
-			while (py < 0) py += 64; while (py >= 64) py -= 64;
+			while (px < 0) px += 64;
+			while (px >= 64) px -= 64;
+			while (py < 0) py += 64;
+			while (py >= 64) py -= 64;
 		}
 		int pcx = x + (int)(px * ts) + ts / 2, pcy = y + (int)(py * ts) + ts / 2;
 		int r = ts < 6 ? 4 : ts / 2 + 2;

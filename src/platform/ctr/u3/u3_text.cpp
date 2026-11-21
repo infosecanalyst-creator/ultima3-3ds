@@ -133,6 +133,7 @@ bool u3_text_window_has(const char *needle) {
 
 // Pins file: one per line "where\ttext"; typed words: "#word"
 void u3_pins_load(const char *path) {
+	u3w_recover(path);
 	FILE *f = fopen(path, "r");
 	if (!f) return;
 	char buf[512];
