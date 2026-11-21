@@ -123,9 +123,21 @@ The original manuals are not included with this program. The setup script makes 
 
 The game saves when you use Q (Quit) while outdoors, or Save game in the START menu (which does the same thing, and is greyed out anywhere else). Do that before you stop playing. The next time you start, choose Journey Onward to continue.
 
-To leave, use Exit game in the START menu. It asks first, because anything since your last save is lost.
+To leave, use Exit game in the START menu, or HOME and then Close. Exit game asks first, because anything since your last save is lost. Closing from HOME has no time to ask: it writes out everything still waiting and then quits.
 
-Closing the 3DS lid puts everything to sleep. Your map, clues and settings are saved when you leave the program, and when the 3DS sleeps.
+While files are being written to the SD card a "Saving..." bar shows at the top of the game screen. The game waits for every write to finish before it leaves, and files the game still had open are written out first, so nothing is half-saved.
+
+If a write fails (the SD card is full or locked) a "Save failed (SD card)" note shows for a few seconds. Exit game then says "Not saved. Exit anyway?" with NO chosen, and does not leave until you say so.
+
+The port's own files (the map, your clues and your settings) are written to a temporary file first and swapped in, with the previous copy kept as a .bak file. If the power is cut at the wrong moment, the next start puts the .bak copy back and throws away any half-written file.
+
+Closing the 3DS lid puts everything to sleep. Your map, clues and settings are saved when you leave the program, and when you press HOME or the 3DS sleeps (the save is done by the game at its next step, not inside the system's sleep hook).
+
+# Where the files are
+
+- The program: /3ds/u3-3ds.3dsx, directly in /3ds.
+- Everything else is in /3ds/u3-3ds/: u3.conf (the DOSBox settings), game/ (Ultima III with the Exodus Project upgrade), books/ (this guide, the spell list, the reference card, your manual scans) and the port's own map, clue and settings files.
+- The build number is in the header of the START menu.
 
 # A few spoiler-free tips
 

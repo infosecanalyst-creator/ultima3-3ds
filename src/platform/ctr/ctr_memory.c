@@ -41,9 +41,9 @@ static void ctrEnableAllServices(void)
 //-----------------------------------------------------------------------------
 int _SetMemoryPermission(void *buffer, int size, int permission)
 {
-	unsigned int currentHandle;
+	Handle currentHandle;   /* libctru's Handle (u32), not unsigned int: they differ on arm-none-eabi */
 	svcDuplicateHandle(&currentHandle, 0xFFFF8001);
-	int res = svcControlProcessMemory(currentHandle, buffer, 0, size, MEMOP_PROT, permission);
+	int res = svcControlProcessMemory(currentHandle, (u32)(uintptr_t)buffer, 0, size, MEMOP_PROT, permission);
 	svcCloseHandle(currentHandle);
 
 	return res;

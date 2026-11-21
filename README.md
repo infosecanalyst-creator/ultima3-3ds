@@ -45,6 +45,8 @@ The built-in manual is START > MANUAL (the Book tab): Circle Pad and C-Stick scr
 moves between section buttons, L/R switch sections, B or START closes it. Settings has a
 left-handed option.
 
+Saving: Save game / Q (outdoors) saves; Exit game (and HOME > Close) wait for every SD write to finish, and Exit game asks "Not saved. Exit anyway?" (NO chosen) if a write failed. The port's own files (map, clues, settings) are written through a temporary file and kept as `.bak`; a power cut is recovered from the `.bak` at the next start. The guide in `dist/3ds/u3-3ds/books/guide.txt` (START > Manual) covers this.
+
 ## Tools
 
 - `tools/Dockerfile` - build image (devkitARM + ffmpeg)
