@@ -25,6 +25,9 @@ jobs:
         run: |
           mkdir -p out
           cp *.3dsx build.log out/ 2>/dev/null || true
+          # symbols for reading crash addresses: gzipped ELF (addr2line) and a demangled nm map
+          gzip -9c u3-3ds.elf > out/u3-3ds.elf.gz 2>/dev/null || true
+          "$DEVKITARM/bin/arm-none-eabi-nm" -C -n u3-3ds.elf 2>/dev/null | gzip -9 > out/u3-3ds.sym.gz || true
           echo "$GITHUB_SHA" > out/SOURCE_COMMIT
       - name: Publish to builds branch
         if: success()   # never replace the last good build with a failed one; failed-build logs stay in the Actions run

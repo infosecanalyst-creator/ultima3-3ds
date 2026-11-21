@@ -20,6 +20,9 @@
 #include <string>
 
 #include "keyboard.h"
+#ifndef PORT_VERSION
+#define PORT_VERSION "unknown"
+#endif
 
 extern bool ticksLocked;           // DOSBox fast-forward
 extern bool keyb_typematic;        // DOSBox hardware key repeat (we repeat held keys ourselves)
@@ -729,6 +732,10 @@ static void draw_smenu() {
 	cv.fill(0, 0, 320, 22, C_PANEL);
 	cv.fill(0, 22, 320, 1, C_EDGE);
 	cv.text(font_bold, 8, 3, smenu_confirm ? "EXIT GAME" : "MENU", C_ACCENT);
+	if (!smenu_confirm) {   // port version (git describe of ultima3-3ds), right of the title
+		const char *v = "Build " PORT_VERSION;
+		cv.text(font_small, 320 - 8 - u3_text_width(font_small, v), 6, v, C_DIM);
+	}
 	cv.fill(0, 224, 320, 16, C_PANEL);
 	cv.fill(0, 224, 320, 1, C_EDGE);
 	const char *hint = "A Select   B Back   ZL Swap";

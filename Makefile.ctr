@@ -109,7 +109,10 @@ CFLAGS	:= -Wno-error=incompatible-pointer-types -Wno-error=int-conversion -Wno-s
 			   -fomit-frame-pointer \
                $(ARCH)
 
-CFLAGS      += $(INCLUDE) -D__3DS__ -DCTR_GFXEND_THREADED
+# Port version in the START menu header: git describe of this repo (exported for the build/ sub-make)
+PORT_VERSION ?= $(shell git -c safe.directory='*' -C "$(CURDIR)" describe --always --dirty 2>/dev/null || echo unknown)
+export PORT_VERSION
+CFLAGS      += $(INCLUDE) -D__3DS__ -DCTR_GFXEND_THREADED -DPORT_VERSION=\"$(PORT_VERSION)\"
 
 CXXFLAGS    := $(CFLAGS) -std=gnu++11 -fpermissive \
                -Wno-unused-parameter -Wno-strict-aliasing
