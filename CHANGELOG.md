@@ -2,6 +2,17 @@
 
 (DOSBox's own history is in `ChangeLog`.)
 
+## 2026-11-22
+
+- Title screens: the Commands tab now shows what the game asks for. "Press <Space>" is one big Continue button; the game's menus ("Option:") become one button per entry with the game's own words (Journey Onward, Organize a Party...). All commands brings the letter pad back.
+- Start a New Game (tapped on that menu) asks first, with NO chosen.
+- B does nothing at the title menus (the game took Esc as "Return to the View" and restarted the title).
+- Manual: section names that did not fit go on two lines instead of being cut with "..."; five taller rows and a scrollbar.
+- START menu footer uses the same words as the other ports and follows left-handed play and Swap A and B. It is one size larger.
+- Exit question tells you how long ago you last saved.
+- Brighter small text: strip labels, command names, the manual's footer; the Settings note is normal size. "Pass" is now "Space". Descend and Transact keep a margin.
+- Guide updated (starting a game, strips off fills the screen).
+
 ## 2026-11-21
 
 - If the power is cut while the port's own files (map, clues, settings) are being written, the next start puts the previous good copy back instead of losing them.

@@ -59,7 +59,7 @@ static bool avail_checked = false;
 enum {
 	// Rule 11: buttons >= 24 px tall, >= 4 px apart, >= 6 px from the screen edges.
 	TOOL_Y = 32, TOOL_H = 32, BODY_Y = 64,
-	RAIL_W = 94, RAIL_BTN_H = 24, RAIL_STEP = 28, RAIL_ROWS = 6,
+	RAIL_W = 94, RAIL_BTN_H = 29, RAIL_STEP = 33, RAIL_ROWS = 5,   // U3-U1: room for a section name on two lines
 	RAIL_X = 6, RAIL_BW = RAIL_W - 8,
 	FOOT_H = 12,   // the footer strip (the reading keys, the same wording in every port)
 	VIEW_X = 96, VIEW_W = 320 - 96, VIEW_H = 240 - 64 - FOOT_H,
@@ -365,19 +365,39 @@ static void draw_rail(U3Canvas &c) {
 	int n = (int)secs.size();
 	for (int r = 0; r < RAIL_ROWS && rail_top + r < n; r++) {
 		int i = rail_top + r;
-		int y = BODY_Y + r * RAIL_STEP;   // six rows, 4 px apart, end at 228: the footer strip starts there
+		int y = BODY_Y + r * RAIL_STEP;   // five rows of 29 px, 4 px apart, end at 225: the footer strip starts at 228
 		int id = B_SEC + i;
 		bool here = i == cur;
 		int off = u3_btn_bg(c, RAIL_X, y, RAIL_BW, RAIL_BTN_H, 4, here ? C_ACCENT_BG : C_BTN, look_of(id));
 		int indent = secs[i].level == 2 ? 6 : 0;
-		std::string t = fit(font_small, secs[i].label, RAIL_BW - 8 - indent);
-		c.text(font_small, RAIL_X + 4 + indent, y + (RAIL_BTN_H - font_small.height) / 2 + off, t.c_str(), here ? C_ACCENT : C_TEXT);
+		// U3-U1: a name too long for one line goes on two (it used to be cut with "...")
+		const int maxw = RAIL_BW - 8 - indent;
+		const char *lbl = secs[i].label.c_str();
+		if (u3_text_width(font_small, lbl) <= maxw) {
+			c.text(font_small, RAIL_X + 4 + indent, y + (RAIL_BTN_H - font_small.height) / 2 + off, lbl, here ? C_ACCENT : C_TEXT);
+		} else {
+			int n1 = u3_wrap(font_small, lbl, maxw);
+			std::string l1(lbl, n1);
+			while (!l1.empty() && l1[l1.size() - 1] == ' ') l1.erase(l1.size() - 1);
+			const char *rest = lbl + n1;
+			while (*rest == ' ') rest++;
+			std::string l2 = fit(font_small, rest, maxw);
+			c.text(font_small, RAIL_X + 4 + indent, y + 2 + off, l1.c_str(), here ? C_ACCENT : C_TEXT);
+			c.text(font_small, RAIL_X + 4 + indent, y + 14 + off, l2.c_str(), here ? C_ACCENT : C_TEXT);
+		}
 		if (i == focus) { c.frame_round(RAIL_X, y, RAIL_BW, RAIL_BTN_H, 4, C_ACCENT); c.frame_round(RAIL_X + 1, y + 1, RAIL_BW - 2, RAIL_BTN_H - 2, 3, C_ACCENT, 140); }
 		hreg(RAIL_X, y, RAIL_BW, RAIL_BTN_H, id);
 	}
 	// more above / below
 	if (rail_top > 0) c.tri(RAIL_W / 2 - 4, BODY_Y + 1, RAIL_W / 2 + 4, BODY_Y + 1, RAIL_W / 2, BODY_Y - 3 + 1, C_DIM);
 	if (rail_top + RAIL_ROWS < n) more_below = true;   // drawn in the footer strip's left corner
+	if (n > RAIL_ROWS) {   // U3-U1: a real scrollbar shows there are more sections and where the list is
+		const int tx = RAIL_X + RAIL_BW, th = RAIL_ROWS * RAIL_STEP - 4;
+		int sh = th * RAIL_ROWS / n; if (sh < 12) sh = 12;
+		int sy = BODY_Y + (th - sh) * rail_top / (n - RAIL_ROWS);
+		c.fill(tx, BODY_Y, 2, th, C_BTN);
+		c.fill(tx, sy, 2, sh, C_ACCENT);
+	}
 }
 
 // The footer strip: the reading keys in the house wording (text books), or the page keys (scans).
@@ -390,7 +410,7 @@ static void draw_footer(U3Canvas &c, bool scans) {
 	const char *t = scans ? (lefty ? "Sticks: move   L / R: page   D-Down / START: close" : "Sticks: move   L / R: page   B / START: close")
 	                      : (lefty ? "Sticks: scroll   A/B/X/Y, L / R: section   D-Down / START: close"
 	                               : "Sticks: scroll   D-Pad, L / R: section   B / START: close");
-	c.text(font_small, 316 - u3_text_width(font_small, t), y0 - 1, t, C_DIM);
+	c.text(font_small, 316 - u3_text_width(font_small, t), y0 - 1, t, C_TEXT);   // U3-U3: bright, not grey on dark
 }
 
 static void draw_toolbar(U3Canvas &c, bool scans) {

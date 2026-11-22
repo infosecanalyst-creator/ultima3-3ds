@@ -23,6 +23,12 @@ void u3_text_scan(const uint16_t *pix, int pitch_px, int w, int h);
 const char *u3_text_window_line(int i);
 bool u3_text_window_has(const char *needle);   // case-insensitive, any line
 
+// The whole 40x25 text screen, read only while no game is running (title, main menu, party
+// organiser): what the game is asking there becomes buttons (U3-X1). Row 0-24; "" outside.
+const char *u3_screen_line(int row);
+bool u3_screen_has(const char *needle);        // case-insensitive, any row
+extern uint32_t u3_screen_changes;             // bumps when the screen text changes
+
 void u3_pins_load(const char *path);
 void u3_pins_save(const char *path);
 // Words useful for the typing helper (from pinned lines + things typed before)

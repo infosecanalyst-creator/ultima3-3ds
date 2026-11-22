@@ -70,6 +70,8 @@ enum {
 	ID_LOG_FILTER = 820, ID_LOG_LINE = 1000,
 	ID_SET = 900, ID_CONFIRM_YES = 950, ID_CONFIRM_NO,
 	ID_SM_RESUME = 960, ID_SM_MANUAL, ID_SM_SAVE, ID_SM_SETTINGS, ID_SM_EXIT, ID_SM_EXIT_YES, ID_SM_EXIT_NO,
+	ID_TITLE_OPT = 970,   // up to 8 menu entries read off the game's title screens (U3-X1)
+	ID_TITLE_YES = 980, ID_TITLE_NO, ID_TITLE_SPACE, ID_TITLE_ALL,
 };
 
 static void reg(int x, int y, int w, int h, int id) { Btn b = { x, y, w, h, id }; btns.push_back(b); }
@@ -295,6 +297,56 @@ static void set_tab(int t) {
 static bool smenu = false;
 static int smenu_confirm = 0;      // 1 = "exit the game?"
 static bool can_save() { return u3s.valid && u3s.nparty > 0 && u3s.map == U3MAP_SOSARIA; }
+static uint32_t last_save_t = 0;   // when Q (save) was last sent outdoors in this session; 0 = not yet (U3-X3)
+static void note_save() { last_save_t = u3_ticks_ms(); if (!last_save_t) last_save_t = 1; }
+
+// ------------------------------------------------------------------ title screens (U3-X1, X2, Q3)
+// Before a game is running (title, main menu, party organiser) the game asks for keys the
+// 26-command pad does not explain. The whole text screen is read (u3_text.cpp); a "Press
+// <Space>" becomes one big Continue button, and an "Option:" menu becomes one button per
+// entry, with the menu's own words. The entry's first letter is the key the game wants.
+enum { TITLE_NONE, TITLE_SPACE, TITLE_MENU };
+struct TitleOpt { std::string label; char key; };
+static std::vector<TitleOpt> title_opts;
+static int title_kind = TITLE_NONE;
+static bool title_all_cmds = false;   // "All commands" was tapped: show the full pad here
+static int title_confirm = -1;        // entry waiting for YES / NO (Start a New Game)
+static uint32_t title_seen = 0xFFFFFFFF;
+
+static bool title_pad_on() { return title_kind != TITLE_NONE && !title_all_cmds; }
+
+static void title_scan() {
+	if (u3_screen_changes == title_seen) return;
+	title_seen = u3_screen_changes;
+	int kind = TITLE_NONE;
+	std::vector<TitleOpt> opts;
+	if (!u3_in_game()) {
+		int opt_row = -1;
+		for (int r = 0; r < 25 && opt_row < 0; r++) if (strstr(u3_screen_line(r), "Option")) opt_row = r;
+		if (opt_row >= 0) {
+			for (int r = opt_row + 1; r < 25 && opts.size() < 8; r++) {
+				std::string t(u3_screen_line(r));
+				size_t a = t.find_first_not_of(' ');
+				if (a == std::string::npos) continue;
+				t = t.substr(a, t.find_last_not_of(' ') - a + 1);
+				if (t[0] == '(') break;                              // the copyright lines end the menu
+				if (!isalpha((unsigned char)t[0]) || t.size() < 3) continue;
+				TitleOpt o = { t, (char)toupper((unsigned char)t[0]) };
+				opts.push_back(o);
+			}
+			if (opts.size() >= 2) kind = TITLE_MENU;
+		}
+		if (kind == TITLE_NONE && (u3_screen_has("<space>") || (u3_screen_has("press") && u3_screen_has("space")))) kind = TITLE_SPACE;
+	}
+	bool same = kind == title_kind && opts.size() == title_opts.size();
+	for (size_t i = 0; same && i < opts.size(); i++) same = opts[i].label == title_opts[i].label;
+	if (same) return;
+	if (kind != title_kind) title_all_cmds = false;
+	title_kind = kind;
+	title_opts = opts;
+	title_confirm = -1;
+	dirty = true;
+}
 static void open_smenu() {
 	if (kb_open) close_keyboard();
 	smenu = true; smenu_confirm = 0; focus_id = ID_SM_RESUME; dirty = true;
@@ -379,7 +431,43 @@ static void arrow_glyph(int cx, int cy, int dir, uint32_t col) {
 	}
 }
 
+// The title pad; false when the normal command pad should be drawn.
+static bool draw_title_pad() {
+	if (!title_pad_on()) return false;
+	if (title_confirm >= 0 && title_confirm < (int)title_opts.size()) {
+		// Start a New Game begins again from nothing: ask first, focus on NO (B also says no)
+		cv.text_center(font_bold, 160, 52, (title_opts[title_confirm].label + "?").c_str(), C_TEXT);
+		cv.text_center(font_small, 160, 76, "The game starts over from the beginning.", C_DIM);
+		cv.text_center(font_small, 160, 92, "A party you saved before may be lost.", C_DIM);
+		button(30, 124, 124, 44, ID_TITLE_YES, "YES", font_bold);
+		button(166, 124, 124, 44, ID_TITLE_NO, "NO", font_bold);
+		return true;
+	}
+	if (title_kind == TITLE_SPACE) {
+		cv.text_center(font_ui, 160, 40, "The game says: Press Space", C_TEXT);
+		button(6, 64, 308, 80, ID_TITLE_SPACE, "Continue", font_big, C_ACCENT_BG, C_ACCENT);
+		cv.text_center(font_small, 160, 154, u3_settings.lefty ? "D-Left does the same." : "X does the same.", C_DIM);
+	} else {
+		cv.text_center(font_ui, 160, 36, "The game asks. Tap your choice:", C_TEXT);
+		const int n = (int)title_opts.size(), cols = n > 4 ? 2 : 1, rows = (n + cols - 1) / cols;
+		int bh = (140 - 4 * (rows - 1)) / rows;
+		if (bh > 40) bh = 40;
+		const int bw = cols == 2 ? 152 : 308;
+		for (int i = 0; i < n; i++) {
+			const u3_font &f = u3_text_width(font_bold, title_opts[i].label.c_str()) <= bw - 8 ? font_bold : font_ui;
+			button(6 + (i % cols) * (bw + 4), 56 + (i / cols) * (bh + 4), bw, bh, ID_TITLE_OPT + i,
+			       title_opts[i].label.c_str(), f, C_ACCENT_BG, C_ACCENT);
+		}
+	}
+	// bottom row. No Esc here: at these menus the game takes Esc as "Return to the View".
+	button(6, 202, 70, 30, ID_ENTER, "Enter", font_bold, 0x2C3340, C_INFO);
+	button(80, 202, 70, 30, ID_KBD, "Abc", font_bold, 0x2C3340, C_INFO);
+	button(154, 202, 160, 30, ID_TITLE_ALL, "All commands", font_ui);
+	return true;
+}
+
 static void draw_pad() {
+	if (draw_title_pad()) return;
 	const int cols = 5, cw = 58, ch = 24, gx = 4, gy = 4, x0 = 6, y0 = 34;   // rule 11
 	for (int i = 0; i < 30; i++) {
 		int cx = x0 + (i % cols) * (cw + gx), cy = y0 + (i / cols) * (ch + gy);
@@ -389,14 +477,16 @@ static void draw_pad() {
 			bool rel = cmd_relevant(c.key);
 			int off = u3_btn_bg(cv, cx, cy, cw, ch, 5, rel ? C_ACCENT_BG : C_BTN, u3_press_look(id, held_on(id)));
 			char k[2] = { c.key, 0 };
-			cv.text(font_bold, cx + 3, cy + (ch - font_bold.height) / 2 + off, k, rel ? C_ACCENT : C_TEXT);
-			int wx = cx + 3 + u3_text_width(font_bold, k) + 2;
-			if (wx < cx + 14) wx = cx + 14;
+			// U3-U4: the letter sits 2 px in and the word right after it, so the longest names
+			// (Descend, Transact) keep a margin; U3-U3: the names are near-white, not blue-grey
+			cv.text(font_bold, cx + 2, cy + (ch - font_bold.height) / 2 + off, k, rel ? C_ACCENT : C_TEXT);
+			int wx = cx + 2 + u3_text_width(font_bold, k) + 1;
+			if (wx < cx + 12) wx = cx + 12;
 			cv.text(font_small, wx, cy + (ch - font_small.height) / 2 + 1 + off,
-			        fit_str(font_small, c.word, cx + cw - 2 - wx).c_str(), rel ? 0xF4E2B8 : C_DIM);
+			        fit_str(font_small, c.word, cx + cw - 2 - wx).c_str(), rel ? 0xF4E2B8 : 0xDCE4F6);
 			reg(cx, cy, cw, ch, id);
 		} else {
-			static const char *L[4] = { "Pass", "Esc", "Enter", "Abc" };
+			static const char *L[4] = { "Space", "Esc", "Enter", "Abc" };   // U3-X2: the game says "Press <Space>"; Space also passes a turn
 			static const int I[4] = { ID_PASS, ID_ESC, ID_ENTER, ID_KBD };
 			button(cx, cy, cw, ch, I[i - 26], L[i - 26], font_bold, 0x2C3340, C_INFO);
 		}
@@ -706,8 +796,8 @@ static void draw_settings() {
 	toggle_row(150, ID_SET + 5, "Left-handed", "D-Pad and A/B/X/Y swap places", u3_settings.lefty);
 	toggle_row(179, ID_SET + 3, "Show the cluebook", "Adds the original cluebook (spoilers!) to Book", u3_settings.cluebook);
 	button(6, 208, 150, 26, ID_SET + 10, "Reset auto-map", font_ui);
-	cv.text(font_small, 164, 208, "START: save, manual,", C_FAINT);
-	cv.text(font_small, 164, 221, "exit the game", C_FAINT);
+	cv.text(font_ui, 164, 206, "START: save, manual,", C_DIM);   // U3-X4: normal size
+	cv.text(font_ui, 164, 221, "exit the game", C_DIM);
 }
 
 static void settings_press(int id) {
@@ -738,8 +828,13 @@ static void draw_smenu() {
 	}
 	cv.fill(0, 224, 320, 16, C_PANEL);
 	cv.fill(0, 224, 320, 1, C_EDGE);
-	const char *hint = "A Select   B Back   ZL Swap";
-	cv.text_center(font_small, 160, 226, hint, C_ACCENT);
+	// U3-U5: the same footer wording as the other ports' START menus; U3-U3: one size larger.
+	// It names the buttons really pressed (left-handed play, Swap A and B).
+	const bool sw = u3_settings.swap_ab;
+	const char *hint = u3_settings.lefty
+		? (sw ? "A/B/X/Y: choose   D-Down: select   D-Right: back" : "A/B/X/Y: choose   D-Right: select   D-Down: back")
+		: (sw ? "D-Pad: choose   B: select   A: back" : "D-Pad: choose   A: select   B: back");
+	cv.text_center(font_ui, 160, 225, hint, C_ACCENT);
 	if (smenu_confirm) {
 		char failed[64], line[96];
 		if (u3w_failed_file(failed, sizeof failed)) {   // U3-04: a write did not reach the SD card
@@ -748,9 +843,16 @@ static void draw_smenu() {
 			cv.text_center(font_small, 160, 76, line, C_DIM);
 			cv.text_center(font_small, 160, 92, "to the SD card. Exiting may lose it.", C_DIM);
 		} else {
-			cv.text_center(font_bold, 160, 52, "Exit Ultima III?", C_TEXT);
-			cv.text_center(font_small, 160, 76, "Anything since your last save is lost.", C_DIM);
-			cv.text_center(font_small, 160, 92, "Save game (outdoors) first to keep it.", C_DIM);
+			cv.text_center(font_bold, 160, 46, "Exit Ultima III?", C_TEXT);
+			// U3-X3: say how long ago the game was saved (Q outdoors, or SAVE GAME here)
+			if (last_save_t) {
+				unsigned mins = (u3_ticks_ms() - last_save_t) / 60000;
+				if (mins == 0) snprintf(line, sizeof line, "You saved less than a minute ago.");
+				else snprintf(line, sizeof line, "You last saved %u min ago.", mins);
+			} else snprintf(line, sizeof line, "You have not saved in this session.");
+			cv.text_center(font_ui, 160, 66, line, last_save_t ? C_TEXT : C_ACCENT);
+			cv.text_center(font_small, 160, 86, "Anything since your last save is lost.", C_DIM);
+			cv.text_center(font_small, 160, 100, "Save game (outdoors) first to keep it.", C_DIM);
 		}
 		button(30, 124, 124, 44, ID_SM_EXIT_YES, "YES", font_bold);
 		button(166, 124, 124, 44, ID_SM_EXIT_NO, "NO", font_bold);
@@ -776,7 +878,7 @@ static void smenu_press(int id) {
 	switch (id) {
 	case ID_SM_RESUME: close_smenu(); break;
 	case ID_SM_MANUAL: close_smenu(); u3_book_open_guide(); set_tab(TAB_BOOK); break;
-	case ID_SM_SAVE: if (can_save() && u3_key_tap('Q')) close_smenu(); break;
+	case ID_SM_SAVE: if (can_save() && u3_key_tap('Q')) { note_save(); close_smenu(); } break;
 	case ID_SM_SETTINGS: close_smenu(); set_tab(TAB_SET); break;
 	case ID_SM_EXIT: smenu_confirm = 1; focus_id = ID_SM_EXIT_NO; break;
 	case ID_SM_EXIT_NO: smenu_confirm = 0; focus_id = ID_SM_EXIT; break;
@@ -885,6 +987,7 @@ static void draw_all() {
 	btns.clear();
 	cv.clear(C_BG);
 	cur_prompt = prompt_kind();
+	title_scan();
 	if (smenu) draw_smenu();
 	else if (kb_open) { draw_tabs(); draw_keyboard(); }
 	else {
@@ -921,9 +1024,27 @@ static void press(int id) {
 	if (kb_open) { kb_press(id); return; }
 	switch (tab) {
 	case TAB_PAD:
-		if (id >= ID_CMD && id < ID_CMD + 26) {
+		if (id >= ID_TITLE_OPT && id < ID_TITLE_OPT + 8) {
+			int i = id - ID_TITLE_OPT;
+			if (i < (int)title_opts.size()) {
+				std::string low = title_opts[i].label;
+				for (size_t k = 0; k < low.size(); k++) low[k] = (char)tolower((unsigned char)low[k]);
+				if (low.find("new game") != std::string::npos) { title_confirm = i; focus_id = ID_TITLE_NO; }   // asks first
+				else u3_key_tap(title_opts[i].key);
+			}
+		} else if (id == ID_TITLE_YES) {
+			if (title_confirm >= 0 && title_confirm < (int)title_opts.size()) u3_key_tap(title_opts[title_confirm].key);
+			title_confirm = -1;
+		} else if (id == ID_TITLE_NO) title_confirm = -1;
+		else if (id == ID_TITLE_SPACE) u3_key_tap(' ');
+		else if (id == ID_TITLE_ALL) title_all_cmds = true;
+		else if (id >= ID_CMD && id < ID_CMD + 26) {
 			char k = CMDS[id - ID_CMD].key;
-			if (u3_key_tap(k) && (k == 'O' || k == 'Y')) open_keyboard(0, true);
+			const bool saving = k == 'Q' && can_save();
+			if (u3_key_tap(k)) {
+				if (saving) note_save();
+				if (k == 'O' || k == 'Y') open_keyboard(0, true);
+			}
 		} else if (id >= ID_NUM + 1 && id <= ID_NUM + 4) u3_key_tap((char)('0' + id - ID_NUM));
 		else if (id >= ID_DIR && id < ID_DIR + 4) key_special(ARROW_KEYS[id - ID_DIR]);
 		else if (id == ID_YES) u3_key_tap('Y');
@@ -1085,7 +1206,12 @@ void u3_ui_input() {
 		if (r || kd) dirty = true;
 	} else if (kd) {
 		if (kd & kA) { if (nav) press_focused(); else u3_key_tap('\n'); }
-		if (kd & kB) u3_key_tap(27);
+		// U3-Q3: at the title's "Option:" menus the game takes Esc as "Return to the View" (the
+		// title film starts again): B does nothing there, except saying no to the port's question.
+		if (kd & kB) {
+			if (title_confirm >= 0) title_confirm = -1;
+			else if (!(title_kind == TITLE_MENU && !title_all_cmds)) u3_key_tap(27);
+		}
 		if (kd & KEY_X) u3_key_tap(' ');
 		if (kd & KEY_Y) { if (kb_open) close_keyboard(); else open_keyboard(0); }
 		if (kd & KEY_L) { if (kb_open) close_keyboard(); set_tab(tab - 1); if (nav) focus_id = ID_TAB + tab; }
@@ -1220,6 +1346,7 @@ touch_done:
 		if (u3_map_changes != last_map_changes && tab == TAB_MAP) { last_map_changes = u3_map_changes; dirty = true; }
 		if (tab == TAB_BOOK && u3_book_dirty()) dirty = true;
 		if (tab == TAB_PAD) { int p = prompt_kind(); if (p != last_prompt) { last_prompt = p; dirty = true; } }
+		title_scan();   // the title screens' menus become buttons (sets dirty when they change)
 	}
 
 	// --- redraw (cap ~30 fps)

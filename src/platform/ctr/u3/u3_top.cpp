@@ -111,7 +111,7 @@ void u3_top_working(int kind, uint32_t now) {
 }
 
 enum { STRIP = 40, RX = 360 };
-static const uint32_t PANEL = 0x15171D, PANEL_EDGE = 0x2A2E38, LABEL = 0x8A8F9C, TEXT = 0xE8E4DA;
+static const uint32_t PANEL = 0x15171D, PANEL_EDGE = 0x2A2E38, LABEL = 0xC4CAD8, TEXT = 0xE8E4DA;
 
 static void moon(U3Canvas &c, int cx, int cy, int r, int phase, uint32_t lit) {
 	c.disc(cx, cy, r, 0x2A2D36);

@@ -52,6 +52,41 @@ static char decode_cell(const uint16_t *pix, int pitch, int cx, int cy) {
 	return 0; // unknown (graphic, cursor, partially drawn)
 }
 
+// ---- the whole text screen (outside the game only)
+enum { SCR_COLS = 40, SCR_ROWS = 25 };
+static char scr[SCR_ROWS][SCR_COLS + 1];
+uint32_t u3_screen_changes = 0;
+
+static void scan_screen(const uint16_t *pix, int pitch) {
+	char now[SCR_ROWS][SCR_COLS + 1];
+	for (int r = 0; r < SCR_ROWS; r++) {
+		for (int c = 0; c < SCR_COLS; c++) {
+			char ch = decode_cell(pix, pitch, c, r);
+			now[r][c] = ch ? ch : ' ';   // pictures and frame pieces read as blanks
+		}
+		now[r][SCR_COLS] = 0;
+	}
+	if (memcmp(now, scr, sizeof now)) { memcpy(scr, now, sizeof scr); u3_screen_changes++; }
+}
+static void clear_screen_text() {
+	if (!scr[0][0]) return;
+	memset(scr, 0, sizeof scr);
+	u3_screen_changes++;
+}
+const char *u3_screen_line(int row) { return (row >= 0 && row < SCR_ROWS) ? scr[row] : ""; }
+bool u3_screen_has(const char *needle) {
+	char want[48];
+	size_t n = strlen(needle);
+	if (n >= sizeof want) return false;
+	for (size_t i = 0; i <= n; i++) want[i] = (char)tolower((unsigned char)needle[i]);
+	for (int r = 0; r < SCR_ROWS; r++) {
+		char low[SCR_COLS + 1];
+		for (int c = 0; c <= SCR_COLS; c++) low[c] = (char)tolower((unsigned char)scr[r][c]);
+		if (strstr(low, want)) return true;
+	}
+	return false;
+}
+
 static std::string trim(const char *s) {
 	std::string r(s);
 	size_t a = r.find_first_not_of(' ');
@@ -79,6 +114,7 @@ static void commit(const char *line) {
 
 void u3_text_scan(const uint16_t *pix, int pitch, int w, int h) {
 	if (!glyphs_ok || !pix || w != 320 || h != 200) return;
+	if (u3_in_game()) clear_screen_text(); else scan_screen(pix, pitch);
 	char now[TW_ROWS][TW_COLS + 1];
 	for (int r = 0; r < TW_ROWS; r++) {
 		for (int c = 0; c < TW_COLS; c++) {

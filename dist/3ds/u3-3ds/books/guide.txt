@@ -6,13 +6,14 @@ The game is on the top screen at its true shape (4:3, full height). The strips o
 
 # Starting a new game
 
-When the title appears, press Space (X button, or Pass on the command pad). Then use the letters on the command pad:
+Until a game is running, the Commands tab shows what the game is asking for as big buttons:
 
-- O - Organize a Party
-- C - Create a Character, then fill in a number (1-20), name, sex, race, type and attributes
-- F - Form a Party from up to four characters
-- M - back to the Main Menu
-- J - Journey Onward to begin
+- When the title says "Press <Space>", there is one button: Continue. The X button does the same.
+- At the game's menu ("Option:"), there is one button for each entry, with the game's own words: Return to the View, Start a New Game, Organize a Party, Journey Onward. Tap the one you want. Start a New Game asks "are you sure" first, because it begins again from nothing.
+- Organize a Party has its own menu, shown as buttons the same way: create a character (then fill in a number from 1 to 20, a name, sex, race, type and attributes), form a party from up to four characters, and go back to the main menu.
+- Journey Onward begins the game.
+
+Under these buttons are Enter, Abc (the keyboard, for names) and All commands, which shows the full letter pad instead. Each menu entry is also its first letter on that pad (J for Journey Onward, O for Organize a Party). The B button does nothing at these menus: the game would take it as Return to the View.
 
 The Book of Play explains races, types and attributes. A balanced first party is a fighter, a cleric, a wizard and a thief or paladin.
 
@@ -23,22 +24,22 @@ These work the same way in every 3DS port:
 - D-pad or circle pad - move (the arrow keys). Hold to keep walking; let go and the party stops at once.
 - A - Enter
 - B - Esc (cancel)
-- X - Space (pass a turn, skip)
+- X - Space (pass a turn, skip, and "Press Space")
 - Y - open or close the keyboard
 - ZL - swap the two screens (see below)
 - ZR - fast-forward (hold it; can be switched to a toggle in Settings)
 - L / R - previous / next bottom-screen tab (in a book: previous / next section)
-- START - the menu: Resume, Manual, Save game, Settings and Exit game. B or START closes it.
+- START - the menu: Resume, Manual, Save game, Settings and Exit game. The D-Pad chooses, A selects, B or START closes it.
 
 A and B can be swapped in Settings.
 
-Left-handed play (Settings): the D-Pad and the A, B, X and Y buttons swap places (Y and Up, A and Right, B and Down, X and Left). It applies everywhere, including this manual, and is remembered.
+Left-handed play (Settings): the D-Pad and the A, B, X and Y buttons swap places (Y and Up, A and Right, B and Down, X and Left). It applies everywhere, including this manual and the START menu, whose hint line then names the buttons you really press. It is remembered.
 
 Presses are never stored up. If the game is still busy with your last press, a new one is ignored rather than played later, so the party never runs on by itself. When the game takes a moment to answer, a small "Working..." bar appears at the top of the game screen; "Saving..." means files are being written to the SD card.
 
 # Swapping the screens
 
-Press ZL at any time to put the game on the touchscreen, where it fills the whole screen. The tabs then move to the top screen, between the info strips:
+Press ZL at any time to put the game on the touchscreen, where it fills the whole screen (the game's own title pictures leave their last text row empty, so a thin dark band can show at the bottom there). The tabs then move to the top screen, between the info strips:
 
 - D-pad - move the highlight between the buttons on the top screen; A presses the highlighted button
 - Circle pad - move the party
@@ -51,7 +52,7 @@ Press ZL again to put everything back. "Game on the touchscreen" in Settings doe
 
 Every Ultima III command is one letter. The pad shows all 26 with their names. Tap one to press that key. Commands that usually matter where you are now are tinted gold: Klimb and Descend in a dungeon, Transact in a town, and so on.
 
-The bottom row has 1-4 for choosing a party member (the bars under the names are their health), 0-9 for amounts, and Spells for the spell list.
+The last buttons of the pad are Space (pass a turn; also the answer to "Press Space"), Esc, Enter and Abc (the keyboard). The bottom row has 1-4 for choosing a party member (the bars under the names are their health), 0-9 for amounts, and Spells for the spell list.
 
 Most commands ask a follow-up question at the bottom of the game screen, such as a direction or a number. When the game asks for a direction, the bottom row turns into North, South, West and East buttons; when it asks yes or no, it shows Yes and No. You can also answer with the D-pad or the pad's buttons. Buttons that can't be used right now (such as an empty party slot) are greyed out and do nothing.
 
@@ -79,7 +80,7 @@ Right strip:
 - Marks and Cards - eight slots that stay blank until someone in the party carries that item
 - In a dungeon: the level you're on and which way you face
 
-Turn the strips off in Settings if you want plain black bars.
+Turn the strips off in Settings and the game picture fills the whole top screen instead (a little wider than its true shape).
 
 # The Map tab
 
@@ -109,7 +110,7 @@ Tap a line to pin it as a clue. Pinned lines are kept for good with the place yo
 Reading works the same way as in every other 3DS port:
 
 - Circle Pad or C-Stick - scroll (hold to keep scrolling; on page scans, move around the page)
-- D-Pad - move between the section buttons on the left; a section opens as you pick it (on page scans, A opens the page you picked)
+- D-Pad - move between the section buttons on the left; a section opens as you pick it (on page scans, A opens the page you picked). Five show at a time; the thin bar beside them shows where you are in the list.
 - L / R - previous / next section (on page scans, the previous / next page)
 - Tap a section to open it; drag the text or page to move it
 - B or START - close the book and go back to where you were
@@ -123,7 +124,7 @@ The original manuals are not included with this program. The setup script makes 
 
 The game saves when you use Q (Quit) while outdoors, or Save game in the START menu (which does the same thing, and is greyed out anywhere else). Do that before you stop playing. The next time you start, choose Journey Onward to continue.
 
-To leave, use Exit game in the START menu, or HOME and then Close. Exit game asks first, because anything since your last save is lost. Closing from HOME has no time to ask: it writes out everything still waiting and then quits.
+To leave, use Exit game in the START menu, or HOME and then Close. Exit game asks first, because anything since your last save is lost; it tells you how long ago you last saved in this session. Closing from HOME has no time to ask: it writes out everything still waiting and then quits.
 
 While files are being written to the SD card a "Saving..." bar shows at the top of the game screen. The game waits for every write to finish before it leaves, and files the game still had open are written out first, so nothing is half-saved.
 
