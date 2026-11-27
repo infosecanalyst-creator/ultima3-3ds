@@ -107,12 +107,14 @@ Tap a line to pin it as a clue. Pinned lines are kept for good with the place yo
 - The original pages - the Book of Play, both spellbooks and the cloth map, with zoom
 - Cluebook - only listed if you turn it on in Settings, because it gives answers away
 
+An open book puts its page on the top screen (over the game, which waits) and its section buttons on the touch screen, in two columns, as in the other ports. With the screens swapped (the game on the touch screen) the page and the sections share the top screen instead.
+
 Reading works the same way as in every other 3DS port:
 
 - Circle Pad or C-Stick - scroll (hold to keep scrolling; on page scans, move around the page)
-- D-Pad - move between the section buttons on the left; a section opens as you pick it (on page scans, A opens the page you picked). Five show at a time; the thin bar beside them shows where you are in the list.
+- D-Pad - move between the section buttons; a section opens as you pick it (on page scans, A opens the page you picked). Ten show at a time (five when the screens are swapped); the thin bar beside them shows where you are in the list.
 - L / R - previous / next section (on page scans, the previous / next page)
-- Tap a section to open it; drag the text or page to move it
+- Tap a section to open it; drag the stylus up or down on the touch screen to move the text or page
 - B or START - close the book and go back to where you were
 - Page scans: + and - (or X and Y) zoom in and out
 

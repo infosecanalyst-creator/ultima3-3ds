@@ -227,6 +227,8 @@ void u3_top_update(bool force) {
 	u3v_game_w = u3_settings.strips ? 400 - 2 * STRIP : 400;
 	if (!u3_settings.strips) {
 		if (loading) draw_loading(now);
+		// a panel over the game (an open book): the picture beside it is covered too
+		if (panel_px) { ov.fill(0, 0, 40, 240, 0x000000); ov.fill(360, 0, 40, 240, 0x000000); }
 		blit_panel();
 		u3v_overlay_commit();
 		if (!panel_px && !loading) u3v_overlay_enable(0);

@@ -932,11 +932,23 @@ void u3_ui_save_all() {
 // Normal: game on top (4:3, full height, strips beside it), this panel on the touchscreen.
 // Swapped: the game fills the touchscreen; this panel sits between the strips on top,
 // worked with the D-Pad and A (tabs with L/R), and the Circle Pad moves the party.
+// What the top screen's middle panel shows: this front end when the screens are swapped, an
+// open book's page when they are not (U3-U2), else nothing (the game).
+static const uint16_t *top_panel = 0;
+static bool sync_panel() {
+	u3_book_set_split(!u3v_swap);
+	const bool book = tab == TAB_BOOK && !kb_open && !smenu;
+	const uint16_t *want = u3v_swap ? bottom_px : (book ? u3_book_page_px() : 0);
+	if (want == top_panel) return false;
+	top_panel = want;
+	u3_top_set_panel(want);
+	return true;
+}
 static void apply_swap() {
 	int want = (u3_settings.swapped && !loading) ? 1 : 0;
 	if (want != u3v_swap) {
 		u3v_swap = want;
-		u3_top_set_panel(want ? bottom_px : 0);
+		sync_panel();
 		if (want && focus_id < 0) focus_id = ID_TAB + tab;
 	}
 	dirty = true;
@@ -1006,8 +1018,14 @@ static void draw_all() {
 		cv.fill_round(250, 228, 66, 12, 4, 0x3A3320);
 		cv.text_center(font_small, 283, 228, "fast-forward", 0xFFE070);
 	}
-	if (u3v_swap) u3_top_panel_changed();
-	else cv.present_bottom();
+	if (u3v_swap) { sync_panel(); u3_top_panel_changed(); }
+	else {
+		cv.present_bottom();
+		// U3-U2: an open book's page is on the top screen, over the game
+		const bool changed = sync_panel();
+		if (changed) { u3_top_update(true); u3v_present(); }
+		if (top_panel) u3_top_panel_changed();
+	}
 	last_draw = u3_ticks_ms();
 	dirty = false;
 }

@@ -59,5 +59,9 @@ void u3_book_tick();                           // Circle Pad / C-Stick scrolling
 bool u3_book_dirty();
 void u3_book_open_spells(char kind);
 void u3_book_open_guide();
+// U3-U2: with the game on the top screen an open book puts its page on the top screen (over the
+// game) and its section buttons on the whole touch screen; u3_book_page_px() is that page.
+void u3_book_set_split(bool on);
+const uint16_t *u3_book_page_px();
 
 #endif

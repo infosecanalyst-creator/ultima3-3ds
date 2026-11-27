@@ -62,11 +62,28 @@ enum {
 	RAIL_W = 94, RAIL_BTN_H = 29, RAIL_STEP = 33, RAIL_ROWS = 5,   // U3-U1: room for a section name on two lines
 	RAIL_X = 6, RAIL_BW = RAIL_W - 8,
 	FOOT_H = 12,   // the footer strip (the reading keys, the same wording in every port)
-	VIEW_X = 96, VIEW_W = 320 - 96, VIEW_H = 240 - 64 - FOOT_H,
+	RAIL_H = 240 - 64 - FOOT_H,
 	SHELF_STEP = 38, SHELF_H = 34,
-	TEXT_X = VIEW_X + 6, TEXT_W = VIEW_W - 6 - 10,   // room for the scrollbar
 	SHELF_ROWS_MAX = 10,
 };
+
+// U3-U2: where the page is drawn. Split (the normal layout): the page fills the top screen's
+// middle panel (320x240, over the game) and the section buttons use the whole touch screen,
+// as in the other ports. Combined (screens swapped: the game is on the touch screen): page and
+// sections share the one panel, as before.
+static bool split = false;
+static int VIEW_X = 96, VIEW_W = 224, VIEW_H = 164, PAGE_Y = 64, TEXT_X = 102, TEXT_W = 208;
+static int rail_cols = 1, rail_bw = RAIL_BW;
+static uint16_t page_px[320 * 240];
+static U3Canvas pcv;
+static bool pcv_ready = false;
+static void set_geometry(bool sp) {
+	split = sp;
+	if (sp) { VIEW_X = 0; VIEW_W = 320; PAGE_Y = 0; VIEW_H = 240 - FOOT_H; rail_cols = 2; rail_bw = 152; }
+	else { VIEW_X = 96; VIEW_W = 224; PAGE_Y = 64; VIEW_H = RAIL_H; rail_cols = 1; rail_bw = RAIL_BW; }
+	TEXT_X = VIEW_X + (sp ? 10 : 6);
+	TEXT_W = VIEW_W - (sp ? 10 : 6) - (sp ? 14 : 10);   // room for the scrollbar
+}
 
 // ---- hits and press feedback (ids offset so they never collide with the tab bar's)
 struct Hit { int x, y, w, h, id; };
@@ -340,10 +357,14 @@ static void keep_focus_visible() {
 	if (n == 0) { rail_top = 0; return; }
 	if (focus < 0) focus = 0;
 	if (focus >= n) focus = n - 1;
-	if (focus < rail_top) rail_top = focus;
-	if (focus >= rail_top + RAIL_ROWS) rail_top = focus - RAIL_ROWS + 1;
-	if (rail_top > n - RAIL_ROWS) rail_top = n - RAIL_ROWS;
+	const int vis = RAIL_ROWS * rail_cols;
+	if (focus < rail_top) rail_top = focus - focus % rail_cols;
+	if (focus >= rail_top + vis) rail_top = (focus / rail_cols - RAIL_ROWS + 1) * rail_cols;
+	int maxtop = ((n + rail_cols - 1) / rail_cols - RAIL_ROWS) * rail_cols;
+	if (maxtop < 0) maxtop = 0;
+	if (rail_top > maxtop) rail_top = maxtop;
 	if (rail_top < 0) rail_top = 0;
+	rail_top -= rail_top % rail_cols;
 }
 
 static void go_section(int i) {
@@ -360,21 +381,24 @@ static void go_section(int i) {
 // =================================================================== drawing
 static bool more_below = false;   // the rail has sections below the last row shown
 static void draw_rail(U3Canvas &c) {
-	c.fill(0, BODY_Y, RAIL_W, VIEW_H, C_PANEL);
+	c.fill(0, BODY_Y, split ? 320 : RAIL_W, 240 - BODY_Y - (split ? 0 : FOOT_H), split ? C_BG : C_PANEL);
 	int cur = current_section();
 	int n = (int)secs.size();
-	for (int r = 0; r < RAIL_ROWS && rail_top + r < n; r++) {
+	const int vis = RAIL_ROWS * rail_cols;
+	for (int r = 0; r < vis && rail_top + r < n; r++) {
 		int i = rail_top + r;
-		int y = BODY_Y + r * RAIL_STEP;   // five rows of 29 px, 4 px apart, end at 225: the footer strip starts at 228
+		int x = RAIL_X + (r % rail_cols) * (rail_bw + 4);
+		int y = BODY_Y + (r / rail_cols) * RAIL_STEP;   // five rows of 29 px, 4 px apart, end at 225
 		int id = B_SEC + i;
 		bool here = i == cur;
-		int off = u3_btn_bg(c, RAIL_X, y, RAIL_BW, RAIL_BTN_H, 4, here ? C_ACCENT_BG : C_BTN, look_of(id));
+		int off = u3_btn_bg(c, x, y, rail_bw, RAIL_BTN_H, 4, here ? C_ACCENT_BG : C_BTN, look_of(id));
 		int indent = secs[i].level == 2 ? 6 : 0;
 		// U3-U1: a name too long for one line goes on two (it used to be cut with "...")
-		const int maxw = RAIL_BW - 8 - indent;
+		const u3_font &lf = split ? font_ui : font_small;
+		const int maxw = rail_bw - 8 - indent;
 		const char *lbl = secs[i].label.c_str();
-		if (u3_text_width(font_small, lbl) <= maxw) {
-			c.text(font_small, RAIL_X + 4 + indent, y + (RAIL_BTN_H - font_small.height) / 2 + off, lbl, here ? C_ACCENT : C_TEXT);
+		if (u3_text_width(lf, lbl) <= maxw) {
+			c.text(lf, x + 4 + indent, y + (RAIL_BTN_H - lf.height) / 2 + off, lbl, here ? C_ACCENT : C_TEXT);
 		} else {
 			int n1 = u3_wrap(font_small, lbl, maxw);
 			std::string l1(lbl, n1);
@@ -382,19 +406,24 @@ static void draw_rail(U3Canvas &c) {
 			const char *rest = lbl + n1;
 			while (*rest == ' ') rest++;
 			std::string l2 = fit(font_small, rest, maxw);
-			c.text(font_small, RAIL_X + 4 + indent, y + 2 + off, l1.c_str(), here ? C_ACCENT : C_TEXT);
-			c.text(font_small, RAIL_X + 4 + indent, y + 14 + off, l2.c_str(), here ? C_ACCENT : C_TEXT);
+			c.text(font_small, x + 4 + indent, y + 2 + off, l1.c_str(), here ? C_ACCENT : C_TEXT);
+			c.text(font_small, x + 4 + indent, y + 14 + off, l2.c_str(), here ? C_ACCENT : C_TEXT);
 		}
-		if (i == focus) { c.frame_round(RAIL_X, y, RAIL_BW, RAIL_BTN_H, 4, C_ACCENT); c.frame_round(RAIL_X + 1, y + 1, RAIL_BW - 2, RAIL_BTN_H - 2, 3, C_ACCENT, 140); }
-		hreg(RAIL_X, y, RAIL_BW, RAIL_BTN_H, id);
+		if (i == focus) { c.frame_round(x, y, rail_bw, RAIL_BTN_H, 4, C_ACCENT); c.frame_round(x + 1, y + 1, rail_bw - 2, RAIL_BTN_H - 2, 3, C_ACCENT, 140); }
+		hreg(x, y, rail_bw, RAIL_BTN_H, id);
 	}
 	// more above / below
-	if (rail_top > 0) c.tri(RAIL_W / 2 - 4, BODY_Y + 1, RAIL_W / 2 + 4, BODY_Y + 1, RAIL_W / 2, BODY_Y - 3 + 1, C_DIM);
-	if (rail_top + RAIL_ROWS < n) more_below = true;   // drawn in the footer strip's left corner
-	if (n > RAIL_ROWS) {   // U3-U1: a real scrollbar shows there are more sections and where the list is
-		const int tx = RAIL_X + RAIL_BW, th = RAIL_ROWS * RAIL_STEP - 4;
-		int sh = th * RAIL_ROWS / n; if (sh < 12) sh = 12;
-		int sy = BODY_Y + (th - sh) * rail_top / (n - RAIL_ROWS);
+	const int mid = split ? 160 : RAIL_W / 2;
+	if (rail_top > 0) c.tri(mid - 4, BODY_Y + 1, mid + 4, BODY_Y + 1, mid, BODY_Y - 3 + 1, C_DIM);
+	if (rail_top + vis < n) {
+		if (split) c.tri(160 - 4, 231, 160 + 4, 231, 160, 235, C_DIM);
+		else more_below = true;   // drawn in the footer strip's left corner
+	}
+	if (n > vis) {   // U3-U1: a real scrollbar shows there are more sections and where the list is
+		const int tx = split ? 316 : RAIL_X + RAIL_BW, th = RAIL_ROWS * RAIL_STEP - 4;
+		const int total = (n + rail_cols - 1) / rail_cols, top = rail_top / rail_cols;
+		int sh = th * RAIL_ROWS / total; if (sh < 12) sh = 12;
+		int sy = BODY_Y + (th - sh) * top / (total - RAIL_ROWS);
 		c.fill(tx, BODY_Y, 2, th, C_BTN);
 		c.fill(tx, sy, 2, sh, C_ACCENT);
 	}
@@ -410,7 +439,8 @@ static void draw_footer(U3Canvas &c, bool scans) {
 	const char *t = scans ? (lefty ? "Sticks: move   L / R: page   D-Down / START: close" : "Sticks: move   L / R: page   B / START: close")
 	                      : (lefty ? "Sticks: scroll   A/B/X/Y, L / R: section   D-Down / START: close"
 	                               : "Sticks: scroll   D-Pad, L / R: section   B / START: close");
-	c.text(font_small, 316 - u3_text_width(font_small, t), y0 - 1, t, C_TEXT);   // U3-U3: bright, not grey on dark
+	if (split) c.text_center(font_small, 160, y0 - 1, t, C_TEXT);
+	else c.text(font_small, 316 - u3_text_width(font_small, t), y0 - 1, t, C_TEXT);   // U3-U3: bright, not grey on dark
 }
 
 static void draw_toolbar(U3Canvas &c, bool scans) {
@@ -430,15 +460,16 @@ static void draw_toolbar(U3Canvas &c, bool scans) {
 	c.text(font_bold, 72, TOOL_Y + (TOOL_H - font_bold.height) / 2, t.c_str(), C_DIM);
 }
 
-static void draw_text(U3Canvas &c) {
-	draw_toolbar(c, false);
-	draw_rail(c);
-	c.fill(VIEW_X, BODY_Y, VIEW_W, VIEW_H, C_PAPER);
-	c.clip(VIEW_X, BODY_Y, VIEW_W, VIEW_H);
-	int y = BODY_Y + 6 - tscroll;
+static void draw_text(U3Canvas &c0) {
+	draw_toolbar(c0, false);
+	draw_rail(c0);
+	U3Canvas &c = split ? pcv : c0;   // U3-U2: the page itself is on the top screen in the split layout
+	c.fill(VIEW_X, PAGE_Y, VIEW_W, VIEW_H, C_PAPER);
+	c.clip(VIEW_X, PAGE_Y, VIEW_W, VIEW_H);
+	int y = PAGE_Y + 6 - tscroll;
 	for (size_t i = 0; i < tlines.size(); i++) {
 		const TLine &t = tlines[i];
-		if (y + t.h >= BODY_Y && y < BODY_Y + VIEW_H) {
+		if (y + t.h >= PAGE_Y && y < PAGE_Y + VIEW_H) {
 			if (t.rule) {
 				int mid = VIEW_X + VIEW_W / 2;
 				c.hline(VIEW_X + 8, y + 7, VIEW_W - 16, 0xD6CBB2);
@@ -448,26 +479,27 @@ static void draw_text(U3Canvas &c) {
 			} else if (!t.s.empty()) c.text(*t.f, TEXT_X + t.x, y, t.s.c_str(), t.col);
 		}
 		y += t.h;
-		if (y > BODY_Y + VIEW_H) break;
+		if (y > PAGE_Y + VIEW_H) break;
 	}
 	c.noclip();
 	if (ttotal > VIEW_H) {
 		int maxs = ttotal - VIEW_H + 20;
 		int sh = VIEW_H * VIEW_H / ttotal; if (sh < 14) sh = 14;
-		int sy = BODY_Y + (VIEW_H - sh) * tscroll / (maxs > 0 ? maxs : 1);
-		c.fill(315, sy, 3, sh, 0xB8AC90);
+		int sy = PAGE_Y + (VIEW_H - sh) * tscroll / (maxs > 0 ? maxs : 1);
+		c.fill(VIEW_X + VIEW_W - 5, sy, 3, sh, 0xB8AC90);
 	}
 	draw_footer(c, false);
 }
 
-static void draw_scan(U3Canvas &c) {
-	draw_toolbar(c, true);
-	draw_rail(c);
-	c.fill(VIEW_X, BODY_Y, VIEW_W, VIEW_H, 0x0A0B0E);
+static void draw_scan(U3Canvas &c0) {
+	draw_toolbar(c0, true);
+	draw_rail(c0);
+	U3Canvas &c = split ? pcv : c0;
+	c.fill(VIEW_X, PAGE_Y, VIEW_W, VIEW_H, 0x0A0B0E);
 	draw_footer(c, true);
 	if (img_err) {
-		c.text_center(font_ui, VIEW_X + VIEW_W / 2, 120, "Couldn't open this page", C_DIM);
-		c.text_center(font_small, VIEW_X + VIEW_W / 2, 140, "(not enough memory?)", C_FAINT);
+		c.text_center(font_ui, VIEW_X + VIEW_W / 2, PAGE_Y + 56, "Couldn't open this page", C_DIM);
+		c.text_center(font_small, VIEW_X + VIEW_W / 2, PAGE_Y + 76, "(not enough memory?)", C_FAINT);
 		return;
 	}
 	if (!img) return;
@@ -475,8 +507,8 @@ static void draw_scan(U3Canvas &c) {
 	float vw = VIEW_W / s, vh = VIEW_H / s;
 	int dh = (int)(ih * s) < VIEW_H ? (int)(ih * s) : VIEW_H;
 	if (vh > ih) vh = (float)ih;
-	c.clip(VIEW_X, BODY_Y, VIEW_W, VIEW_H);
-	c.blit_rgb888(img, iw, ih, ox, oy, vw, vh, VIEW_X, BODY_Y, VIEW_W, dh);
+	c.clip(VIEW_X, PAGE_Y, VIEW_W, VIEW_H);
+	c.blit_rgb888(img, iw, ih, ox, oy, vw, vh, VIEW_X, PAGE_Y, VIEW_W, dh);
 	c.noclip();
 }
 
@@ -557,8 +589,24 @@ void u3_book_open_spells(char) {
 	if (avail[BK_SPELLS] && cur_book != BK_SPELLS) open_book(BK_SPELLS);
 }
 
+// U3-U2: the layout follows where the game is. on = the page goes on the top screen.
+void u3_book_set_split(bool on) {
+	if (on == split) return;
+	int sec = cur_book >= 0 ? current_section() : 0;
+	set_geometry(on);
+	if (cur_book >= 0) {
+		if (is_scans()) clamp_scan();
+		else { layout_text(BOOKS[cur_book].path); build_sections(); go_section(sec); }
+		keep_focus_visible();
+	}
+	dirty = true;
+}
+// The 320x240 page for the top screen, or 0 when no page belongs there (shelf, combined layout).
+const uint16_t *u3_book_page_px() { return (split && cur_book >= 0) ? page_px : 0; }
+
 void u3_book_draw(U3Canvas &c, int) {
 	hits.clear();
+	if (!pcv_ready) { pcv.init(page_px, 320, 240, U3_RGB565); pcv_ready = true; }
 	if (cur_book < 0) draw_shelf(c);
 	else if (is_scans()) draw_scan(c);
 	else draw_text(c);
@@ -597,7 +645,7 @@ void u3_book_touch(int x, int y, int phase) {
 		int dx = x - drag_x, dy = y - drag_y;
 		if (!dragging && (abs(x - start_x) > 5 || abs(y - start_y) > 5)) dragging = true;
 		if (!dragging) return;   // ignore jitter until a real drag starts
-		bool in_view = start_x >= VIEW_X && start_y >= BODY_Y;
+		bool in_view = split ? start_y >= BODY_Y : (start_x >= VIEW_X && start_y >= BODY_Y);
 		if (cur_book < 0) {   // drag the shelf list a row at a time; focus stays on a shown row
 			shelf_acc += dy;
 			int ids[NBOOKS]; int n = shelf_rows(ids);
@@ -619,12 +667,13 @@ void u3_book_touch(int x, int y, int phase) {
 	}
 }
 
-// D-Pad up/down with key repeat (first move at once, then after 350 ms every 90 ms)
+// D-Pad with key repeat (first move at once, then after 350 ms every 90 ms).
+// Returns -2 up, 2 down, -1 left, 1 right, 0 nothing.
 static int dpad_step(uint32_t kd, uint32_t kh) {
 	static uint32_t t0 = 0, last = 0;
 	uint32_t now = u3_ticks_ms();
-	int dir = (kh & KEY_DUP) ? -1 : (kh & KEY_DDOWN) ? 1 : 0;
-	if (kd & (KEY_DUP | KEY_DDOWN)) { t0 = last = now; return dir; }
+	int dir = (kh & KEY_DUP) ? -2 : (kh & KEY_DDOWN) ? 2 : (kh & KEY_DLEFT) ? -1 : (kh & KEY_DRIGHT) ? 1 : 0;
+	if (kd & (KEY_DUP | KEY_DDOWN | KEY_DLEFT | KEY_DRIGHT)) { t0 = last = now; return dir; }
 	if (!dir) return 0;
 	if (now - t0 >= 350 && now - last >= 90) { last = now; return dir; }
 	return 0;
@@ -633,7 +682,8 @@ static int dpad_step(uint32_t kd, uint32_t kh) {
 int u3_book_buttons(uint32_t kd, uint32_t kh) {
 	if (kd & (KEY_B | KEY_START)) return 2;   // close the manual
 	int used = kd ? 1 : 0;
-	int step = dpad_step(kd, kh);
+	const int pad = dpad_step(kd, kh);
+	int step = pad == -2 ? -1 : pad == 2 ? 1 : 0;   // the shelf is one column
 	if (cur_book < 0) {
 		int ids[NBOOKS]; int n = shelf_rows(ids);
 		if (step) { focus += step; if (focus < 0) focus = 0; if (focus >= n) focus = n - 1; dirty = true; used = 1; }
@@ -643,6 +693,8 @@ int u3_book_buttons(uint32_t kd, uint32_t kh) {
 		return used;
 	}
 	int n = (int)secs.size();
+	// sections: one column beside the page, or two columns filling the touch screen (U3-U2)
+	step = rail_cols == 2 ? (pad == -2 ? -2 : pad == 2 ? 2 : pad) : step;
 	if (step && n) {
 		focus += step; keep_focus_visible(); dirty = true; used = 1;
 		// house standard: a section opens as the D-Pad picks it (page scans still wait for A: each is a big picture to load)
