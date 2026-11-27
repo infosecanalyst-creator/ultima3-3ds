@@ -399,6 +399,8 @@ static void draw_rail(U3Canvas &c) {
 		const char *lbl = secs[i].label.c_str();
 		if (u3_text_width(lf, lbl) <= maxw) {
 			c.text(lf, x + 4 + indent, y + (RAIL_BTN_H - lf.height) / 2 + off, lbl, here ? C_ACCENT : C_TEXT);
+		} else if (u3_text_width(font_small, lbl) <= maxw) {   // one line in the smaller font
+			c.text(font_small, x + 4 + indent, y + (RAIL_BTN_H - font_small.height) / 2 + off, lbl, here ? C_ACCENT : C_TEXT);
 		} else {
 			int n1 = u3_wrap(font_small, lbl, maxw);
 			std::string l1(lbl, n1);
