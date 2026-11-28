@@ -8,6 +8,7 @@
 - Start a New Game (tapped on that menu) asks first, with NO chosen.
 - B does nothing at the title menus (the game took Esc as "Return to the View" and restarted the title).
 - Manual: an open book now shows its page on the top screen and its sections on the whole touch screen (two columns), like the other ports. With the screens swapped it stays as it was.
+- Fixed: anything drawn over the game picture on the top screen (the "Working...", "Saving..." and "Save failed" bars, and now the open book) was hidden behind the game; only the strips beside it showed.
 - Manual: section names that did not fit go on two lines instead of being cut with "..."; five taller rows and a scrollbar.
 - START menu footer uses the same words as the other ports and follows left-handed play and Swap A and B. It is one size larger.
 - Exit question tells you how long ago you last saved.

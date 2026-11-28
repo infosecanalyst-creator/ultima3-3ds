@@ -556,10 +556,16 @@ static void videoThread(void* data)
 						drawTexture((400-this->hidden->w1*this->hidden->scalex)/2,(240-this->hidden->h1*this->hidden->scaley)/2, this->hidden->w1*this->hidden->scalex, this->hidden->h1*this->hidden->scaley, this->hidden->l1, this->hidden->r1, this->hidden->t1, this->hidden->b1);
 					if (overlay_ready && overlay_enabled) {
 						C3D_TexBind(0, &overlay_tex);
+						/* The overlay is drawn at the same depth as the game picture, and the default
+						 * depth test (GREATER) threw away every overlay pixel that lies over the game:
+						 * the strips beside it showed, but a panel or the "Working" pill over it did
+						 * not. The overlay always wins. */
+						C3D_DepthTest(true, GPU_ALWAYS, GPU_WRITE_ALL);
 						C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA, GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA);
 						drawTexture(0, 0, 400, 240, 0.0f, 400.0f/512.0f, 0.0f, 240.0f/256.0f);
 						if (u3v_custom_top && u3v_working && !u3v_swap)
 							drawTexture(u3v_game_x + (u3v_game_w - 160) / 2, 3, 160, 16, 0.0f, 160.0f/512.0f, 240.0f/256.0f, 1.0f);
+						C3D_DepthTest(true, GPU_GREATER, GPU_WRITE_ALL);   /* back to the default */
 						C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_ONE, GPU_ZERO, GPU_ONE, GPU_ZERO);
 						C3D_TexBind(0, &spritesheet_tex);
 					}
@@ -574,8 +580,10 @@ static void videoThread(void* data)
 					drawTexture(0, 0, 320, 240, this->hidden->l1, this->hidden->r1, this->hidden->t1, this->hidden->b1);
 					if (overlay_ready && u3v_working) {
 						C3D_TexBind(0, &overlay_tex);
+						C3D_DepthTest(true, GPU_ALWAYS, GPU_WRITE_ALL);   /* the pill lies over the game: see above */
 						C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA, GPU_SRC_ALPHA, GPU_ONE_MINUS_SRC_ALPHA);
 						drawTexture(80, 3, 160, 16, 0.0f, 160.0f/512.0f, 240.0f/256.0f, 1.0f);
+						C3D_DepthTest(true, GPU_GREATER, GPU_WRITE_ALL);
 						C3D_AlphaBlend(GPU_BLEND_ADD, GPU_BLEND_ADD, GPU_ONE, GPU_ZERO, GPU_ONE, GPU_ZERO);
 						C3D_TexBind(0, &spritesheet_tex);
 					}
